@@ -1,0 +1,20 @@
+      1          15/04/2015    Temperatura media (ºC)                    14,7
+      1          16/04/2015    Temperatura media (ºC)                    13
+      1          01/04/2015    Temperatura máxima (ºC)                   25
+      1          02/04/2015    Temperatura máxima (ºC)                   29,5
+      1          06/05/2015    Temperatura mínima (ºC)                   6
+      1          07/05/2015    Temperatura mínima (ºC)                   10,4
+      1          01/04/2015    Humidade relativa media (%)               63,8
+      1          02/04/2015    Humidade relativa media (%)               53
+      1          23/06/2015    Humidade Relativa Máxima (%)              92
+      1          23/06/2015    Humidade Relativa Máxima (%)              92.2
+      1          27/04/2015    Humidade Relativa Mínima (%)              56
+      1          28/04/2015    Humidade Relativa Mínima (%)              47.7
+      1          01/04/2015    Temperatura de Orballo (ºC)               6
+      1          02/04/2015    Temperatura de Orballo (ºC)               4,2
+	  1          02/04/2015    Temperatura do Aire a 10 cm (ºC)          17,8
+      1          03/04/2015    Temperatura do Aire a 10 cm (ºC)          17
+      1          01/04/2015    Horas de Frío (Base 7 ºC) (h)             5,2
+      1          02/04/2015    Horas de Frío (Base 7 ºC) (h)             5
+      1          07/04/2015    Chuvia (L/m2)                             0
+      1          08/04/2015    Chuvia (L/m2)                             0,4

@@ -17,6 +17,10 @@ class ClassFichero
 	public $periodo; //periodo en dias que durar el ciclo
 
 
+	public $periodoInicial;
+	public $periodoFin;
+
+
 
 	function __construct()
 	{
@@ -125,12 +129,27 @@ class ClassFichero
 		$ddmmyyyy2 = str_replace('/','-',$f2);
 		$datetime1 = new DateTime($ddmmyyyy1);
 		$datetime2 = new DateTime($ddmmyyyy2);
+
+		$this->periodoInicial = $datetime1;
+		$this->periodoFin = $datetime2;
+
+		
+
 		$interval = $datetime1->diff($datetime2);
 	
 		$this->periodo = $interval->format('%a');
 
 	}
 
+	//DOS GETTERS PARA DEVOLVER LAS FECHAS DE INICIO Y FIN
+
+	public function getPeriodoInicial(){
+		return $this->periodoInicial;
+	}
+
+	public function getPeriodoFin(){
+		return $this->periodoFin;
+	}
 
 
 	public function obtenerInformacionTemperaturaMedia($l,$p){//le pasamos la cadena y el numero de la linea(este por el ajuste que digo luego)

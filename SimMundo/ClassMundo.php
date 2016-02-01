@@ -17,10 +17,15 @@ class ClassMundo
 	public $velocidadViento;//puede influir en la expansion del hongo
 
 
+	public $infectarCepa; // recibe si el hongo infecta o no a la cepa desde la funcion 
+							//getInfeccionHongo() de la clase hongo
+
+
 	//instancio las diferentes clases
 	public $clasePaisano ;
 	public $claseFichero;
 	public $claseDato;
+	public $claseEnfermedad;
 
 
 	public $worldLog = "worldLog.txt";
@@ -30,11 +35,13 @@ class ClassMundo
 	
 
 
-	public function __construct(&$pai,&$fic,&$dato)
+	public function __construct(&$pai,&$fic,&$dato,&$hongo)
     {
         $this->clasePaisano =&$pai;
         $this->claseFichero = &$fic;
         $this->claseDato = &$dato;
+        $this->claseEnfermedad = &$hongo;
+        $this->cabeceraLog();
        
 
     } 
@@ -89,7 +96,7 @@ class ClassMundo
 		return $this->phTierra;		
 	}
 
-	public function getSulfate(){
+	public function getSulfatado(){
 		
 		return $this->clasePaisano->getSulfatar();		
 	}
@@ -169,9 +176,24 @@ class ClassMundo
 	}
 
 
+	//get para preguntar a claseEnfermedad si infecta o no a la cepa
+
+	public function getInfectarCepa (){
+		$this->infectarCepa = $this->claseEnfermedad->infectarCepa();
+		return $this->infectarCepa;
+	}
+
+
+	public function cabeceraLog(){
+		$periodoInicial =  $this->claseFichero->getPeriodoInicial();
+		$periodoFin = $this->claseFichero->getPeriodoFin();
+		file_put_contents($this->worldLog, "Perido: " .date_format($periodoInicial, 'd-m-Y')." - ".date_format($periodoFin, 'd-m-Y')."\n", FILE_APPEND | LOCK_EX);
+		file_put_contents($this->worldLog, "-------------------------------------------" ."\n", FILE_APPEND | LOCK_EX);
+	}
 
 
 	public function guardarLog ($fecha,$lluvia,$tamanhoHongo){
+
 		// Escribir los contenidos en el fichero,
 		// usando la bandera FILE_APPEND para añadir el contenido al final del fichero
 		// y la bandera LOCK_EX para evitar que cualquiera escriba en el fichero al mismo tiempo

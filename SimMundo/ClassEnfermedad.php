@@ -19,7 +19,7 @@ class ClassEnfermedad{
 	public $expansion;
 	public $crecimiento;
 
-	public $probabilidadInfeccion;
+	public $probabilidadInfeccionCepa = 0.0;
 	
 
 	public $tamanoHongo = 1;//un valor inicial por darle uno
@@ -118,27 +118,40 @@ class ClassEnfermedad{
 
 	public function getProbabilidadInfeccion()
 	{
-		return $this->probabilidadInfeccion;
+		return $this->probabilidadInfeccionCepa;
 	}
 
 
 	public function setProbabilidadInfeccion($prob)
 	{
-		$this->probabilidadInfeccion = $prob;
+		$this->probabilidadInfeccionCepa = $prob;
 	}
 
 
 	//calcula si infeccta o no a una cepa
-	public function infecctarCepa(){
+	//REVISAR LO DE LA PROBABILIDAD
+	//ME REFIERO AL IF PARA VERIFICAR QUE FUNCIONA BINE ASI
+	public function infectarCepa(){
+
 		$aleatorio=rand(0,100);
-		if ($aleatorio > 70) echo 'alta calidad'; //dando un 30% de probabilidad de escoger alta calidad
-		else if ($aleatorio >50) echo 'media calidad'; //dando un 20% de probabilidad de escoger media calidad 
-		        else echo 'mala calidad'; //dando un 50% de probabilidad de escoger mala calidad  
+
+		$prob = $this->getProbabilidadInfeccion() * 100;
+
+		if ($aleatorio < $prob){
+			return 1; //1 es qu esta infectado
+		}
+		else 
+		{
+			return 0; //no esta infectado
+
+		}  
+		 
 	}
 
 
 
-
+	//ACORDARSE DE METER LA VARIABLE DE  probabilidadInfeccion DENTRO DE ESTA FUNCION 
+	//PARA CALCULAR SU PROBABILIDAD
 	public function calcularCrecimientoHongo(){
 		
 		$referenciaLluviaHongo= $this->claseMundo->getReferenciaLluviaHongo();
@@ -158,7 +171,11 @@ class ClassEnfermedad{
 
 		//ejemplo de en que momento puede crecer un hongo
 		if($this->claseMundo->getLluviaMedia() > 10 || $this->claseMundo->getTemperaturaMedia() > 10){
-			$this->crecioHongo = 1;
+			if($this->claseMundo->getSulfatado() == 1){
+				$this->crecioHongo = 0;
+			}else{
+				$this->crecioHongo = 1;
+			}
 		}
 
 		if ($this->crecioHongo == 1){

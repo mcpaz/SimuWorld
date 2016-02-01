@@ -13,10 +13,10 @@ include ("ClassDato.php");
 $classDato = new ClassDato;
 $fichero = new ClassFichero;
 $paisano = new ClassPaisano;
-$mundo = new ClassMundo($paisano,$fichero,$classDato);
+
 $cepa = new ClassCepa($mundo);
 $hongo = new ClassEnfermedad($mundo);
-
+$mundo = new ClassMundo($paisano,$fichero,$classDato,$hongo);
 
 
 
@@ -44,25 +44,6 @@ $contSulfato = 0 ;
 if(isset($_POST["submit"])){
   $numeroCepas = $_POST["numeroCepas"];
 
-
-  /*
-    public $referenciaLluviaUva;
-  public $referenciaTemperaturaUva;
-  public $porcentajeCrecimientoLluviaUva;
-  
-  //datos de referencia hoja
-  public $referenciaLluviaHoja;
-  public $referenciaTemperaturaHoja;
-  public $porcentajeCrecimientoLluviaHoja;
-  
-
-  //datos de referencia hongo
-  public $referenciaLluviaHongo;
-  public $referenciaTemperaturaHongo;
-  public $porcentajeCrecimientoLluviaHongo;*/
-  
-
-
   //datos de uva
   $classDato->setReferenciaLluviaUva($_POST["referenciaLluviaUva"]);
   $classDato->setReferenciaTemperaturaUva($_POST["referenciaTemperaturaUva"]);
@@ -81,8 +62,8 @@ if(isset($_POST["submit"])){
 
 
 
-  
-
+  $duracionSulfato = 0; //lo que dura el sulfato haciendo efecto
+  $rangoTiempoSulfato = 0;
   while($i!=$periodo+24){
     
       //$fecha = $mundo->getFechaActual($i+1870-25);
@@ -98,19 +79,47 @@ if(isset($_POST["submit"])){
 
 
 
-  //algo improvisado para simular que el paisano sulfato cada 15 dias
-      if($contSulfato == 15){
-        $paisano->setSulfatar(1);
-        $contSulfato = 0;  
-      }else{
-        $paisano->setSulfatar(0);     
-      }
+      //algo improvisado para simular que el paisano sulfato cada 15 dias
+      //IMPORTATNEEEEEEEE
+      //me acabao de dar cuenta que si sulfato cada 15 dias seguramente no se reproduzca nunnca el hongo
+      //ya que siempre lo elimino y el sulfatado durara para dias
       
+
+      //NI IDEA COMO SOLUCIONA ESTO, PENSAR MEJOR
+      //EL PROBLEMA ES ALTERNAR LA DURACION DEL SULFATO CON EL TIEMPO EL RANGO DE TIEMPO CADA CUANT OSE SULFATA
+      if($rangoTiempoSulfato < $paisano->getRangoTiempoSulfato()){
+        $paisano->setSulfatar(0);
+        $rangoTiempoSulfato++;
+        $duracionSulfato = 0;
+      }else
+      {   
+       
+        if( $duracionSulfato < $paisano->getDuracionSulfato()){
+          $paisano->setSulfatar(1);
+          $duracionSulfato++;
+        }else
+        {
+          $paisano->setSulfatar(0);
+          $hongo->calcularCrecimientoHongo();
+          $mundo->getInfectarCepa();
+        }
+
+      }
+
+
+
+
+
+
       $sulfato = $paisano->getSulfatar();
       echo "<br>Sulfatado del paisano: ".$sulfato;
        echo "<br>";
+      //supngo que metere este metodo dentro de la estrucutra anterior de if else
+      //ya que si se sulfata no merece la pena calcular el crecimiento 
+      //$hongo->calcularCrecimientoHongo();
 
-      $hongo->calcularCrecimientoHongo();
+      
+      echo "infectar cepa: " . $mundo->getInfectarCepa();
       //DUDAAAAAAAAAAAA
       //ES EL HONGO EL QUE AVISA DE QUE CRECE O ES EL MUNDO?
       $tamanhoHongo = $hongo->getTamanhoHongo();
@@ -118,14 +127,19 @@ if(isset($_POST["submit"])){
       echo "<br>----------------------------------------------<br>";
     
     
-      //$mundo->guardarLog($fecha ,$lluvia,$tamanhoHongo);
+      $mundo->guardarLog($fecha ,$lluvia,$tamanhoHongo);
     $i++;
-    $contSulfato++;
+    
   }
+
 
 }
 
+
 $numeroCepas = 55;
+
+
+
 ?>  
 
 

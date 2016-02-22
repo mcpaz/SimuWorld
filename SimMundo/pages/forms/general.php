@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | General Form Elements</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      
+      <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+           <?php
+              include("../../Class/ClassDato.php");
+                 //inicio sesion para guaradar el bojeto de claseDato
+              session_start();
+
+              //uso esta variable de sesion para controlar que se haya metido los datos del formualrio
+              //para luego comprobar en el ejecucionSimulacion si se metieron o no
+              //y en el caso de no haberse metido no dejar dar al boton de simular.
+              $_SESSION['introducidoDatos'] = 0;
+      
+
+             include("../../menuLateral.html");
+
+          ?>
+        </section>
+        <!-- /.sidebar -->
+      </aside>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            General Form Elements
+            <small>Preview</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Forms</a></li>
+            <li class="active">General Elements</li>
+          </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <!-- left column -->
+           
+            <!-- right column -->
+            <div class="col-md-8">
+              <!-- Horizontal Form -->
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Formulario de parametrización</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                  <div class="box-body">
+
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Número de simulaciones: </label>
+                      <div  class="col-sm-10">
+                        <input type="text" class="form-control" name="numeroSimulaciones" placeholder="Numero de simulaciones" value="3">
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Número de cepas: </label>
+                      <div  class="col-sm-10">
+                        <input type="text" class="form-control" name="numeroCepas" placeholder="Numero de cepas" value="3">
+                      </div>
+                    </div>
+
+                    <label><h4>Referencia de factores ambientales con respecto a la UVA.</h4></label>
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Referencia de litros de lluvia</label>
+                      <div  class="col-sm-10">
+                        <input type="text" class="form-control" name="referenciaLluviaUva" placeholder="Lluvia" value="10">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Referencia temperatura</label>
+                      <div  class="col-sm-10">
+                        <input type="text" class="form-control" name="referenciaTemperaturaUva" placeholder="Temperatura" value="10">
+                      </div>
+                      
+                    </div>
+                    <label><h4>Porcentajes de crecimiento segun los factores ambientales de la UVA</h4></label>
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Porcentaje de crecimiento de la UVA</label>
+                      <div  class="col-sm-10">
+                        <input type="text" class="form-control" name="porcentajeCrecimientoLluviaUva" placeholder="Porcentaje" value="0.4">
+                      </div>
+                    </div>
+
+                    <label><h4>Referencia de factores ambientales con respecto a la HOJA.</h4></label>
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Referencia de litros de lluvia</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="referenciaLluviaHoja" placeholder="Lluvia" value="16">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Referencia temperatura</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="referenciaTemperaturaHoja" placeholder="Temperatura" value="11">
+                      </div>
+                      
+                    </div>
+                    <label><h4>Porcentajes de crecimiento segun los factores ambientales de la HOJA</h4></label>
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Porcentaje de crecimiento de la HOJA</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="porcentajeCrecimientoLluviaHoja" placeholder="Porcentaje" value="0.4">
+                      </div>
+                    </div>
+
+
+                    <label><h4>Referencia de factores ambientales con respecto a la HONGO.</h4></label>
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Referencia de litros de lluvia</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="referenciaLluviaHongo" placeholder="Lluvia" value="3">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Referencia temperatura</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="referenciaTemperaturaHongo" placeholder="Temperatura" value="11">
+                      </div>
+                      
+                    </div>
+                    <label><h4>Porcentajes de crecimiento segun los factores ambientales de la HONGO</h4></label>
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Porcentaje de crecimiento de la HONGO</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="porcentajeCrecimientoLluviaHongo" placeholder="Porcentaje" value="0.4">
+                      </div>
+                    </div>
+                    <br>
+                    <label><h4>Archivo de datos climáticos</h4></label>
+                    <div class="form-group">  
+                        <label for="exampleInputFile" class="col-sm-2 control-label">Archivo</label>
+                        <div class="col-sm-10">
+                          <input type="file" id="exampleInputFile" name="archivo" >
+                          
+                        </div>
+                    </div>
+                  </div>  
+                  <div class="box-footer">
+                    <button type="submit" name="submit" class="btn btn-primary" >Guardar datos</button>
+                  </div> 
+
+                </form>
+              </div><!-- /.box -->
+              <!-- general form elements disabled -->
+             
+            </div><!--/.col (right) -->
+          </div>   <!-- /.row -->
+        </section><!-- /.content -->
+      </div><!-- /.content-wrapper -->
+      <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+          <b>Version</b> 2.3.0
+        </div>
+        <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+      </footer>
+
+     
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class="control-sidebar-bg"></div>
+    </div><!-- ./wrapper -->
+
+    <!-- jQuery 2.1.4 -->
+    <script src="../../plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../../plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../dist/js/demo.js"></script>
+
+
+    <?php
+
+  
+
+
+        
+
+        $claseDato = new ClassDato;
+  
+      if(isset($_POST["submit"])){
+        $_SESSION['introducidoDatos'] = 1;
+        $claseDato->setNumeroCepas($_POST["numeroCepas"]);
+        $claseDato->setNumeroSimulaciones($_POST["numeroSimulaciones"]);
+
+        //datos de uva
+        $claseDato->setReferenciaLluviaUva($_POST["referenciaLluviaUva"]);
+        $claseDato->setReferenciaTemperaturaUva($_POST["referenciaTemperaturaUva"]);
+        $claseDato->setPorcentajeCrecimientoUva($_POST["porcentajeCrecimientoLluviaUva"]);
+
+          //datos de hoja
+        $claseDato->setReferenciaLluviaHoja($_POST["referenciaLluviaHoja"]);
+        $claseDato->setReferenciaTemperaturaHoja($_POST["referenciaTemperaturaHoja"]);
+        $claseDato->setPorcentajeCrecimientoHoja($_POST["porcentajeCrecimientoLluviaHoja"]);
+
+          //datos de hongo
+        $claseDato->setReferenciaLluviaHongo($_POST["referenciaLluviaHongo"]);
+        $claseDato->setReferenciaTemperaturaHongo($_POST["referenciaTemperaturaHongo"]);
+        $claseDato->setPorcentajeCrecimientoHongo($_POST["porcentajeCrecimientoLluviaHongo"]);
+
+
+
+        //Poner decente para comprobar tamaño y  esas cosas del archivo
+
+        $dir_subida = '../../carpetaDatos/';
+        $fichero_subido = $dir_subida . basename($_FILES["archivo"]['name']);
+
+        
+        move_uploaded_file($_FILES['archivo']['tmp_name'], $fichero_subido);
+           
+
+
+        //voy intuir que todos los datos tienen que ser metidos obligatoriament
+        //de esta manera recojo en una varible que los datos han sido metidos 
+        //para poder ejecuar la accion de simulacion en la otra ventana
+
+
+        //cuando se mete un objeto en una variable de sesion hay que meterla con serialize y luego cuando se 
+        //quieran quitar los datos de unserialize(que se usa en la ejecuconSimulacion.php)
+        $_SESSION['claseDato'] = serialize($claseDato);
+
+       
+      }
+
+
+
+      ?>  
+        
+
+  </body>
+</html>

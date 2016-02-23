@@ -114,16 +114,9 @@
                 subtitle: 'in millions of dollars (USD)'
               },
               width: 900,
-              height: 500,
-              axes: {
-              // Adds labels to each axis; they don't have to match the axis names.
-              y: {
-              Temps: {label: 'Temps (Celsius)'},
-              Daylight: {label: 'Daylight'}
-          }
-
+              height: 500
+              
             };
-
             var chart = new google.charts.Line(document.getElementById('linechart_material'));
 
             chart.draw(data, options);

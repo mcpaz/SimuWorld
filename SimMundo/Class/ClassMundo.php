@@ -292,10 +292,12 @@ class ClassMundo
 		return $this->totalPesoUvaPorDia;
 
 	}
+    
+    
+    public function getMesCrecimiento(){
+        return $this->claseDato->getMesCrecimiento();
+    }
 
-	public function getArrayTotalTodasCepasPorDia(){
-		return $arrayPesoCepasPorDia;
-	}
 
 
 	public function mainWorld(){
@@ -339,6 +341,8 @@ class ClassMundo
                 $arrayCepas[$ii] = new ClassCepa;
                 $arrayEnfermedades[$ii] = new ClassEnfermedad;
             }
+            
+            print_r($this->getMesCrecimiento());
             //DUDADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             //CUANTEAS VECES TNEGO QUE CALCULAR SI SE INFECTA O NO LA CEPA?
             //PORQUE SI CALCULO DE CADA VEZ AL FINAL ES MUY POSIBLE QUE TODAS LAS CEPAS ACABEN INFECTADAS

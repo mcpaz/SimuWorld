@@ -11,6 +11,8 @@ class ClassDato
 	
 	public $numeroCepas; // numero de cepass que se quiere que se simule
 	public $numeroSimulaciones; // numero de veces a simular
+    
+    public $mesCrecimiento;
 
 	//datos de referencia uva
 	public $referenciaLluviaUva;
@@ -134,7 +136,7 @@ class ClassDato
 		$this->numeroCepas = $num;
 	}
 
-	//metodos para el numer ode vees que se va simular
+	//metodos para el numero de veces que se va simular
 
 	public function getNumeroSimulaciones(){
 		return $this->numeroSimulaciones;
@@ -144,8 +146,19 @@ class ClassDato
 
 		$this->numeroSimulaciones = $num;
 	}
+    
+    
+    //guardo el mes en que va empezar el crecimiento de la uva
+    
+    public function getMesCrecimiento(){
+        return $this->mesCrecimiento;
+    }
 
-
+    
+    public function setMesCrecimiento($mc){
+        $this->mesCrecimiento = $mc;
+    }
+    
 }
 
 

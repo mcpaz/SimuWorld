@@ -330,7 +330,7 @@ class ClassMundo
   		$refTemperaturaHongo = $this->getReferenciaTemperaturaHongo();
   		$porcentajeCreHongo = $this->getPorcentajeCrecimientoHongo();
 
-  		
+  		 
 
 		$contador = 0;//2ª variable de control para que no este siempre calculando si infeta o no
 
@@ -349,7 +349,7 @@ class ClassMundo
                 $arrayEnfermedades[$ii] = new ClassEnfermedad;
             }
             
-
+  
             //DUDADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             //CUANTEAS VECES TNEGO QUE CALCULAR SI SE INFECTA O NO LA CEPA?
             //PORQUE SI CALCULO DE CADA VEZ AL FINAL ES MUY POSIBLE QUE TODAS LAS CEPAS ACABEN INFECTADAS
@@ -362,8 +362,9 @@ class ClassMundo
                 $humedad = $this->gethumedadMediaFichero($i+640-25);
                 $lluvia = $this->getLluviaMediaFichero($i+1870-25);
 
-                $fecha = $this->getFechaActual($i);
-                            
+                $fechaFicheroActual = $this->getFechaActual($i);//cojo la fecha que viene del fichero de datos climaticos
+                          
+              
                 /*echo "<br> Fecha1: " . $fecha ;
                 echo "<br> lluvia:  " . $lluvia ;
                 echo "<br> temperatura:  " . $temperatura ;
@@ -377,57 +378,72 @@ class ClassMundo
                 $_SESSION["lluvia"][$k]= $lluvia;
                 $_SESSION["humedad"][$k] = $humedad;
 
-            
-
-                for ($j =0; $j  < $numCepas; $j ++) { 
-                    $pesoUva = $arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
-                    
-                    //echo "<br>peso uva:" .$arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
-                    $tamanoHoja = $arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja);
-                    //echo "<br>tamaño de hoja:" .$arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja);
-                    
-                    //mientras esto sea 0 es que no hay condiciones optimas para que crezca el hongo
-                    //y entonces se calcula su probabilidad pasandole la humedad para ver si se puede desarrolar o no
-                    if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 0){					
-                        $arrayEnfermedades[$j]->calcularProbabilidadInfectar($humedad);
-                    }
-
-                    //aqui ya es optimo xk es igual 1 entonces se el hongo se pone a infectar a la cepa
-                    if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 1){
-                        if($contador < $numCepas ){
-                            $infectar = $arrayEnfermedades[$j]->getInfectarCepa();
-                            //echo "<br>esta infectado: ". $infectar;
-                            $arrayCepas[$j]->setTenerHongo($infectar);
-                            //echo "<br>esta infectado desde cepa: " . $arrayCepas[$j]->getTenerHongo();
-                            $contador++;
-                        }
-                    }else{
-                        $infectar = -1;
-                    }
-
-                    //esta condicion me sirve para calcular solo el crecimiento de hongo de solo aquellas cepas
-                    // que han sido infectadas
-                    if($arrayCepas[$j]->getTenerHongo() == 1){
-                        $tamanhoHongo = $arrayEnfermedades[$j]->calcularCrecimientoHongo($lluvia,$temperatura,$refLluviaHongo,$refTemperaturaHongo,$porcentajeCreHongo);
-                        //echo "<br>Tamanho del hongo:" . $tamanhoHongo;
-                    }else{
-                        $tamanhoHongo = 0;
-                    }
-                    //guardar los datos en e LOG
-                    $this->guardarLog($fecha,$humedad,$lluvia,$temperatura,$pesoUva,$tamanoHoja, $infectar,$tamanhoHongo);
-
-                    //calculo el peso de la cepas por dia y los meto en un array solo si el numero de simualciones es inferios a 2
-                    if($numeroSimulaciones >1){
-                        
-                        $arrayPesoCepasPorDia[$j] = $this->calcularTamanoTotalTodasCepasPorDia($arrayCepas);  
-                         
-                    }
-                    
-                //fin fbucle numCepas
+                $fechaFicheroActual = date_create($fechaFicheroActual);
+                $fechaInicialCrecimiento = date_create($fechaInicialCrecimiento);
+                
+                
+                print_r($fechaFicheroActual);
+                                
+                print_r($fechaInicialCrecimiento);
+                if ($fechaFicheroActual > $fechaInicialCrecimiento){
+                    echo "mierda";
                 }
+                die();
+            
+                if($fechaFicheroActual > $fechaInicialCrecimiento && $fechaFicheroActual < $fechaFinCrecimiento ){
+                    echo "si";
+                    for ($j =0; $j  < $numCepas; $j ++) { 
+                        $pesoUva = $arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
+                        
+                        //echo "<br>peso uva:" .$arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
+                        $tamanoHoja = $arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja);
+                        //echo "<br>tamaño de hoja:" .$arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja);
+                        
+                        //mientras esto sea 0 es que no hay condiciones optimas para que crezca el hongo
+                        //y entonces se calcula su probabilidad pasandole la humedad para ver si se puede desarrolar o no
+                        if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 0){					
+                            $arrayEnfermedades[$j]->calcularProbabilidadInfectar($humedad);
+                        }
+
+                        //aqui ya es optimo xk es igual 1 entonces se el hongo se pone a infectar a la cepa
+                        if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 1){
+                            if($contador < $numCepas ){
+                                $infectar = $arrayEnfermedades[$j]->getInfectarCepa();
+                                //echo "<br>esta infectado: ". $infectar;
+                                $arrayCepas[$j]->setTenerHongo($infectar);
+                                //echo "<br>esta infectado desde cepa: " . $arrayCepas[$j]->getTenerHongo();
+                                $contador++;
+                            }
+                        }else{
+                            $infectar = -1;
+                        }
+
+                        //esta condicion me sirve para calcular solo el crecimiento de hongo de solo aquellas cepas
+                        // que han sido infectadas
+                        if($arrayCepas[$j]->getTenerHongo() == 1){
+                            $tamanhoHongo = $arrayEnfermedades[$j]->calcularCrecimientoHongo($lluvia,$temperatura,$refLluviaHongo,$refTemperaturaHongo,$porcentajeCreHongo);
+                            //echo "<br>Tamanho del hongo:" . $tamanhoHongo;
+                        }else{
+                            $tamanhoHongo = 0;
+                        }
+                        //guardar los datos en e LOG
+                        $this->guardarLog($fecha,$humedad,$lluvia,$temperatura,$pesoUva,$tamanoHoja, $infectar,$tamanhoHongo);
+
+                        //calculo el peso de la cepas por dia y los meto en un array solo si el numero de simualciones es inferios a 2
+                        if($numeroSimulaciones >1){
+                            
+                            $arrayPesoCepasPorDia[$j] = $this->calcularTamanoTotalTodasCepasPorDia($arrayCepas);  
+                            
+                        }
+                        
+                    //fin fbucle numCepas
+                    }
 
                 $this->guardarLogSeparador();
-
+                //fin de la condicion de fechas
+                }else {
+                    echo "no";
+                }
                    
             //fin de bucle de periodo	
             }

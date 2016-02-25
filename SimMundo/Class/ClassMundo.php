@@ -294,16 +294,23 @@ class ClassMundo
 	}
     
     
-    public function getMesCrecimiento(){
-        return $this->claseDato->getMesCrecimiento();
+    public function getFechaIniCrecimiento(){
+        return $this->claseDato->getFechaInicio();
     }
 
+    
+    public function getFechaFinCrecimiento(){
+        return $this->claseDato->getFechaFin();
+    }
 
 
 	public function mainWorld(){
 
 
 		$this->cabeceraLog();
+
+        $fechaInicialCrecimiento = $this->getFechaIniCrecimiento();
+        $fechaFinCrecimiento = $this->getFechaFinCrecimiento();
 
 		$numCepas = $this->getNumeroCepas();
         $numeroSimulaciones = $this->getNumeroSimulaciones();
@@ -342,7 +349,7 @@ class ClassMundo
                 $arrayEnfermedades[$ii] = new ClassEnfermedad;
             }
             
-            print_r($this->getMesCrecimiento());
+
             //DUDADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             //CUANTEAS VECES TNEGO QUE CALCULAR SI SE INFECTA O NO LA CEPA?
             //PORQUE SI CALCULO DE CADA VEZ AL FINAL ES MUY POSIBLE QUE TODAS LAS CEPAS ACABEN INFECTADAS

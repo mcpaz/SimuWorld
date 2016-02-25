@@ -13,6 +13,8 @@ class ClassDato
 	public $numeroSimulaciones; // numero de veces a simular
     
     public $mesCrecimiento;
+    public $fechaInicio;
+    public $fechaFin; 
 
 	//datos de referencia uva
 	public $referenciaLluviaUva;
@@ -150,15 +152,26 @@ class ClassDato
     
     //guardo el mes en que va empezar el crecimiento de la uva
     
-    public function getMesCrecimiento(){
-        return $this->mesCrecimiento;
-    }
-
-    
-    public function setMesCrecimiento($mc){
-        $this->mesCrecimiento = $mc;
+    public function getFechaInicio(){
+        return $this->fechaInicio;
     }
     
+    
+    public function getFechaFin(){
+        return $this->fechaFin;
+    }
+    
+    //funcion para recoger las fechas quie vienen juntas como un string y hay que separlas
+    public function cortarFechasRango($fec){
+       
+       $fecha = explode("-",$fec);
+       $this->fechaInicio = $fecha[0];
+       $this->fechaFin = $fecha[1];        
+       
+    }
+    
+    
+//fin de la clase    
 }
 
 

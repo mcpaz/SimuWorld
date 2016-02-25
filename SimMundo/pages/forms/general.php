@@ -95,12 +95,12 @@
 
                     <!-- Date range -->
                   <div class="form-group">
-                    <label class="col-sm-2 control-label">Date range:</label>
+                    <label class="col-sm-2 control-label">Rango de crecimiento:</label>
                     <div class="input-group">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input type="text" class="form-control pull-right" id="reservation">
+                      <input type="text" class="form-control pull-right" id="reservation" name = "rangoMesCrecimiento">
                     </div><!-- /.input group -->
                   </div><!-- /.form group -->
 
@@ -109,13 +109,6 @@
                       <label  class="col-sm-2 control-label">Número de cepas: </label>
                       <div  class="col-sm-10">
                         <input type="text" class="form-control" name="numeroCepas" placeholder="Numero de cepas" value="3">
-                      </div>
-                    </div>
-                    
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Mes de crecimiento: </label>
-                      <div  class="col-sm-10">
-                        <input type="text" class="form-control" name="mesCrecimiento" placeholder="Mes de crecimiento" value="3">
                       </div>
                     </div>
 
@@ -242,10 +235,11 @@
         $claseDato = new ClassDato;
   
       if(isset($_POST["submit"])){
+          
         $_SESSION['introducidoDatos'] = 1;
         $claseDato->setNumeroCepas($_POST["numeroCepas"]);
         $claseDato->setNumeroSimulaciones($_POST["numeroSimulaciones"]);
-        $claseDato->setMesCrecimiento($_POST["mesCrecimiento"]);
+        $claseDato->cortarFechasRango($_POST["rangoMesCrecimiento"]);
 
         //datos de uva
         $claseDato->setReferenciaLluviaUva($_POST["referenciaLluviaUva"]);
@@ -283,7 +277,6 @@
         //quieran quitar los datos de unserialize(que se usa en la ejecuconSimulacion.php)
         $_SESSION['claseDato'] = serialize($claseDato);
 
-       
       }
 
 

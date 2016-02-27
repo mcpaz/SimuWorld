@@ -309,8 +309,13 @@ class ClassMundo
 
 		$this->cabeceraLog();
 
-        $fechaInicialCrecimiento = $this->getFechaIniCrecimiento();
-        $fechaFinCrecimiento = $this->getFechaFinCrecimiento();
+         //recojo los fechas de crecimiento de la cepa que viene de claseDato
+        $fechaInicialCrecimiento = date_create($this->getFechaIniCrecimiento());
+        $fechaFinCrecimiento = date_create($this->getFechaFinCrecimiento());
+	
+		//$fechaInicialCrecimiento = new DateTime($this->getFechaIniCrecimiento());
+		//$fechaFinCrecimiento =  new DateTime($this->getFechaFinCrecimiento());
+
 
 		$numCepas = $this->getNumeroCepas();
         $numeroSimulaciones = $this->getNumeroSimulaciones();
@@ -362,36 +367,20 @@ class ClassMundo
                 $humedad = $this->gethumedadMediaFichero($i+640-25);
                 $lluvia = $this->getLluviaMediaFichero($i+1870-25);
 
-                $fechaFicheroActual = $this->getFechaActual($i);//cojo la fecha que viene del fichero de datos climaticos
-                          
-              
-                /*echo "<br> Fecha1: " . $fecha ;
-                echo "<br> lluvia:  " . $lluvia ;
-                echo "<br> temperatura:  " . $temperatura ;
-                echo "<br> humedad:  " . $humedad ;
+                $fechaFicheroActual = date_create(str_replace("/", "-",$this->getFechaActual($i)));//cojo la fecha que viene del fichero de datos climaticos
 
-                */
         
+
+
                 //GUARDO LOS DATOS EN SESION DE ARRAY PAR LUEGO PASARLOS AL JAVASCRIPT
                 //QUE CREA LAS GRAFICAS
                 $_SESSION["temperatura"][$k] = $temperatura;
                 $_SESSION["lluvia"][$k]= $lluvia;
                 $_SESSION["humedad"][$k] = $humedad;
-
-                $fechaFicheroActual = date_create($fechaFicheroActual);
-                $fechaInicialCrecimiento = date_create($fechaInicialCrecimiento);
-                
-                
-                print_r($fechaFicheroActual);
-                                
-                print_r($fechaInicialCrecimiento);
-                if ($fechaFicheroActual > $fechaInicialCrecimiento){
-                    echo "mierda";
-                }
-                die();
+        
             
-                if($fechaFicheroActual > $fechaInicialCrecimiento && $fechaFicheroActual < $fechaFinCrecimiento ){
-                    echo "si";
+                if($fechaInicialCrecimiento < $fechaFicheroActual && $fechaFinCrecimiento > $fechaFicheroActual ){
+
                     for ($j =0; $j  < $numCepas; $j ++) { 
                         $pesoUva = $arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
                         
@@ -442,7 +431,7 @@ class ClassMundo
                 $this->guardarLogSeparador();
                 //fin de la condicion de fechas
                 }else {
-                    echo "no";
+
                 }
                    
             //fin de bucle de periodo	
@@ -451,7 +440,7 @@ class ClassMundo
           //hago esto porque asi guardo eltotal por cada iteracion
           $arrayPesoCepasTotal[$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
           $this->totalPesoUva = 0; //hay que volver inicializarla a 0 para que no acumule los valores
-          
+
         //fin bucle numeroSimulaciones
         }
 		

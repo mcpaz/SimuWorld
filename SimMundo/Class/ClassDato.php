@@ -165,8 +165,8 @@ class ClassDato
     public function cortarFechasRango($fec){
        
        $fecha = explode("-",$fec);
-       $this->fechaInicio = $fecha[0];
-       $this->fechaFin = $fecha[1];        
+       $this->fechaInicio = str_replace('/','-',$fecha[0]);
+       $this->fechaFin =str_replace('/','-',$fecha[1]);       
        
     }
     

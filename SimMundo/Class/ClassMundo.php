@@ -23,6 +23,7 @@ class ClassMundo
 
     public $totalPesoUva; //variablepara guardar el total del crecimiento de la uva en peso por iteracion
     public $totalPesoUvaPorDia; //variablepara guardar el total del crecimiento de la uva por dia de peso por dia en casda iteracion
+    public $totalTamanoTotalHongo;//variablepara guardar el total del crecimiento del hongo por iteracion
     
 
 	public $tipoTierra; // tipo de tierra que es determiante en la produccion y calidad del vino
@@ -292,6 +293,20 @@ class ClassMundo
 		return $this->totalPesoUvaPorDia;
 
 	}
+
+
+	public function calcularTotalTamanoHongo($arrayEnfermedades){
+
+
+		for ($i=0; $i < sizeof($arrayEnfermedades); $i++) { 
+
+			$this->totalTamanoTotalHongo=$this->totalTamanoTotalHongo +  $arrayEnfermedades[$i]->getTamanhoHongo();
+
+		}
+
+		return $this->totalTamanoTotalHongo;
+
+	}
     
     
     public function getFechaIniCrecimiento(){
@@ -322,6 +337,7 @@ class ClassMundo
 
 		$arrayCepas = array();		
         $arrayPesoCepasTotal = array();
+        $arrayTamanoHongo = array();
 
 		$refLluviaUva = $this->getReferenciaLluviaUva();
   		$refTemperaturaUva = $this->getReferenciaTemperaturaUva();
@@ -338,13 +354,6 @@ class ClassMundo
   		 
 
 		$contador = 0;//2ª variable de control para que no este siempre calculando si infeta o no
-
-		/*while($i!=$periodo+24){
-    $i=24;
-      //$fecha = $mundo->getFechaActual($i+1870-25);
-      $lluvia = $mundo->getLluviaMediaFichero($i+1870-25);
-      $temperatura = $mundo->getTemperaturaMediaFichero($i);*/
-
 
 
         for($z=0;$z <  $numeroSimulaciones; $z++ ){
@@ -392,13 +401,17 @@ class ClassMundo
                         //y entonces se calcula su probabilidad pasandole la humedad para ver si se puede desarrolar o no
                         if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 0){					
                             $arrayEnfermedades[$j]->calcularProbabilidadInfectar($humedad);
-                        }
 
-                        //aqui ya es optimo xk es igual 1 entonces se el hongo se pone a infectar a la cepa
+                        }
+                     
+                        //aqui ya es optimo porque es igual 1 entonces se el hongo se pone a infectar a la cepa
                         if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 1){
-                            if($contador < $numCepas ){
+                        	if( $arrayCepas[$j]->getTenerHongo() == 0 ){
+                            	//echo "<br>empieza la infeccion " . $j;
+
                                 $infectar = $arrayEnfermedades[$j]->getInfectarCepa();
-                                //echo "<br>esta infectado: ". $infectar;
+                                
+                                //echo "<br>esta infectado? : ". $infectar;
                                 $arrayCepas[$j]->setTenerHongo($infectar);
                                 //echo "<br>esta infectado desde cepa: " . $arrayCepas[$j]->getTenerHongo();
                                 $contador++;
@@ -408,18 +421,24 @@ class ClassMundo
                         }
 
                         //esta condicion me sirve para calcular solo el crecimiento de hongo de solo aquellas cepas
-                        // que han sido infectadas
+                        // que han sido infectadas y ademas para restar al peso total del racimo el tamano del hongo
+
                         if($arrayCepas[$j]->getTenerHongo() == 1){
+                        	
                             $tamanhoHongo = $arrayEnfermedades[$j]->calcularCrecimientoHongo($lluvia,$temperatura,$refLluviaHongo,$refTemperaturaHongo,$porcentajeCreHongo);
+                            //echo "<br>peso uva actual :" . $arrayCepas[$j]->getPesoRacimo();
+                            $arrayCepas[$j]->restarTamanoHongoPesoUva($tamanhoHongo);
+							//echo "<br>peso uva despues de la resta :" . $arrayCepas[$j]->getPesoRacimo();
                             //echo "<br>Tamanho del hongo:" . $tamanhoHongo;
                         }else{
                             $tamanhoHongo = 0;
+
                         }
                         //guardar los datos en e LOG
                         $this->guardarLog($fecha,$humedad,$lluvia,$temperatura,$pesoUva,$tamanoHoja, $infectar,$tamanhoHongo);
 
                         //calculo el peso de la cepas por dia y los meto en un array solo si el numero de simualciones es inferios a 2
-                        if($numeroSimulaciones >1){
+                        if($numeroSimulaciones == 1){
                             
                             $arrayPesoCepasPorDia[$j] = $this->calcularTamanoTotalTodasCepasPorDia($arrayCepas);  
                             
@@ -430,18 +449,23 @@ class ClassMundo
 
                 $this->guardarLogSeparador();
                 //fin de la condicion de fechas
-                }else {
-
                 }
-                   
             //fin de bucle de periodo	
             }
           
           //hago esto porque asi guardo eltotal por cada iteracion
           $arrayPesoCepasTotal[$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
+          $arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
           $this->totalPesoUva = 0; //hay que volver inicializarla a 0 para que no acumule los valores
-
+          $this->totalTamanoTotalHongo = 0;
+          echo "<br>---------------------------------------------------------------FIN DE ITERACION";
         //fin bucle numeroSimulaciones
+        }
+
+      
+        for ($i=0; $i < sizeof($arrayPesoCepasTotal); $i++) { 
+        	echo "<br>Total de la cepa " . $i . ": " .$arrayPesoCepasTotal[$i];
+        	echo "<br>Total de la hongo " . $i . ": " .$arrayTamanoHongo[$i];
         }
 		
 	}

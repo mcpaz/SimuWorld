@@ -22,7 +22,7 @@ class ClassEnfermedad{
 	public $probabilidadInfeccionCepa = 0.0;
 	
 
-	public $tamanoHongo = 1;//un valor inicial por darle uno
+	public $tamanoHongo = 0.1;//un valor inicial por darle uno
 	public $inicioCrecimientoHongo = 0;//hay que tener en cuenta esta variable para ver si crcio o no elhongo
 		// ya que una vez que crezca por las codiciones optimas puede seguir creciendo aunque estas no 
 		//sean tan buenas.

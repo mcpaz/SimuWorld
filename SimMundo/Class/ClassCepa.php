@@ -16,7 +16,7 @@ class ClassCepa{
 	private $numerohojas = 7;//lo tomo como ejemplo desde el principio despues del deshoje
 	private $tamanoHojas;
 	private $numRacimos;
-	private $pesoRacimo;
+	private $pesoRacimo = 0.1;
 
 	private $tenerHongo = 0; //guarda si tiene o no hongo
 	private $fechaSulfatado;
@@ -114,6 +114,18 @@ class ClassCepa{
 		$this->fechaSulfatado=$i;		
 	}
 
+
+
+	//metodo apra restarle al peso del racimo de la uva el tamanho del hongo
+
+	public function restarTamanoHongoPesoUva($tamanhoHongo){
+
+		$this->pesoRacimo = $this->pesoRacimo - $tamanhoHongo;
+	}
+
+
+
+	//funciones para calcular el crecimiento tanto de la hoja como del peso de la uva
 
 	public function calCrecPesoRacimo($lluvia,$temperatura,$refLluvia,$refTemp,$crecimiento){
 		

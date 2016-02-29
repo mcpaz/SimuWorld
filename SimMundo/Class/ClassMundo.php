@@ -375,8 +375,8 @@ class ClassMundo
                 $temperatura = $this->getTemperaturaMediaFichero($i);
                 $humedad = $this->gethumedadMediaFichero($i+640-25);
                 $lluvia = $this->getLluviaMediaFichero($i+1870-25);
-
-                $fechaFicheroActual = date_create(str_replace("/", "-",$this->getFechaActual($i)));//cojo la fecha que viene del fichero de datos climaticos
+                $fechaLog = $this->getFechaActual($i); //esta asignacion para guardar la fecha en tipo string
+                $fechaFicheroActual = date_create(str_replace("/", "-",$this->getFechaActual($i)));//cojo la fecha que viene del fichero de datos climaticos y la paso a date para poder comparalar con otra fecha
 
         
 
@@ -435,7 +435,7 @@ class ClassMundo
 
                         }
                         //guardar los datos en e LOG
-                        $this->guardarLog($fecha,$humedad,$lluvia,$temperatura,$pesoUva,$tamanoHoja, $infectar,$tamanhoHongo);
+                        $this->guardarLog($fechaLog,$humedad,$lluvia,$temperatura,$pesoUva,$tamanoHoja, $infectar,$tamanhoHongo);
 
                         //calculo el peso de la cepas por dia y los meto en un array solo si el numero de simualciones es inferios a 2
                         if($numeroSimulaciones == 1){

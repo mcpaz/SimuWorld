@@ -93,9 +93,58 @@
                       </div>
                     </div>
 
+
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Número de sulfatos: </label>
+                      <div  class="col-sm-10">
+                        <input id="numeroSulfatos" type="text" class="form-control" name="numeroSulfatos" placeholder="Numero de sulfatos" value="2" onblur="generarDiasSulfato()">
+                      </div>
+                    </div>
+
+
+                    <script>
+                    function generarDiasSulfato() {
+                            $('#numeroSulfatos').append("Actualidad jQuery");  
+                       
+                    
+                     
+                      
+                    }
+                
+                    </script>
+
+
+                    <script>
+                    function generarDiasSulfato() {
+                        var cont = document.getElementById("numeroSulfatos").value;
+                        cont = parseInt(cont);
+                       
+                        for (var i=0 ;i < cont; i++){
+                           alert(i);
+                          document.getElementById("fechasSulfatos"+i).innerHTML = ('<div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i> </div><input type="text" class="form-control" data-inputmask="\'alias\': \'dd/mm/yyyy\'" data-mask> </div>');  
+                          alert(i);
+                        };
+                        
+                     
+                      
+                    }
+                
+                    </script>
+
+
+                    </div>
+
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Número de días de efecto: </label>
+                      <div  class="col-sm-10">
+                        <input type="text" class="form-control" name="diasEfectoSulfato" placeholder="Número de días de efecto:" value="30">
+                      </div>
+                    </div>
+
                     <!-- Date range -->
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Rango de crecimiento:</label>
+                    <div class="col-sm-10">
                     <div class="input-group">
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
@@ -103,6 +152,7 @@
                       <input type="text" class="form-control pull-right"  id="reservation" name = "rangoMesCrecimiento">
                     </div><!-- /.input group -->
                   </div><!-- /.form group -->
+                  </div>
 
 
                     <div class="form-group">

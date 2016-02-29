@@ -364,9 +364,7 @@ class ClassMundo
             }
             
   
-            //DUDADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-            //CUANTEAS VECES TNEGO QUE CALCULAR SI SE INFECTA O NO LA CEPA?
-            //PORQUE SI CALCULO DE CADA VEZ AL FINAL ES MUY POSIBLE QUE TODAS LAS CEPAS ACABEN INFECTADAS
+  
             for ($i=24,$k=0; $i < $this->getPeriodoFichero() + 24 ; $i++,$k++) { 
                 
                 

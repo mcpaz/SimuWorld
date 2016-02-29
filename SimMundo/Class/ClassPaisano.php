@@ -7,8 +7,8 @@ class ClassPaisano
 {
 	
 	public $sulfatar;
-	public $duracionSulfato = 20;
-	public $rangoTiempoSulfato = 50;
+	public $duracionSulfato;
+	public $rangoTiempoSulfato;
 
 	function __construct()
 	{
@@ -43,6 +43,13 @@ class ClassPaisano
  	}
 
 
+ 	public function setDuracionSulfato($diasSulfato){
+ 		$this->duracionSulfato = $diasSulfato;
+ 	}
+
+ 	public function getDuracionSulfato(){
+ 		return $this->diasDuracionSulfato;
+ 	}
 
 }
 

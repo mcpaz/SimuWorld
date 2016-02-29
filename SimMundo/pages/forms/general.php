@@ -119,20 +119,49 @@
                         var cont = document.getElementById("numeroSulfatos").value;
                         cont = parseInt(cont);
                        
-                        for (var i=0 ;i < cont; i++){
-                           alert(i);
-                          document.getElementById("fechasSulfatos"+i).innerHTML = ('<div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i> </div><input type="text" class="form-control" data-inputmask="\'alias\': \'dd/mm/yyyy\'" data-mask> </div>');  
-                          alert(i);
-                        };
-                        
-                     
+                      var alias = "alias";
+                      var fech = " dd/mm/yyyy";
+                      for(var i=0 ;i < cont; i++){
+                        $("#fechasSulfatos").append('<div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i> </div><input type="text" name="sulfatdas'+i+'"class="form-control" data-inputmask="\'+alias+\': \'+fech+\'" data-mask> </div>');
+                      }
                       
                     }
                 
                     </script>
 
 
+                    <div class="form-group" id="fechasSulfatos">
+                      
                     </div>
+
+                    <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" name="fechaSulfato0"  class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask value="01/06/2015">
+                    </div><!-- /.input group -->
+                  </div><!-- /.form group -->
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" name="fechaSulfato1"  class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask value="15/07/2015">
+                    </div><!-- /.input group -->
+                  </div><!-- /.form group -->
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                      </div>
+                      <input type="text" name="fechaSulfato2"  class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask value="30/08/2015">
+                    </div><!-- /.input group -->
+                  </div><!-- /.form group -->
+
+
 
                     <div class="form-group">
                       <label  class="col-sm-2 control-label">Número de días de efecto: </label>
@@ -281,7 +310,7 @@
 
 
         
-
+        $calsePaisano = new clasePaisano;
         $claseDato = new ClassDato;
   
       if(isset($_POST["submit"])){
@@ -306,7 +335,15 @@
         $claseDato->setReferenciaTemperaturaHongo($_POST["referenciaTemperaturaHongo"]);
         $claseDato->setPorcentajeCrecimientoHongo($_POST["porcentajeCrecimientoLluviaHongo"]);
 
+        $arrayFechasSulfato = array();
+        $arrayFechasSulfato[0] = $_POST["fechaSulfato0"];
+        $arrayFechasSulfato[1] = $_POST["fechaSulfato1"];
+        $arrayFechasSulfato[2] = $_POST["fechaSulfato2"];
 
+        $clasePaisano->setFechasSulfato($arrayFechasSulfato);
+
+
+        $clasePaisano->setDuracionSulfato($_POST["diasEfectoSulfato"]);
 
         //Poner decente para comprobar tamaño y  esas cosas del archivo
 
@@ -360,7 +397,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
     <!-- Page script -->
-    <script>
+<script>
       $(function () {
         //Initialize Select2 Elements
         $(".select2").select2();
@@ -368,14 +405,14 @@
         //Datemask dd/mm/yyyy
         $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
         //Datemask2 mm/dd/yyyy
-        $("#datemask2").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+        $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
         //Money Euro
         $("[data-mask]").inputmask();
 
         //Date range picker
         $('#reservation').daterangepicker();
         //Date range picker with time picker
-        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'DD/MM/YYYY h:mm A'});
+        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/ZZ/YYYY h:mm A'});
         //Date range as a button
         $('#daterange-btn').daterangepicker(
             {

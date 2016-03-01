@@ -146,7 +146,7 @@ class ClassCepa{
 		$porcentajeCrecimientoUva = $crecimiento;
 		
 		$aumento = ($lluvia*$temperatura*$porcentajeCrecimientoUva)/($referenciaLluviaUva*$referenciaTemperaturaUva);
-
+		
 		//sumo al peso del racimo que hay lo que aumenta
 		$this->pesoRacimo = $this->pesoRacimo + $aumento;
 		//voy decir que este crecimeinto realmente es el aumento de peso de la uva(racimo)

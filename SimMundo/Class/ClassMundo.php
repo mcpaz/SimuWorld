@@ -334,6 +334,9 @@ class ClassMundo
 
 		$numCepas = $this->getNumeroCepas();
         $numeroSimulaciones = $this->getNumeroSimulaciones();
+        //guardo en sesion tambien el numero de simulaciones porque me hace falta pra un bucle de carga de datos
+        //en la venta de graficas
+        $_SESSION["numeroSimulaciones"] = $numeroSimulaciones;
 
 		$arrayCepas = array();		
         $arrayPesoCepasTotal = array();
@@ -384,8 +387,7 @@ class ClassMundo
                 $_SESSION["temperatura"][$k] = $temperatura;
                 $_SESSION["lluvia"][$k]= $lluvia;
                 $_SESSION["humedad"][$k] = $humedad;
-        
-            
+
                 if($fechaInicialCrecimiento < $fechaFicheroActual && $fechaFinCrecimiento > $fechaFicheroActual ){
 
                     for ($j =0; $j  < $numCepas; $j ++) { 
@@ -452,21 +454,23 @@ class ClassMundo
             }
           
           //hago esto porque asi guardo eltotal por cada iteracion
-          //$arrayPesoCepasTotal[$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
-          //$arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
-          $_SESSION["pesoCepasTotal"][$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
-          $_SESSION["tamanoHongo"][$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
+          $arrayPesoCepasTotal[$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
+          $arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
+         /* $_SESSION["pesoCepasTotal"][$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
+          $_SESSION["tamanoHongo"][$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);*/
+
+         
           $this->totalPesoUva = 0; //hay que volver inicializarla a 0 para que no acumule los valores
           $this->totalTamanoTotalHongo = 0;
           echo "<br>---------------------------------------------------------------FIN DE ITERACION";
         //fin bucle numeroSimulaciones
         }
 
-      
-        /*for ($i=0; $i < sizeof($arrayPesoCepasTotal); $i++) { 
+      	
+        for ($i=0; $i < sizeof($arrayPesoCepasTotal); $i++) { 
         	echo "<br>Total de la cepa " . $i . ": " .$arrayPesoCepasTotal[$i];
         	echo "<br>Total de la hongo " . $i . ": " .$arrayTamanoHongo[$i];
-        }*/
+        }
 		
 	}
 

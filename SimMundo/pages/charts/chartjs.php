@@ -63,15 +63,21 @@
       //defino las varaibles para las graficas de los datos climaticos
 
         var periodo = <?php echo $_SESSION["periodo"] ?>;
+        var numeroSimulaciones = <?php echo $_SESSION["numeroSimulaciones"] ?>;
+
         var datosGraficaTempe = [];
         var datosGraficaLluvia = [];
         var datosGraficaHumedad =[];
 
+        //datos de la cepa y hongo
+        var datosGraficapesoCepasTotal =[];
+        var datosGraficatamanoHongo =[];
       </script>
 
       <?php      
       
         $i=0;
+        $j=0;
      
         while($i<$_SESSION["periodo"]){     
           
@@ -81,21 +87,52 @@
             echo "<script>datosGraficaHumedad[$i] = " . (float)$_SESSION["humedad"][$i] . ";</script>";    
           $i++;
         }    
+
+        while ( $j < $_SESSION["numeroSimulaciones"]) {
+          echo "<script>datosGraficapesoCepasTotal[$j] = " .(float) $_SESSION['pesoCepasTotal'][$j] . ";</script>";
+          echo "<script>datosGraficatamanoHongo[$j] = " .(float) $_SESSION['tamanoHongo'][$j] . ";</script>";
+          $j++;
+        }
+
+
+
           
       ?>  
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
       <script type="text/javascript">
+
+          
+
+
+
        
           google.load('visualization', '1.1', {packages: ['line']});
-          google.setOnLoadCallback(graficaDatosClimaticos);
-          google.setOnLoadCallback(graficaCepaHongo);
+          //google.setOnLoadCallback(graficaDatosClimaticos);
+          google.setOnLoadCallback(generarGraficas);
          
+
+         /*function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+              if ((new Date().getTime() - start) > milliseconds){
+                break;
+              }
+            }
+          }*/
+
+          function generarGraficas(){
+            graficaDatosClimaticos();
+            alert();
+            graficaCepaHongo();
+            alert();
+          }
+
 
           function graficaDatosClimaticos() {
             var i = 0;
             var data = new google.visualization.DataTable();
-            data.addColumn('number', 'Day');
+            data.addColumn('number', 'day');
             data.addColumn('number', 'temperatura');
             data.addColumn('number', 'lluvia');
             data.addColumn('number', 'humedad');
@@ -104,7 +141,7 @@
 
        
 
-            for (var i =0; i < periodo; i++) {
+            for (var i =0; i < numeroSimulaciones; i++) {
               data.addRows([  [i, datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
             };
 
@@ -124,20 +161,23 @@
             chart.draw(data, options);
           }
 
+
+
+
           function graficaCepaHongo() {
             var i = 0;
             var data = new google.visualization.DataTable();
             data.addColumn('number', 'Day');
-            data.addColumn('number', 'temperatura');
-            data.addColumn('number', 'lluvia');
-            data.addColumn('number', 'humedad');
+            data.addColumn('number', 'CEPA');
+            data.addColumn('number', 'HONGO');
+
             
             //data.addColumn('number', 'Transformers: Age of Extinction');
 
        
 
-            for (var i =0; i < periodo; i++) {
-              data.addRows([  [i, datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
+            for (var i =0; i < numeroSimulaciones; i++) {
+              data.addRows([  [i, datosGraficapesoCepasTotal[i], datosGraficatamanoHongo[i] ]  ]);
             };
 
 

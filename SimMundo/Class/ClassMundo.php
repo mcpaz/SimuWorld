@@ -452,8 +452,10 @@ class ClassMundo
             }
           
           //hago esto porque asi guardo eltotal por cada iteracion
-          $arrayPesoCepasTotal[$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
-          $arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
+          //$arrayPesoCepasTotal[$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
+          //$arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
+          $_SESSION["pesoCepasTotal"][$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
+          $_SESSION["tamanoHongo"][$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
           $this->totalPesoUva = 0; //hay que volver inicializarla a 0 para que no acumule los valores
           $this->totalTamanoTotalHongo = 0;
           echo "<br>---------------------------------------------------------------FIN DE ITERACION";
@@ -461,10 +463,10 @@ class ClassMundo
         }
 
       
-        for ($i=0; $i < sizeof($arrayPesoCepasTotal); $i++) { 
+        /*for ($i=0; $i < sizeof($arrayPesoCepasTotal); $i++) { 
         	echo "<br>Total de la cepa " . $i . ": " .$arrayPesoCepasTotal[$i];
         	echo "<br>Total de la hongo " . $i . ": " .$arrayTamanoHongo[$i];
-        }
+        }*/
 		
 	}
 

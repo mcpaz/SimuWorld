@@ -39,6 +39,7 @@
         <section class="sidebar">
            <?php
               include("../../Class/ClassDato.php");
+              include("../../Class/ClassPaisano.php");
                  //inicio sesion para guaradar el bojeto de claseDato
               session_start();
 
@@ -102,31 +103,40 @@
                     </div>
 
 
-                    <script>
-                    function generarDiasSulfato() {
-                            $('#numeroSulfatos').append("Actualidad jQuery");  
-                       
-                    
-                     
-                      
-                    }
-                
-                    </script>
-
 
                     <script>
-                    function generarDiasSulfato() {
+                    /*function generarDiasSulfato() {
                         var cont = document.getElementById("numeroSulfatos").value;
                         cont = parseInt(cont);
-                       
+                      var $padre = $("#fechasSulfatos");
                       var alias = "alias";
                       var fech = " dd/mm/yyyy";
                       for(var i=0 ;i < cont; i++){
                         $("#fechasSulfatos").append('<div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i> </div><input type="text" name="sulfatdas'+i+'"class="form-control" data-inputmask="\'+alias+\': \'+fech+\'" data-mask> </div>');
                       }
                       
+                    }*/
+                      
+                      function generarDiasSulfato() {
+                        var $cont = document.getElementById("numeroSulfatos").value;
+                        $cont = parseInt($cont);
+                        var $padre = $("#fechasSulfatos");
+                        var $inicioBloque = $('<div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i> </div>');
+                        var $input = $('<input type="text" class="form-control" data-mask>').attr("data-inputmask","'alias': 'dd/mm/yyyy'");
+                        var $finBloque = ('</div></div>');
+                        $inicioBloque.append($input).append($finBloque);
+                    
+
+            
+                        for(var i=0 ;i < $cont; i++){
+
+                          $padre.append($inicioBloque);
+                          
+                        }
+                      
                     }
-                
+
+
                     </script>
 
 
@@ -310,7 +320,7 @@
 
 
         
-        $calsePaisano = new clasePaisano;
+        $clasePaisano = new ClassPaisano;
         $claseDato = new ClassDato;
   
       if(isset($_POST["submit"])){
@@ -340,10 +350,11 @@
         $arrayFechasSulfato[1] = $_POST["fechaSulfato1"];
         $arrayFechasSulfato[2] = $_POST["fechaSulfato2"];
 
-        $clasePaisano->setFechasSulfato($arrayFechasSulfato);
 
+        //recojo los datos para la clase paisano
 
-        $clasePaisano->setDuracionSulfato($_POST["diasEfectoSulfato"]);
+        //$clasePaisano->setFechasSulfato($arrayFechasSulfato);
+        //$clasePaisano->setDuracionSulfato($_POST["diasEfectoSulfato"]);
 
         //Poner decente para comprobar tamaño y  esas cosas del archivo
 
@@ -397,7 +408,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
     <!-- Page script -->
-<script>
+    <script>
       $(function () {
         //Initialize Select2 Elements
         $(".select2").select2();
@@ -412,7 +423,7 @@
         //Date range picker
         $('#reservation').daterangepicker();
         //Date range picker with time picker
-        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/ZZ/YYYY h:mm A'});
+        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
         //Date range as a button
         $('#daterange-btn').daterangepicker(
             {
@@ -427,7 +438,8 @@
               startDate: moment().subtract(29, 'days'),
               endDate: moment()
             },
-        function (start, end) {
+
+      function (start, end) {
           $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         }
         );

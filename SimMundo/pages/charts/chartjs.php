@@ -88,9 +88,43 @@
       <script type="text/javascript">
        
           google.load('visualization', '1.1', {packages: ['line']});
-          google.setOnLoadCallback(drawChart);
+          google.setOnLoadCallback(graficaDatosClimaticos);
+          google.setOnLoadCallback(graficaCepaHongo);
+         
 
-          function drawChart() {
+          function graficaDatosClimaticos() {
+            var i = 0;
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'Day');
+            data.addColumn('number', 'temperatura');
+            data.addColumn('number', 'lluvia');
+            data.addColumn('number', 'humedad');
+            
+            //data.addColumn('number', 'Transformers: Age of Extinction');
+
+       
+
+            for (var i =0; i < periodo; i++) {
+              data.addRows([  [i, datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
+            };
+
+
+  
+            var options = {
+              chart: {
+                title: 'Box Office Earnings in First Two Weeks of Opening',
+                subtitle: 'in millions of mierdaaaaaaaa (USD)'
+              },
+              width: 900,
+              height: 500
+              
+            };
+            var chart = new google.charts.Line(document.getElementById('graficaDatosClimaticos'));
+
+            chart.draw(data, options);
+          }
+
+          function graficaCepaHongo() {
             var i = 0;
             var data = new google.visualization.DataTable();
             data.addColumn('number', 'Day');
@@ -117,7 +151,7 @@
               height: 500
               
             };
-            var chart = new google.charts.Line(document.getElementById('linechart_material'));
+            var chart = new google.charts.Line(document.getElementById('graficaCepaHongo'));
 
             chart.draw(data, options);
           }
@@ -137,9 +171,28 @@
                 </div>
                 <div class="box-body">
                   <div class="chart">
-                    <div id="linechart_material"></div>
+                    <div id="graficaDatosClimaticos"></div>
                   </div>
                 </div><!-- /.box-body -->
+              </div><!-- /.box -->
+
+
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Area Chart</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart">
+                    <div id="graficaCepaHongo"></div>
+                  </div>
+                </div><!-- /.box-body -->
+
+
+                
               </div><!-- /.box -->
 
          

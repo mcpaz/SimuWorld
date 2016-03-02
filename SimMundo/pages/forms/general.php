@@ -98,80 +98,108 @@
                     <div class="form-group">
                       <label  class="col-sm-2 control-label">Número de sulfatos: </label>
                       <div  class="col-sm-10">
-                        <input id="numeroSulfatos" type="text" class="form-control" name="numeroSulfatos" placeholder="Numero de sulfatos" value="2" onblur="generarDiasSulfato()">
+                        <input id="numeroSulfatos" type="text" class="form-control" name="numeroFechasSulfatos" placeholder="Numero de sulfatos" value="2" onblur="generarDiasSulfato()">
                       </div>
                     </div>
 
 
 
                     <script>
-                    /*function generarDiasSulfato() {
-                        var cont = document.getElementById("numeroSulfatos").value;
-                        cont = parseInt(cont);
-                      var $padre = $("#fechasSulfatos");
-                      var alias = "alias";
-                      var fech = " dd/mm/yyyy";
-                      for(var i=0 ;i < cont; i++){
-                        $("#fechasSulfatos").append('<div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i> </div><input type="text" name="sulfatdas'+i+'"class="form-control" data-inputmask="\'+alias+\': \'+fech+\'" data-mask> </div>');
-                      }
                       
-                    }*/
                       
-                      function generarDiasSulfato() {
+                      /*function generarDiasSulfato() {
                         var $cont = document.getElementById("numeroSulfatos").value;
                         $cont = parseInt($cont);
                         var $padre = $("#fechasSulfatos");
                         var $inicioBloque = $('<div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i> </div>');
                         var $input = $('<input type="text" class="form-control" data-mask>').attr("data-inputmask","'alias': 'dd/mm/yyyy'");
                         var $finBloque = ('</div></div>');
+                        alert(dump($inicioBloque));
                         $inicioBloque.append($input).append($finBloque);
                     
 
-            
+                      
                         for(var i=0 ;i < $cont; i++){
 
                           $padre.append($inicioBloque);
                           
                         }
                       
+                      }*/
+
+                         /* function generarDiasSulfato() {
+                            var $cont = document.getElementById("numeroSulfatos").value;
+                            $cont = parseInt($cont);
+                            var $padre = $("#fechasSulfatos");
+                            var $input1 = $('<div class="input-group"></div>');
+                            var $input2 = $('<div class="input-group-addon"></div>');
+                            var $input3 = $('<i class="fa fa-calendar"></i>');
+                            
+                            var $input4= $('<input type="text" class="form-control" data-mask>').attr("data-inputmask","'alias': 'dd/mm/yyyy'");
+
+                            $input1.append($input2);
+                            $input2.append($input3);
+                            $input1.append($input4);                                            
+                    
+
+                          
+                            for(var i=0 ;i < $cont; i++){
+
+                              $padre.append($input1);
+                              
+                            }
+                      
+
+                          $(document).ready(function(){
+                            $(":input").inputmask();
+                            or
+                            Inputmask().mask(document.querySelectorAll("input"));
+                          });
+                      }
+                      */
+
+                      //consultar a rodeiro si estaria bien, aunque creo k si
+                      var cont = 0;
+                    function generarDiasSulfato() {
+                        
+
+
+                        if(cont == 0){
+                          cont = document.getElementById("numeroSulfatos").value;
+                          cont = parseInt(cont);                  
+                          var $padre = $("#fechasSulfatos");
+                          var alias = "alias";
+                          var fech = "dd/mm/yyyy";
+
+                          for(var i=1 ;i < cont+1; i++){
+                            $("#divControl").append('<div class="form-group" id="fechasSulfatos'+i+'"><label class="col-sm-2 control-label"> '+i+'ª sulfatada:</label><div class="col-sm-10"><div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i></div> <input type="text" name="sulfatada'+i+'" class="form-control" data-inputmask="\''+alias+'\':\''+fech+'\'" data-mask>  </div></div></div>');
+                          }
+
+                          $(document).ready(function(){
+                              $(":input").inputmask();
+                           
+                          });
+
+                        }else{
+                            
+                            for (var j = 1; j < cont +1; j++) {
+                              $("#fechasSulfatos"+j).remove();                         
+                            };                            
+
+                            cont = 0;
+                            generarDiasSulfato();
+                        }
+
+                      
                     }
-
-
+                        
                     </script>
 
+                    <!-- espacio para poner los calendar que se generan   -->
+                    <div  id="divControl">
 
-                    <div class="form-group" id="fechasSulfatos">
-                      
                     </div>
-
-                    <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                      </div>
-                      <input type="text" name="fechaSulfato0"  class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask value="01/06/2015">
-                    </div><!-- /.input group -->
-                  </div><!-- /.form group -->
-
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                      </div>
-                      <input type="text" name="fechaSulfato1"  class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask value="15/07/2015">
-                    </div><!-- /.input group -->
-                  </div><!-- /.form group -->
-
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                      </div>
-                      <input type="text" name="fechaSulfato2"  class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask value="30/08/2015">
-                    </div><!-- /.input group -->
-                  </div><!-- /.form group -->
-
-
+                 
 
                     <div class="form-group">
                       <label  class="col-sm-2 control-label">Número de días de efecto: </label>
@@ -316,7 +344,8 @@
 
     <?php
 
-  
+        ///recojo la varaible del numero de fechas de sulfatada que va hacerse.
+      
 
 
         
@@ -324,7 +353,9 @@
         $claseDato = new ClassDato;
   
       if(isset($_POST["submit"])){
-          
+
+       
+         
         $_SESSION['introducidoDatos'] = 1;
         $claseDato->setNumeroCepas($_POST["numeroCepas"]);
         $claseDato->setNumeroSimulaciones($_POST["numeroSimulaciones"]);
@@ -346,11 +377,18 @@
         $claseDato->setPorcentajeCrecimientoHongo($_POST["porcentajeCrecimientoLluviaHongo"]);
 
         $arrayFechasSulfato = array();
-        $arrayFechasSulfato[0] = $_POST["fechaSulfato0"];
+        /*$arrayFechasSulfato[0] = $_POST["fechaSulfato0"];
         $arrayFechasSulfato[1] = $_POST["fechaSulfato1"];
-        $arrayFechasSulfato[2] = $_POST["fechaSulfato2"];
+        $arrayFechasSulfato[2] = $_POST["fechaSulfato2"];*/
 
 
+        //recojo el valor de cuantasfechas se van introducir y luego recorro todas $_POST dpara recvojer los valores
+        for ($i=1; $i< $_POST["numeroFechasSulfatos"] +1 ; $i++){
+            $arrayFechasSulfato[$i] = $_POST["sulfatada".$i];
+            print_r($arrayFechasSulfato[$i]);
+        }
+
+ 
         //recojo los datos para la clase paisano
 
         //$clasePaisano->setFechasSulfato($arrayFechasSulfato);

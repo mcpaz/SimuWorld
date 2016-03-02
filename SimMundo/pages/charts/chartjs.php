@@ -112,20 +112,13 @@
           google.setOnLoadCallback(generarGraficas);
          
 
-         /*function sleep(milliseconds) {
-            var start = new Date().getTime();
-            for (var i = 0; i < 1e7; i++) {
-              if ((new Date().getTime() - start) > milliseconds){
-                break;
-              }
-            }
-          }*/
+
 
           function generarGraficas(){
             graficaDatosClimaticos();
-            alert();
-            graficaCepaHongo();
-            alert();
+        setTimeout(function(){  graficaCepaHongo();}, 0);
+          
+            
           }
 
 

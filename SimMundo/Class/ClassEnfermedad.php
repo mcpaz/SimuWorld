@@ -99,8 +99,6 @@ class ClassEnfermedad{
 	}
 
 
-
-
 	//metodos de crecimento
 
 
@@ -138,11 +136,11 @@ class ClassEnfermedad{
 		$prob = $this->probabilidadInfeccionCepa * 100;
 
 		if ($aleatorio < $prob){
-			return 1; //1 es qu esta infectado
+			return 1; //1  esta infectado
 		}
 		else 
 		{
-			return 0; //no esta infectado
+			return 0; //0 no esta infectado
 
 		}  
 		 
@@ -154,8 +152,8 @@ class ClassEnfermedad{
 	}
 
 
-	public function calcularProbabilidadInfectar($humedad){
-		if($humedad > 70){
+	public function calcularProbabilidadInfectar($humedad,refHumedad,$refProbHumedad){
+		if($humedad >= $refHumedad){
 			//TOMO LA LLUVIA HUMEDAD COMO DETONANTE DEL CRECIEMIENTO DEL HONGO
 			//preguntar ¿?
 			//voy tomar como a partir de 70 la probabilidad de infectar es de 0.3, y asi hago regla de 3
@@ -163,7 +161,7 @@ class ClassEnfermedad{
 			//EN CASO DE ESTAR BIEN ESTO ACORDARSE DE PARAMETRIZAR
 
 			//esto esta bien ----> parametrizar
-			$this->probabilidadInfeccionCepa = ($humedad*0.4)/70;
+			$this->probabilidadInfeccionCepa = ($humedad*$refProbHumedad)/$refHumedad;
 			$this->inicioCrecimientoHongo = 1;
 		}
 	}

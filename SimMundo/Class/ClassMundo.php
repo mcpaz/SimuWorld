@@ -217,8 +217,18 @@ class ClassMundo
 		return $this->claseDato->getReferenciaTemperaturaHongo();
 	}
 
+
+	public function getReferenciaHumedadHongo(){
+		return $this->claseDato->getReferenciaHumedadHongo();
+	}
+
 	public function getPorcentajeCrecimientoHongo(){
 		return $this->claseDato->getPorcentajeCrecimientoHongo();
+	}
+
+
+	public function getPorcentajeProbabilidadHumedadHongo(){
+		return $this->claseDato->getPorcentajeProbabilidadHumedadHongo();
 	}
 
 
@@ -352,7 +362,9 @@ class ClassMundo
 
   		$refLluviaHongo = $this->getReferenciaLluviaHongo();
   		$refTemperaturaHongo = $this->getReferenciaTemperaturaHongo();
+  		$refHumedadHongo = $this->$this->getReferenciaHumedadHongo();
   		$porcentajeCreHongo = $this->getPorcentajeCrecimientoHongo();
+  		$procentajeProbabilidadHumedad ->$this->getPorcentajeProbabilidadHumedadHongo();
 
   		 
 
@@ -400,7 +412,7 @@ class ClassMundo
                         //mientras esto sea 0 es que no hay condiciones optimas para que crezca el hongo
                         //y entonces se calcula su probabilidad pasandole la humedad para ver si se puede desarrolar o no
                         if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 0){					
-                            $arrayEnfermedades[$j]->calcularProbabilidadInfectar($humedad);
+                            $arrayEnfermedades[$j]->calcularProbabilidadInfectar($humedad,$refHumedadHongo,$procentajeProbabilidadHumedad);
 
                         }
                      

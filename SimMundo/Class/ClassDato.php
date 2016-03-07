@@ -30,7 +30,9 @@ class ClassDato
 	//datos de referencia hongo
 	public $referenciaLluviaHongo;
 	public $referenciaTemperaturaHongo;
+	public $referenciaHumedadHongo;
 	public $porcentajeCrecimientoLluviaHongo;
+	public $porcentajeProbabilidadHumedadHongo;
 
 
 	public function __construct()
@@ -127,6 +129,24 @@ class ClassDato
 	}
 
 
+	public function getReferenciaHumedadHongo(){
+		return $this->referenciaHumedadHongo;
+	}
+
+	public function setReferenciaHumedadHongo($ref){
+		$this->referenciaHumedadHongo = $ref;
+	}
+
+
+	public function setPorcentajeProbabilidadHumedadHongo($ref){
+    	$this->porcentajeProbabilidadHumedadHongo = $ref;
+    }
+
+
+    public function getPorcentajeProbabilidadHumedadHongo(){
+    	return $this->porcentajeProbabilidadHumedadHongo;
+    }
+
 	//metodos para la cantidad de cepas que se van simular
 
 	public function getNumeroCepas(){
@@ -169,6 +189,11 @@ class ClassDato
        $this->fechaFin =str_replace('/','-',$fecha[1]);       
        
     }
+
+
+    
+
+
     
     
 //fin de la clase    

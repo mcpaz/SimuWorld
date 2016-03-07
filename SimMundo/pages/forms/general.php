@@ -104,96 +104,7 @@
 
 
 
-                    <script>
-                      
-                      
-                      /*function generarDiasSulfato() {
-                        var $cont = document.getElementById("numeroSulfatos").value;
-                        $cont = parseInt($cont);
-                        var $padre = $("#fechasSulfatos");
-                        var $inicioBloque = $('<div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i> </div>');
-                        var $input = $('<input type="text" class="form-control" data-mask>').attr("data-inputmask","'alias': 'dd/mm/yyyy'");
-                        var $finBloque = ('</div></div>');
-                        alert(dump($inicioBloque));
-                        $inicioBloque.append($input).append($finBloque);
-                    
-
-                      
-                        for(var i=0 ;i < $cont; i++){
-
-                          $padre.append($inicioBloque);
-                          
-                        }
-                      
-                      }*/
-
-                         /* function generarDiasSulfato() {
-                            var $cont = document.getElementById("numeroSulfatos").value;
-                            $cont = parseInt($cont);
-                            var $padre = $("#fechasSulfatos");
-                            var $input1 = $('<div class="input-group"></div>');
-                            var $input2 = $('<div class="input-group-addon"></div>');
-                            var $input3 = $('<i class="fa fa-calendar"></i>');
-                            
-                            var $input4= $('<input type="text" class="form-control" data-mask>').attr("data-inputmask","'alias': 'dd/mm/yyyy'");
-
-                            $input1.append($input2);
-                            $input2.append($input3);
-                            $input1.append($input4);                                            
-                    
-
-                          
-                            for(var i=0 ;i < $cont; i++){
-
-                              $padre.append($input1);
-                              
-                            }
-                      
-
-                          $(document).ready(function(){
-                            $(":input").inputmask();
-                            or
-                            Inputmask().mask(document.querySelectorAll("input"));
-                          });
-                      }
-                      */
-
-                      //consultar a rodeiro si estaria bien, aunque creo k si
-                      var cont = 0;
-                    function generarDiasSulfato() {
-                        
-
-
-                        if(cont == 0){
-                          cont = document.getElementById("numeroSulfatos").value;
-                          cont = parseInt(cont);                  
-                          var $padre = $("#fechasSulfatos");
-                          var alias = "alias";
-                          var fech = "dd/mm/yyyy";
-
-                          for(var i=1 ;i < cont+1; i++){
-                            $("#divControl").append('<div class="form-group" id="fechasSulfatos'+i+'"><label class="col-sm-2 control-label"> '+i+'ª sulfatada:</label><div class="col-sm-10"><div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i></div> <input type="text" name="sulfatada'+i+'" class="form-control" data-inputmask="\''+alias+'\':\''+fech+'\'" data-mask>  </div></div></div>');
-                          }
-
-                          $(document).ready(function(){
-                              $(":input").inputmask();
-                           
-                          });
-
-                        }else{
-                            
-                            for (var j = 1; j < cont +1; j++) {
-                              $("#fechasSulfatos"+j).remove();                         
-                            };                            
-
-                            cont = 0;
-                            generarDiasSulfato();
-                        }
-
-                      
-                    }
-                        
-                    </script>
+                   
 
                     <!-- espacio para poner los calendar que se generan   -->
                     <div  id="divControl">
@@ -247,7 +158,7 @@
                     <div class="form-group">
                       <label  class="col-sm-2 control-label">Porcentaje de crecimiento de la UVA</label>
                       <div  class="col-sm-10">
-                        <input type="text" class="form-control" name="porcentajeCrecimientoLluviaUva" placeholder="Porcentaje" value="0.4">
+                        <input type="text" class="form-control" name="porcentajeCrecimientoUva" placeholder="Porcentaje" value="0.4">
                       </div>
                     </div>
 
@@ -269,12 +180,12 @@
                     <div class="form-group">
                       <label  class="col-sm-2 control-label">Porcentaje de crecimiento de la HOJA</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" name="porcentajeCrecimientoLluviaHoja" placeholder="Porcentaje" value="0.4">
+                        <input type="text" class="form-control" name="porcentajeCrecimientoHoja" placeholder="Porcentaje" value="0.4">
                       </div>
                     </div>
 
 
-                    <label><h4>Referencia de factores ambientales con respecto a la HONGO.</h4></label>
+                    <label><h4>Referencia de factores ambientales con respecto al HONGO.</h4></label>
                     <div class="form-group">
                       <label  class="col-sm-2 control-label">Referencia de litros de lluvia</label>
                       <div class="col-sm-10">
@@ -288,11 +199,27 @@
                       </div>
                       
                     </div>
-                    <label><h4>Porcentajes de crecimiento segun los factores ambientales de la HONGO</h4></label>
+
                     <div class="form-group">
-                      <label  class="col-sm-2 control-label">Porcentaje de crecimiento de la HONGO</label>
+                      <label  class="col-sm-2 control-label">Referencia humedad inicio</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" name="porcentajeCrecimientoLluviaHongo" placeholder="Porcentaje" value="0.4">
+                        <input type="text" class="form-control" name="referenciaHumedadHongo" placeholder="Humedad" value="11">
+                      </div>                      
+                    </div>
+
+
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Porcentaje de probabilidad de crecimiento del hongo</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="porcentajeProbabilidadHumedadHongo" placeholder="Porcentaje crecimiento" value="0.2">
+                      </div>                      
+                    </div>
+
+                    <label><h4>Porcentajes de crecimiento segun los factores ambientales del HONGO</h4></label>
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Porcentaje de crecimiento del HONGO</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="porcentajeCrecimientoHongo" placeholder="Porcentaje" value="0.4">
                       </div>
                     </div>
                     <br>
@@ -364,17 +291,20 @@
         //datos de uva
         $claseDato->setReferenciaLluviaUva($_POST["referenciaLluviaUva"]);
         $claseDato->setReferenciaTemperaturaUva($_POST["referenciaTemperaturaUva"]);
-        $claseDato->setPorcentajeCrecimientoUva($_POST["porcentajeCrecimientoLluviaUva"]);
+        $claseDato->setPorcentajeCrecimientoUva($_POST["porcentajeCrecimientoUva"]);
 
           //datos de hoja
         $claseDato->setReferenciaLluviaHoja($_POST["referenciaLluviaHoja"]);
         $claseDato->setReferenciaTemperaturaHoja($_POST["referenciaTemperaturaHoja"]);
-        $claseDato->setPorcentajeCrecimientoHoja($_POST["porcentajeCrecimientoLluviaHoja"]);
+        $claseDato->setPorcentajeCrecimientoHoja($_POST["porcentajeCrecimientoHoja"]);
 
           //datos de hongo
         $claseDato->setReferenciaLluviaHongo($_POST["referenciaLluviaHongo"]);
         $claseDato->setReferenciaTemperaturaHongo($_POST["referenciaTemperaturaHongo"]);
-        $claseDato->setPorcentajeCrecimientoHongo($_POST["porcentajeCrecimientoLluviaHongo"]);
+        $claseDato->setReferenciaHumedadHongo($_POST["referenciaHumedadHongo"]);
+        $claseDato->setPorcentajeCrecimientoHongo($_POST["porcentajeCrecimientoHongo"]);
+        $claseDato->setPorcentajeProbabilidadHumedadHongo($_POST["porcentajeProbabilidadHumedadHongo"]);
+
 
         $arrayFechasSulfato = array();
         /*$arrayFechasSulfato[0] = $_POST["fechaSulfato0"];
@@ -509,5 +439,45 @@
         });
       });
     </script>
+
+     <script>
+                    
+
+                      //consultar a rodeiro si estaria bien, aunque creo k si
+                      var cont = 0;
+                    function generarDiasSulfato() {
+                        
+
+
+                        if(cont == 0){
+                          cont = document.getElementById("numeroSulfatos").value;
+                          cont = parseInt(cont);                  
+                          var $padre = $("#fechasSulfatos");
+                          var alias = "alias";
+                          var fech = "dd/mm/yyyy";
+
+                          for(var i=1 ;i < cont+1; i++){
+                            $("#divControl").append('<div class="form-group" id="fechasSulfatos'+i+'"><label class="col-sm-2 control-label"> '+i+'ª sulfatada:</label><div class="col-sm-10"><div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i></div> <input type="text" name="sulfatada'+i+'" class="form-control" data-inputmask="\''+alias+'\':\''+fech+'\'" data-mask>  </div></div></div>');
+                          }
+
+                          $(document).ready(function(){
+                              $(":input").inputmask();
+                           
+                          });
+
+                        }else{
+                            
+                            for (var j = 1; j < cont +1; j++) {
+                              $("#fechasSulfatos"+j).remove();                         
+                            };                            
+
+                            cont = 0;
+                            generarDiasSulfato();
+                        }
+
+                      
+                    }
+                        
+                    </script>
   </body>
 </html>

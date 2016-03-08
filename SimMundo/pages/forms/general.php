@@ -136,7 +136,7 @@
                     <div class="form-group">
                       <label  class="col-sm-2 control-label">Número de cepas: </label>
                       <div  class="col-sm-10">
-                        <input type="text" class="form-control" name="numeroCepas" placeholder="Numero de cepas" value="3">
+                        <input type="text" class="form-control" name="numeroCepas" placeholder="Numero de cepas" value="10">
                       </div>
                     </div>
 
@@ -203,7 +203,7 @@
                     <div class="form-group">
                       <label  class="col-sm-2 control-label">Referencia humedad inicio</label>
                       <div class="col-sm-10">
-                        <input type="text" class="form-control" name="referenciaHumedadHongo" placeholder="Humedad" value="11">
+                        <input type="text" class="form-control" name="referenciaHumedadHongo" placeholder="Humedad" value="60">
                       </div>                      
                     </div>
 
@@ -313,11 +313,13 @@
 
 
         //recojo el valor de cuantasfechas se van introducir y luego recorro todas $_POST dpara recvojer los valores
-        for ($i=1; $i< $_POST["numeroFechasSulfatos"] +1 ; $i++){
+        if(isset($_POSt["sulfatada0"])){
+          for ($i=1; $i< $_POST["numeroFechasSulfatos"] +1 ; $i++){
             $arrayFechasSulfato[$i] = $_POST["sulfatada".$i];
             print_r($arrayFechasSulfato[$i]);
+          }  
         }
-
+        
  
         //recojo los datos para la clase paisano
 

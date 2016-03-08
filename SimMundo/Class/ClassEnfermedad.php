@@ -21,7 +21,7 @@ class ClassEnfermedad{
 
 	public $probabilidadInfeccionCepa = 0.0;
 	
-
+	public $aumentoHongo = 0; //variable para pasar la cantidad que crece el hongo , par no solo pasar el total
 	public $tamanoHongo = 0.1;//un valor inicial por darle uno
 	public $inicioCrecimientoHongo = 0;//hay que tener en cuenta esta variable para ver si crcio o no elhongo
 		// ya que una vez que crezca por las codiciones optimas puede seguir creciendo aunque estas no 
@@ -57,10 +57,15 @@ class ClassEnfermedad{
 	}
 
 
+
 	public function getTamanhoHongo(){
 		return $this->tamanoHongo;
 	}
-	//getters especificos de cepa
+
+	public function getAumentoHongo(){
+		return $this->aumentoHongo;
+	}
+	
 
 	
 
@@ -152,7 +157,7 @@ class ClassEnfermedad{
 	}
 
 
-	public function calcularProbabilidadInfectar($humedad,refHumedad,$refProbHumedad){
+	public function calcularProbabilidadInfectar($humedad,$refHumedad,$refProbHumedad){
 		if($humedad >= $refHumedad){
 			//TOMO LA LLUVIA HUMEDAD COMO DETONANTE DEL CRECIEMIENTO DEL HONGO
 			//preguntar ¿?
@@ -160,8 +165,16 @@ class ClassEnfermedad{
 			//$this->probabilidadInfeccionCepa = 0.4; // tomo como ejemplo 0.4 de probavilidad cuando empieza a crecer ppr estas condiciones
 			//EN CASO DE ESTAR BIEN ESTO ACORDARSE DE PARAMETRIZAR
 
+			/*echo "humedad: " . $humedad;
+			echo "<br>";
+			echo "refProbHumedad: " . $refProbHumedad;
+			echo "<br>";
+			echo "refHumedad: " . $refHumedad;
+			echo "<br>";
+			echo "calculo: " . ($humedad*$refProbHumedad)/$refHumedad;*/
 			//esto esta bien ----> parametrizar
 			$this->probabilidadInfeccionCepa = ($humedad*$refProbHumedad)/$refHumedad;
+			
 			$this->inicioCrecimientoHongo = 1;
 		}
 	}
@@ -190,10 +203,10 @@ class ClassEnfermedad{
 
 		if($this->inicioCrecimientoHongo == 1){
 			//TOMO LA LLUVIA COMO DATO PERO REALEMTE SE HARIA CON EL DE HUMEDAD			
-			$aumento = ($lluvia*$temperatura*$porcentajeCrecimientoHongo)/($referenciaLluviaHongo*$referenciaTemperaturaHongo);
+			$this->aumentoHongo = ($lluvia*$temperatura*$porcentajeCrecimientoHongo)/($referenciaLluviaHongo*$referenciaTemperaturaHongo);
 
 			
-			$this->tamanoHongo = $this->tamanoHongo + $aumento;
+			$this->tamanoHongo = $this->tamanoHongo + $this->aumentoHongo;
 		}
 		
 		

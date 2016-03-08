@@ -118,9 +118,9 @@ class ClassCepa{
 
 	//metodo apra restarle al peso del racimo de la uva el tamanho del hongo
 
-	public function restarTamanoHongoPesoUva($tamanhoHongo){
+	public function restarTamanoHongoPesoUva($aumentoHongo){
 
-		$this->pesoRacimo = $this->pesoRacimo - $tamanhoHongo;
+		$this->pesoRacimo = $this->pesoRacimo - $aumentoHongo;
 	}
 
 

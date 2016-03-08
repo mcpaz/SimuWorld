@@ -362,9 +362,9 @@ class ClassMundo
 
   		$refLluviaHongo = $this->getReferenciaLluviaHongo();
   		$refTemperaturaHongo = $this->getReferenciaTemperaturaHongo();
-  		$refHumedadHongo = $this->$this->getReferenciaHumedadHongo();
+  		$refHumedadHongo = $this->getReferenciaHumedadHongo();
   		$porcentajeCreHongo = $this->getPorcentajeCrecimientoHongo();
-  		$procentajeProbabilidadHumedad ->$this->getPorcentajeProbabilidadHumedadHongo();
+  		$procentajeProbabilidadHumedad = $this->getPorcentajeProbabilidadHumedadHongo();
 
   		 
 
@@ -411,13 +411,16 @@ class ClassMundo
                         
                         //mientras esto sea 0 es que no hay condiciones optimas para que crezca el hongo
                         //y entonces se calcula su probabilidad pasandole la humedad para ver si se puede desarrolar o no
+
                         if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 0){					
+
                             $arrayEnfermedades[$j]->calcularProbabilidadInfectar($humedad,$refHumedadHongo,$procentajeProbabilidadHumedad);
 
                         }
                      
                         //aqui ya es optimo porque es igual 1 entonces se el hongo se pone a infectar a la cepa
                         if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 1){
+
                         	if( $arrayCepas[$j]->getTenerHongo() == 0 ){
                             	//echo "<br>empieza la infeccion " . $j;
 
@@ -439,7 +442,8 @@ class ClassMundo
                         	
                             $tamanhoHongo = $arrayEnfermedades[$j]->calcularCrecimientoHongo($lluvia,$temperatura,$refLluviaHongo,$refTemperaturaHongo,$porcentajeCreHongo);
                             //echo "<br>peso uva actual :" . $arrayCepas[$j]->getPesoRacimo();
-                            $arrayCepas[$j]->restarTamanoHongoPesoUva($tamanhoHongo);
+                            //se le pasa al metodo de rstar al peso de la uva el crecimiento del hongo solo el aumejto de esa iteraccion del hongo en ese momento
+                            $arrayCepas[$j]->restarTamanoHongoPesoUva($arrayEnfermedades[$j]->getAumentoHongo());
 							//echo "<br>peso uva despues de la resta :" . $arrayCepas[$j]->getPesoRacimo();
                             //echo "<br>Tamanho del hongo:" . $tamanhoHongo;
                         }else{
@@ -468,7 +472,7 @@ class ClassMundo
           //hago esto porque asi guardo eltotal por cada iteracion
           /*$arrayPesoCepasTotal[$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
           $arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);*/
-         $_SESSION["pesoCepasTotal"][$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
+          $_SESSION["pesoCepasTotal"][$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
           $_SESSION["tamanoHongo"][$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
 
          
@@ -483,7 +487,10 @@ class ClassMundo
         	echo "<br>Total de la cepa " . $i . ": " .$arrayPesoCepasTotal[$i];
         	echo "<br>Total de la hongo " . $i . ": " .$arrayTamanoHongo[$i];
         }*/
-		
+		/*for ($i=0; $i < sizeof($_SESSION["pesoCepasTotal"]); $i++) { 
+        	echo "<br>Total de la cepa " . $i . ": " .$_SESSION["pesoCepasTotal"][$i];
+        	echo "<br>Total de la hongo " . $i . ": " .$_SESSION["tamanoHongo"][$i];
+        }*/
 	}
 
 

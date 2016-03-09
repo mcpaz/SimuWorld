@@ -352,6 +352,12 @@ class ClassMundo
         $arrayPesoCepasTotal = array();
         $arrayTamanoHongo = array();
 
+
+        $lineaTemperatura = $this->claseFichero->getLineaTemperaturaMedia();
+        $lineaLluvia = $this->claseFichero->getLineaLluviaMedia();
+        $lineaHumedad = $this->claseFichero->getLineaHumedad();
+        
+
 		$refLluviaUva = $this->getReferenciaLluviaUva();
   		$refTemperaturaUva = $this->getReferenciaTemperaturaUva();
   		$porcentajeCreUva = $this->getPorcentajeCrecimientoUva();
@@ -365,6 +371,8 @@ class ClassMundo
   		$refHumedadHongo = $this->getReferenciaHumedadHongo();
   		$porcentajeCreHongo = $this->getPorcentajeCrecimientoHongo();
   		$procentajeProbabilidadHumedad = $this->getPorcentajeProbabilidadHumedadHongo();
+
+
 
   		 
 
@@ -380,19 +388,23 @@ class ClassMundo
             
   
   
-            for ($i=24,$k=0; $i < $this->getPeriodoFichero() + 24 ; $i++,$k++) { 
+            for ($i=0,$k=0; $i < $this->getPeriodoFichero(); $i++,$k++) { 
                 
                 
                 $tamanhoHongo = 0; //tamano inicila del hongo en mi vatiable local deste metodo
                 
-                $temperatura = $this->getTemperaturaMediaFichero($i);
-                $humedad = $this->gethumedadMediaFichero($i+640-25);
-                $lluvia = $this->getLluviaMediaFichero($i+1870-25);
+                $temperatura = $this->getTemperaturaMediaFichero($i+$lineaTemperatura);
+                $humedad = $this->gethumedadMediaFichero($i+$lineaHumedad);
+                $lluvia = $this->getLluviaMediaFichero($i+ $lineaLluvia);
                 $fechaLog = $this->getFechaActual($i); //esta asignacion para guardar la fecha en tipo string
                 $fechaFicheroActual = date_create(str_replace("/", "-",$this->getFechaActual($i)));//cojo la fecha que viene del fichero de datos climaticos y la paso a date para poder comparalar con otra fecha
-
-        
-
+                
+                echo "t: " . $temperatura;
+                echo "<br> ";
+        		echo "h: " .$humedad;
+        		echo "<br> ";
+        		echo "ll: " .$lluvia;
+echo "<br> ";echo "<br> ";
 
                 //GUARDO LOS DATOS EN SESION DE ARRAY PAR LUEGO PASARLOS AL JAVASCRIPT
                 //QUE CREA LAS GRAFICAS
@@ -437,11 +449,11 @@ class ClassMundo
 
                         //esta condicion me sirve para calcular solo el crecimiento de hongo de solo aquellas cepas
                         // que han sido infectadas y ademas para restar al peso total del racimo el tamano del hongo
-
+                       
                         if($arrayCepas[$j]->getTenerHongo() == 1){
                         	
                             $tamanhoHongo = $arrayEnfermedades[$j]->calcularCrecimientoHongo($lluvia,$temperatura,$refLluviaHongo,$refTemperaturaHongo,$porcentajeCreHongo);
-                            //echo "<br>peso uva actual :" . $arrayCepas[$j]->getPesoRacimo();
+                            //echo "<br>peso uva actual " .$j .":" . $arrayCepas[$j]->getPesoRacimo();
                             //se le pasa al metodo de rstar al peso de la uva el crecimiento del hongo solo el aumejto de esa iteraccion del hongo en ese momento
                             $arrayCepas[$j]->restarTamanoHongoPesoUva($arrayEnfermedades[$j]->getAumentoHongo());
 							//echo "<br>peso uva despues de la resta :" . $arrayCepas[$j]->getPesoRacimo();
@@ -487,10 +499,10 @@ class ClassMundo
         	echo "<br>Total de la cepa " . $i . ": " .$arrayPesoCepasTotal[$i];
         	echo "<br>Total de la hongo " . $i . ": " .$arrayTamanoHongo[$i];
         }*/
-		/*for ($i=0; $i < sizeof($_SESSION["pesoCepasTotal"]); $i++) { 
+		for ($i=0; $i < sizeof($_SESSION["pesoCepasTotal"]); $i++) { 
         	echo "<br>Total de la cepa " . $i . ": " .$_SESSION["pesoCepasTotal"][$i];
         	echo "<br>Total de la hongo " . $i . ": " .$_SESSION["tamanoHongo"][$i];
-        }*/
+        }
 	}
 
 

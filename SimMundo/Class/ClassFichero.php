@@ -11,6 +11,11 @@ class ClassFichero
 	public $lluviaMedia;
 	public $numeroLineas;
 
+	//variables para la captura de la linea en la que empieza cada tipo de datos n el .txt
+	public $lineaTemperaturaMedia = 0;
+	public $lineaLluviaMedia = 0;
+	public $lineaHumedad = 0;
+
 
 	public $archivo;//done cargo y guardo el archivo
 	public $fechaActual; //guardo la fecha del archivo por donde pasa
@@ -27,6 +32,7 @@ class ClassFichero
 		$this->cargarArchivo();
 		$this->calcularPeriodo();
 		$this->numeroLineas = count($this->archivo);
+		$this->getLineasInicioDatos();
 	
 		# code...
 	}
@@ -43,7 +49,7 @@ class ClassFichero
 		//sustituir mas adelante la linea comentada por la que no esta comentada
 		//esta ya coge el archivo subido en carpetaDatos
 		//$this->archivo = file($this->dir_subida . $_SESSION[]);
-		$this->archivo = file("Class/historico.txt");
+		$this->archivo = file("historico.txt");
 		//$this->archivo = $arch;
 		
 		return $this->archivo;
@@ -200,6 +206,10 @@ class ClassFichero
 			    $this->temperaturaMedia = str_replace(',', '.', $float1);
 			    $this->fechaActual = $ddmmyyyy1;
 
+			    if($this->lineaTemperaturaMedia == 0){
+			    	$this->lineaTemperaturaMedia = $p;
+			    }
+
 
 			}
 		}else{
@@ -236,6 +246,11 @@ class ClassFichero
 			
 			    $this->lluviaMedia = $float1;
 			    $this->fechaActual = $ddmmyyyy1;
+
+			    if($this->lineaLluviaMedia == 0){
+			    	$this->lineaLluviaMedia = $p;
+			    }
+
 			    
 			}
 		}else{
@@ -265,7 +280,7 @@ class ClassFichero
 		//funcion que aplica el la expresion regular
 		if ($c=preg_match_all ("/".$re1.$re2.$re3.$re4.$re5.$re6.$re7.$re8."/is", $l, $matches))
 		{
-			if($p != 19){//el 19 es un ajuste mientras no solvento el problema de coger dos
+			//if($p != 19){//el 19 es un ajuste mientras no solvento el problema de coger dos
 				//fechas del tipo 01/4/2015-23/10/2015 !!!!!!!!!!!!!!!!SOLVENTAARRRRRRRRR
 
 
@@ -298,6 +313,39 @@ class ClassFichero
 			    $this->humedadMedia = str_replace(',', '.', $float1);
 			    $this->fechaActual = $ddmmyyyy1;
 
+			    if($this->lineaHumedad == 0){
+			    	$this->lineaHumedad = $p;
+			    }
+
+
+
+			//}
+		}else{
+			/*echo "<br>";
+			echo "no se encontro nada.";*/
+		}
+	}
+
+
+
+	public function getLineasInicioDatosTemperaturaMedia($l,$p){
+		//expresion regular que obtiene los datos del fichero
+		$re1='.*?';	# Non-greedy match on filler
+		$re2='((?:(?:[0-2]?\\d{1})|(?:[3][01]{1}))[-:\\/.](?:[0]?[1-9]|[1][012])[-:\\/.](?:(?:[1]{1}\\d{1}\\d{1}\\d{1})|(?:[2]{1}\\d{3})))(?![\\d])';	# DDMMYYYY 1
+		$re3='.*?';	# Non-greedy match on filler
+		$re4='((?:[a-z][a-z]+))';	# Word 1
+		$re5='.*?';	# Non-greedy match on filler
+		$re6='((?:[a-z][a-z]+))';	# Word 2
+		$re7='.*?';	# Non-greedy match on filler
+		$re8='(-?[0-9]+(?!\))([,\.][0-9]*)?)';	# Float 1
+		
+		//funcion que aplica el la expresion regular
+		if ($c=preg_match_all ("/".$re1.$re2.$re3.$re4.$re5.$re6.$re7.$re8."/is", $l, $matches))
+		{
+			if($p != 19){//el 19 es un ajuste mientras no solvento el problema de coger dos
+				//fechas del tipo 01/4/2015-23/10/2015 !!!!!!!!!!!!!!!!SOLVENTAARRRRRRRRR
+
+				$this->lineaTemperaturaMedia = $p;
 
 			}
 		}else{
@@ -305,6 +353,44 @@ class ClassFichero
 			echo "no se encontro nada.";*/
 		}
 	}
+
+
+	public function getLineasInicioDatos(){
+		for ($i=0; $i < $this->getNumeroLineas(); $i++) { 
+
+			$linea = $this->archivo[$i];
+
+			if($this->lineaTemperaturaMedia == 0){
+				$this->obtenerInformacionTemperaturaMedia($linea,$i);
+				//echo "<br>". $this->lineaTemperaturaMedia;
+			}
+			if($this->lineaLluviaMedia == 0){
+				$this->obtenerInformacionLluviaMedia($linea,$i);
+				//echo "<br>". $this->lineaLluviaMedia;
+			}
+			if($this->lineaHumedad == 0){
+				$this->obtenerInformacionHumedadMedia($linea,$i);
+				//echo "<br>". $this->lineaHumedad;
+			}
+		}
+	}
+
+
+
+	public function getLineaTemperaturaMedia(){
+		return $this->lineaTemperaturaMedia;
+	}
+
+	public function getLineaLluviaMedia(){
+		return $this->lineaLluviaMedia;
+	}
+
+	public function getLineaHumedad(){
+		return $this->lineaHumedad;
+	}
+
+
+
 //fin
 }
 
@@ -319,5 +405,5 @@ while($i!=3000){
 
 */
 
-
+//$mierda->getLineasInicioDatos();
  ?>

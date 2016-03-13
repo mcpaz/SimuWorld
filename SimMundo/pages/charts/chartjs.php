@@ -58,137 +58,8 @@
 
 
         <!-- codigo mio para la creacion de las graficas -->
-      <script type="text/javascript">
-
-      //defino las varaibles para las graficas de los datos climaticos
-
-        var periodo = <?php echo $_SESSION["periodo"] ?>;
-        var numeroSimulaciones = <?php echo $_SESSION["numeroSimulaciones"] ?>;
-
-        var datosGraficaTempe = [];
-        var datosGraficaLluvia = [];
-        var datosGraficaHumedad =[];
-
-        //datos de la cepa y hongo
-        var datosGraficapesoCepasTotal =[];
-        var datosGraficatamanoHongo =[];
-      </script>
-
-      <?php      
-      
-        $i=0;
-        $j=0;
      
-        while($i<$_SESSION["periodo"]){     
-          
-
-            echo "<script>datosGraficaTempe[$i] = " .(float) $_SESSION['temperatura'][$i] . ";</script>";
-            echo "<script>datosGraficaLluvia[$i] = " . (float)$_SESSION["lluvia"][$i] . ";</script>";
-            echo "<script>datosGraficaHumedad[$i] = " . (float)$_SESSION["humedad"][$i] . ";</script>";    
-          $i++;
-        }    
-
-        while ( $j < $_SESSION["numeroSimulaciones"]) {
-          echo "<script>datosGraficapesoCepasTotal[$j] = " .(float) $_SESSION['pesoCepasTotal'][$j] . ";</script>";
-          echo "<script>datosGraficatamanoHongo[$j] = " .(float) $_SESSION['tamanoHongo'][$j] . ";</script>";
-          $j++;
-        }
-
-
-
-          
-      ?>  
-      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
-      <script type="text/javascript">
-
-          
-
-
-
-       
-          google.load('visualization', '1.1', {packages: ['line']});
-          //google.setOnLoadCallback(graficaDatosClimaticos);
-          google.setOnLoadCallback(generarGraficas);
-         
-
-
-
-          function generarGraficas(){
-            graficaDatosClimaticos();
-        setTimeout(function(){  graficaCepaHongo();}, 0);
-          
-            
-          }
-
-
-          function graficaDatosClimaticos() {
-            var i = 0;
-            var data = new google.visualization.DataTable();
-            data.addColumn('number', 'day');
-            data.addColumn('number', 'temperatura');
-            data.addColumn('number', 'lluvia');
-            data.addColumn('number', 'humedad');
-            
-            //data.addColumn('number', 'Transformers: Age of Extinction');
-
-       
-
-            for (var i =0; i < numeroSimulaciones; i++) {
-              data.addRows([  [i, datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
-            };
-
-
-  
-            var options = {
-              chart: {
-                title: 'Box Office Earnings in First Two Weeks of Opening',
-                subtitle: 'in millions of mierdaaaaaaaa (USD)'
-              },
-              width: 900,
-              height: 500
-              
-            };
-            var chart = new google.charts.Line(document.getElementById('graficaDatosClimaticos'));
-
-            chart.draw(data, options);
-          }
-
-
-
-
-          function graficaCepaHongo() {
-            var i = 0;
-            var data = new google.visualization.DataTable();
-            data.addColumn('number', 'Day');
-            data.addColumn('number', 'CEPA');
-            data.addColumn('number', 'HONGO');
-
-            
-            //data.addColumn('number', 'Transformers: Age of Extinction');
-
-       
-
-            for (var i =0; i < numeroSimulaciones; i++) {
-              data.addRows([  [i, datosGraficapesoCepasTotal[i], datosGraficatamanoHongo[i] ]  ]);
-            };
-
-
-  
-            var options = {
-              chart: {
-                title: 'Box Office Earnings in First Two Weeks of Opening',
-                subtitle: 'in millions of dollars (USD)'
-              },
-              width: 900,
-              height: 500
-              
-            };
-            var chart = new google.charts.Line(document.getElementById('graficaCepaHongo'));
-
-            chart.draw(data, options);
-          }
-       </script>
+      
         <!-- Main content -->
         <section class="content">
           <div class="row">
@@ -261,7 +132,136 @@
     <script src="../../dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
-    <!-- page script -->
 
+     <script type="text/javascript">
+
+      //defino las varaibles para las graficas de los datos climaticos
+
+        var periodo = <?php echo $_SESSION["periodo"] ?>;
+        var numeroSimulaciones = <?php echo $_SESSION["numeroSimulaciones"] ?>;
+
+        var datosGraficaTempe = [];
+        var datosGraficaLluvia = [];
+        var datosGraficaHumedad =[];
+
+        //datos de la cepa y hongo
+        var datosGraficapesoCepasTotal =[];
+        var datosGraficatamanoHongo =[];
+      </script>
+
+      <?php      
+      
+        $i=0;
+        $j=0;
+     
+        while($i<$_SESSION["periodo"]){     
+          
+
+            echo "<script>datosGraficaTempe[$i] = " .(float) $_SESSION['temperatura'][$i] . ";</script>";
+            echo "<script>datosGraficaLluvia[$i] = " . (float)$_SESSION["lluvia"][$i] . ";</script>";
+            echo "<script>datosGraficaHumedad[$i] = " . (float)$_SESSION["humedad"][$i] . ";</script>";    
+          $i++;
+          echo "<br>" . $i;
+        }    
+
+        while ( $j < $_SESSION["numeroSimulaciones"]) {
+          echo "<script>datosGraficapesoCepasTotal[$j] = " .(float) $_SESSION['pesoCepasTotal'][$j] . ";</script>";
+          echo "<script>datosGraficatamanoHongo[$j] = " .(float) $_SESSION['tamanoHongo'][$j] . ";</script>";
+          $j++;
+        }
+
+
+
+          
+      ?>  
+      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <!-- page script -->
+<script type="text/javascript">
+
+          
+          google.load('visualization', '1.1', {packages: ['line']});
+          //google.setOnLoadCallback(graficaDatosClimaticos);
+          google.setOnLoadCallback(generarGraficas);
+         
+
+
+
+          function generarGraficas(){
+            graficaDatosClimaticos();
+        setTimeout(function(){  graficaCepaHongo();}, 0);
+          
+            
+          }
+
+
+          function graficaDatosClimaticos() {
+            var i = 0;
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'day');
+            data.addColumn('number', 'temperatura');
+            data.addColumn('number', 'lluvia');
+            data.addColumn('number', 'humedad');
+            
+            //data.addColumn('number', 'Transformers: Age of Extinction');
+
+       
+
+            for (var i =0; i < periodo; i++) {
+              data.addRows([  [i, datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
+               
+            };
+
+
+  
+            var options = {
+              chart: {
+                title: 'Box Office Earnings in First Two Weeks of Opening',
+                subtitle: 'in millions of mierdaaaaaaaa (USD)'
+              },
+              width: 900,
+              height: 500
+              
+            };
+            var chart = new google.charts.Line(document.getElementById('graficaDatosClimaticos'));
+
+            chart.draw(data, options);
+          }
+
+
+
+
+          function graficaCepaHongo() {
+            var i = 0;
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'Day');
+            data.addColumn('number', 'CEPA');
+            data.addColumn('number', 'HONGO');
+
+            
+            //data.addColumn('number', 'Transformers: Age of Extinction');
+
+       
+
+            for (var i =0; i < numeroSimulaciones; i++) {
+              data.addRows([  [i, datosGraficapesoCepasTotal[i], datosGraficatamanoHongo[i] ]  ]);
+            };
+
+
+  
+            var options = {
+              chart: {
+                title: 'Box Office Earnings in First Two Weeks of Opening',
+                subtitle: 'in millions of dollars (USD)'
+              },
+              width: 900,
+              height: 500
+              
+            };
+            var chart = new google.charts.Line(document.getElementById('graficaCepaHongo'));
+
+            chart.draw(data, options);
+          }
+       </script>
   </body>
 </html>

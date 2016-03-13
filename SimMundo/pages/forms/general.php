@@ -173,9 +173,17 @@
                       <label  class="col-sm-2 control-label">Referencia temperatura</label>
                       <div class="col-sm-10">
                         <input type="text" class="form-control" name="referenciaTemperaturaHoja" placeholder="Temperatura" value="11">
-                      </div>
-                      
+                      </div>                      
                     </div>
+                    <div class="form-group">
+                      <label  class="col-sm-2 control-label">Numero de hojas de la cepa</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="numeroHojas" placeholder="Hojas" value="7">
+                      </div>
+                    </div>
+
+
+
                     <label><h4>Porcentajes de crecimiento segun los factores ambientales de la HOJA</h4></label>
                     <div class="form-group">
                       <label  class="col-sm-2 control-label">Porcentaje de crecimiento de la HOJA</label>
@@ -297,6 +305,7 @@
         $claseDato->setReferenciaLluviaHoja($_POST["referenciaLluviaHoja"]);
         $claseDato->setReferenciaTemperaturaHoja($_POST["referenciaTemperaturaHoja"]);
         $claseDato->setPorcentajeCrecimientoHoja($_POST["porcentajeCrecimientoHoja"]);
+        $claseDato->setNumeroHojas($_POST["numeroHojas"]);
 
           //datos de hongo
         $claseDato->setReferenciaLluviaHongo($_POST["referenciaLluviaHongo"]);

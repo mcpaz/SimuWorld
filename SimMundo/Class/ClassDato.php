@@ -25,6 +25,8 @@ class ClassDato
 	public $referenciaLluviaHoja;
 	public $referenciaTemperaturaHoja;
 	public $porcentajeCrecimientoLluviaHoja;
+	public $numeroHojas;
+	public $arrrayHojas = array();
 	
 
 	//datos de referencia hongo
@@ -33,6 +35,8 @@ class ClassDato
 	public $referenciaHumedadHongo;
 	public $porcentajeCrecimientoLluviaHongo;
 	public $porcentajeProbabilidadHumedadHongo;
+
+
 
 
 	public function __construct()
@@ -100,6 +104,15 @@ class ClassDato
 	public function setPorcentajeCrecimientoHoja($ref){
 		$this->porcentajeCrecimientoLluviaHoja = $ref;
 	}
+
+
+	public function getNumeroHojas(){
+    	return $this->numeroHojas;
+    }
+
+    public function setNumeroHojas($num){
+    	$this->numeroHojas = $num;
+    }
 
 
 //datos de referencia hongo
@@ -191,7 +204,8 @@ class ClassDato
     }
 
 
-    
+
+
 
 
     

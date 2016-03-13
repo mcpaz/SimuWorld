@@ -241,6 +241,13 @@ class ClassMundo
 	}
 
 
+	public function getNumeroHojas(){
+		return $this->claseDato->getNumeroHojas();
+	}
+
+
+
+
 	public function cabeceraLog(){
 		$periodoInicial =  $this->claseFichero->getPeriodoInicial();
 		$periodoFin = $this->claseFichero->getPeriodoFin();
@@ -365,12 +372,15 @@ class ClassMundo
   		$refLluviaHoja = $this->getReferenciaLluviaHoja();
   		$refTemperaturaHoja= $this->getReferenciaTemperaturaHoja();
   		$porcentajeCreHoja = $this->getPorcentajeCrecimientoHoja();
+  		$numeroHojas = $this->getNumeroHojas();
 
   		$refLluviaHongo = $this->getReferenciaLluviaHongo();
   		$refTemperaturaHongo = $this->getReferenciaTemperaturaHongo();
   		$refHumedadHongo = $this->getReferenciaHumedadHongo();
   		$porcentajeCreHongo = $this->getPorcentajeCrecimientoHongo();
   		$procentajeProbabilidadHumedad = $this->getPorcentajeProbabilidadHumedadHongo();
+
+
 
 
 
@@ -398,13 +408,15 @@ class ClassMundo
                 $lluvia = $this->getLluviaMediaFichero($i+ $lineaLluvia);
                 $fechaLog = $this->getFechaActual($i); //esta asignacion para guardar la fecha en tipo string
                 $fechaFicheroActual = date_create(str_replace("/", "-",$this->getFechaActual($i)));//cojo la fecha que viene del fichero de datos climaticos y la paso a date para poder comparalar con otra fecha
+
+         
                 
-                echo "t: " . $temperatura;
+               /* echo "t: " . $temperatura;
                 echo "<br> ";
         		echo "h: " .$humedad;
         		echo "<br> ";
         		echo "ll: " .$lluvia;
-echo "<br> ";echo "<br> ";
+				echo "<br> ";echo "<br> ";*/
 
                 //GUARDO LOS DATOS EN SESION DE ARRAY PAR LUEGO PASARLOS AL JAVASCRIPT
                 //QUE CREA LAS GRAFICAS
@@ -413,7 +425,7 @@ echo "<br> ";echo "<br> ";
                 $_SESSION["humedad"][$k] = $humedad;
 
                 if($fechaInicialCrecimiento < $fechaFicheroActual && $fechaFinCrecimiento > $fechaFicheroActual ){
-
+                	echo "<br>". $i;
                     for ($j =0; $j  < $numCepas; $j ++) { 
                         $pesoUva = $arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
                         

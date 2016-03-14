@@ -443,7 +443,7 @@ class ClassMundo
                 $_SESSION["lluvia"][$k]= $lluvia;
                 $_SESSION["humedad"][$k] = $humedad;
                 $_SESSION["fechaFichero"][$k] = $fechaLog;
-     
+
 
                 if($fechaInicialCrecimiento < $fechaFicheroActual && $fechaFinCrecimiento > $fechaFicheroActual ){
            
@@ -519,7 +519,6 @@ class ClassMundo
           $arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);*/
           $_SESSION["pesoCepasTotal"][$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
           $_SESSION["tamanoHongo"][$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
-          $_SESSION["tamanoHojas"][$z] = $this->calcularTotalTamanoHojas($arrayCepas,$numeroHojas);
 
 
          

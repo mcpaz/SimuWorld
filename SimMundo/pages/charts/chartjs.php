@@ -103,7 +103,7 @@
 
               <div class="col-md-6">
               <!-- LINE CHART -->
-              <!--
+             
               <div class="box box-info">
                 <div class="box-header with-border">
                   <h3 class="box-title">Line Chart</h3>
@@ -117,8 +117,7 @@
                     <canvas id="lineChart" style="height:250px"></canvas>
                   </div>
                 </div>
-              </div> -->
-
+              </div> 
 
          
 
@@ -170,6 +169,10 @@
         var datosGraficaPesoCepasTotal =[];
         var datosGraficaTamanoHongo =[];
         var datosGraficaTamanoHoja = [];
+
+
+
+
       </script>
 
       <?php      
@@ -177,13 +180,16 @@
         $i=0;
         $j=0;
      
+
+
+
         while($i<$_SESSION["periodo"]){     
           
 
             echo "<script>datosGraficaTempe[$i] = " .(float) $_SESSION['temperatura'][$i] . ";</script>";
             echo "<script>datosGraficaLluvia[$i] = " . (float)$_SESSION["lluvia"][$i] . ";</script>";
             echo "<script>datosGraficaHumedad[$i] = " . (float)$_SESSION["humedad"][$i] . ";</script>";
-            echo "<script>datosGraficaFechaFichero[$i] = " . $_SESSION["fechaFichero"][$i] . ";</script>";
+            echo "<script>datosGraficaFechaFichero[$i] = '" . $_SESSION["fechaFichero"][$i] . "';</script>";
           $i++;
          
         }    
@@ -214,12 +220,13 @@
     <!-- page script -->
     <script type="text/javascript">
 
+
+         
           
           google.load('visualization', '1.1', {packages: ['line']});
           //google.setOnLoadCallback(graficaDatosClimaticos);
           google.setOnLoadCallback(generarGraficas);
          
-
 
 
           function generarGraficas(){
@@ -233,17 +240,23 @@
           function graficaDatosClimaticos() {
             var i = 0;
             var data = new google.visualization.DataTable();
-            data.addColumn('number', 'mese');
+
+
+            var cadenaPartida = [];
+      
+
+            data.addColumn('date', 'meses');
             data.addColumn('number', 'temperatura');
             data.addColumn('number', 'lluvia');
             data.addColumn('number', 'humedad');
             
             //data.addColumn('number', 'Transformers: Age of Extinction');
 
-       
-
             for (var i =0; i < periodo; i++) {
-              data.addRows([  [ i, datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
+
+              cadenaPartida = datosGraficaFechaFichero[i].split("/");              
+
+              data.addRows([  [ new Date(parseInt(cadenaPartida[2]),parseInt(cadenaPartida[1]),parseInt(cadenaPartida[0])), datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
                
             };
 
@@ -254,16 +267,18 @@
                 title: 'Gráfica de datos climaticos.'
               },
               width: 800,
-              height: 450            
+              height: 450 ,
+            
               
             };
+
             var chart = new google.charts.Line(document.getElementById('graficaDatosClimaticos'));
 
             chart.draw(data, options);
           }
 
 
-
+  
 
           function graficaCepaHongo() {
             var i = 0;
@@ -300,7 +315,7 @@
 
 
        <script>
-         /* $(function () {
+       $(function () {
  
         // This will get the first returned node in the jQuery collection.
  
@@ -311,8 +326,8 @@
             {
               label: "Electronics",
               fillColor: "rgba(210, 214, 222, 1)",
-              strokeColor: "rgba(210, 214, 222, 1)",
-              pointColor: "rgba(210, 214, 222, 1)",
+              strokeColor: "rgba(210, 100, 222, 1)",
+              pointColor: "rgba(100, 214, 100, 1)",
               pointStrokeColor: "#c1c7d1",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(220,220,220,1)",
@@ -383,7 +398,7 @@
         lineChart.Line(areaChartData, lineChartOptions);
 
 
-          });*/
+          });
        
         </script>
   </body>

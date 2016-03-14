@@ -91,13 +91,34 @@
                 </div>
                 <div class="box-body">
                   <div class="chart">
-                    <div id="graficaCepaHongo"></div>
+                    <div //id="graficaCepaHongo"></div>
                   </div>
                 </div><!-- /.box-body -->
 
 
                 
               </div><!-- /.box -->
+
+
+
+              <div class="col-md-6">
+              <!-- LINE CHART -->
+              <!--
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Line Chart</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart">
+                    <canvas id="lineChart" style="height:250px"></canvas>
+                  </div>
+                </div>
+              </div> -->
+
 
          
 
@@ -143,10 +164,12 @@
         var datosGraficaTempe = [];
         var datosGraficaLluvia = [];
         var datosGraficaHumedad =[];
+        var datosGraficaFechaFichero = [];
 
         //datos de la cepa y hongo
-        var datosGraficapesoCepasTotal =[];
-        var datosGraficatamanoHongo =[];
+        var datosGraficaPesoCepasTotal =[];
+        var datosGraficaTamanoHongo =[];
+        var datosGraficaTamanoHoja = [];
       </script>
 
       <?php      
@@ -159,14 +182,16 @@
 
             echo "<script>datosGraficaTempe[$i] = " .(float) $_SESSION['temperatura'][$i] . ";</script>";
             echo "<script>datosGraficaLluvia[$i] = " . (float)$_SESSION["lluvia"][$i] . ";</script>";
-            echo "<script>datosGraficaHumedad[$i] = " . (float)$_SESSION["humedad"][$i] . ";</script>";    
+            echo "<script>datosGraficaHumedad[$i] = " . (float)$_SESSION["humedad"][$i] . ";</script>";
+            echo "<script>datosGraficaFechaFichero[$i] = " . $_SESSION["fechaFichero"][$i] . ";</script>";
           $i++;
-          echo "<br>" . $i;
+         
         }    
 
         while ( $j < $_SESSION["numeroSimulaciones"]) {
-          echo "<script>datosGraficapesoCepasTotal[$j] = " .(float) $_SESSION['pesoCepasTotal'][$j] . ";</script>";
-          echo "<script>datosGraficatamanoHongo[$j] = " .(float) $_SESSION['tamanoHongo'][$j] . ";</script>";
+          echo "<script>datosGraficaPesoCepasTotal[$j] = " .(float) $_SESSION['pesoCepasTotal'][$j] . ";</script>";
+          echo "<script>datosGraficaTamanoHongo[$j] = " .(float) $_SESSION['tamanoHongo'][$j] . ";</script>";
+          echo "<script>datosGraficaTamanoHoja[$j] = " .(float) $_SESSION['tamanoHojas'][$j] . ";</script>";
           $j++;
         }
 
@@ -175,9 +200,19 @@
           
       ?>  
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
+<script src="../../plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+    <!-- ChartJS 1.0.1 -->
+    <script src="../../plugins/chartjs/Chart.min.js"></script>
+    <!-- FastClick -->
+    <script src="../../plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../dist/js/demo.js"></script>
     <!-- page script -->
-<script type="text/javascript">
+    <script type="text/javascript">
 
           
           google.load('visualization', '1.1', {packages: ['line']});
@@ -198,7 +233,7 @@
           function graficaDatosClimaticos() {
             var i = 0;
             var data = new google.visualization.DataTable();
-            data.addColumn('number', 'day');
+            data.addColumn('number', 'mese');
             data.addColumn('number', 'temperatura');
             data.addColumn('number', 'lluvia');
             data.addColumn('number', 'humedad');
@@ -208,7 +243,7 @@
        
 
             for (var i =0; i < periodo; i++) {
-              data.addRows([  [i, datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
+              data.addRows([  [ i, datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
                
             };
 
@@ -216,11 +251,10 @@
   
             var options = {
               chart: {
-                title: 'Box Office Earnings in First Two Weeks of Opening',
-                subtitle: 'in millions of mierdaaaaaaaa (USD)'
+                title: 'Gráfica de datos climaticos.'
               },
-              width: 900,
-              height: 500
+              width: 800,
+              height: 450            
               
             };
             var chart = new google.charts.Line(document.getElementById('graficaDatosClimaticos'));
@@ -234,9 +268,10 @@
           function graficaCepaHongo() {
             var i = 0;
             var data = new google.visualization.DataTable();
-            data.addColumn('number', 'Day');
+            data.addColumn('number', 'Numero de simulaciones');
             data.addColumn('number', 'CEPA');
             data.addColumn('number', 'HONGO');
+            data.addColumn('number', 'HOJA');
 
             
             //data.addColumn('number', 'Transformers: Age of Extinction');
@@ -244,18 +279,17 @@
        
 
             for (var i =0; i < numeroSimulaciones; i++) {
-              data.addRows([  [i, datosGraficapesoCepasTotal[i], datosGraficatamanoHongo[i] ]  ]);
+              data.addRows([  [i, datosGraficaPesoCepasTotal[i], datosGraficaTamanoHongo[i] , datosGraficaTamanoHoja[i]]  ]);
             };
 
 
   
             var options = {
               chart: {
-                title: 'Box Office Earnings in First Two Weeks of Opening',
-                subtitle: 'in millions of dollars (USD)'
+                title: 'Gráfica de crecimiento'
               },
-              width: 900,
-              height: 500
+              width: 800,
+              height: 450
               
             };
             var chart = new google.charts.Line(document.getElementById('graficaCepaHongo'));
@@ -263,5 +297,94 @@
             chart.draw(data, options);
           }
        </script>
+
+
+       <script>
+         /* $(function () {
+ 
+        // This will get the first returned node in the jQuery collection.
+ 
+
+        var areaChartData = {
+          labels: ["January", "February", "March", "April", "May", "June", "July"],
+          datasets: [
+            {
+              label: "Electronics",
+              fillColor: "rgba(210, 214, 222, 1)",
+              strokeColor: "rgba(210, 214, 222, 1)",
+              pointColor: "rgba(210, 214, 222, 1)",
+              pointStrokeColor: "#c1c7d1",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: [65, 59, 80, 81, 56, 55, 40]
+            },
+            {
+              label: "Digital Goods",
+              fillColor: "rgba(60,141,188,0.9)",
+              strokeColor: "rgba(60,141,188,0.8)",
+              pointColor: "#3b8bba",
+              pointStrokeColor: "rgba(60,141,188,1)",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(60,141,188,1)",
+              data: [28, 48, 40, 19, 86, 27, 90]
+            }
+          ]
+        };
+
+        var areaChartOptions = {
+          //Boolean - If we should show the scale at all
+          showScale: true,
+          //Boolean - Whether grid lines are shown across the chart
+          scaleShowGridLines: false,
+          //String - Colour of the grid lines
+          scaleGridLineColor: "rgba(0,0,0,.05)",
+          //Number - Width of the grid lines
+          scaleGridLineWidth: 1,
+          //Boolean - Whether to show horizontal lines (except X axis)
+          scaleShowHorizontalLines: true,
+          //Boolean - Whether to show vertical lines (except Y axis)
+          scaleShowVerticalLines: true,
+          //Boolean - Whether the line is curved between points
+          bezierCurve: true,
+          //Number - Tension of the bezier curve between points
+          bezierCurveTension: 0.3,
+          //Boolean - Whether to show a dot for each point
+          pointDot: false,
+          //Number - Radius of each point dot in pixels
+          pointDotRadius: 4,
+          //Number - Pixel width of point dot stroke
+          pointDotStrokeWidth: 1,
+          //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+          pointHitDetectionRadius: 20,
+          //Boolean - Whether to show a stroke for datasets
+          datasetStroke: true,
+          //Number - Pixel width of dataset stroke
+          datasetStrokeWidth: 2,
+          //Boolean - Whether to fill the dataset with a color
+          datasetFill: true,
+          //String - A legend template
+          legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+          //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+          maintainAspectRatio: true,
+          //Boolean - whether to make the chart responsive to window resizing
+          responsive: true
+        };
+
+        //Create the line chart
+
+
+        //-------------
+        //- LINE CHART -
+        //--------------
+        var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+        var lineChart = new Chart(lineChartCanvas);
+        var lineChartOptions = areaChartOptions;
+        lineChartOptions.datasetFill = false;
+        lineChart.Line(areaChartData, lineChartOptions);
+
+
+          });*/
+       
+        </script>
   </body>
 </html>

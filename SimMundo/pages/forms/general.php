@@ -127,7 +127,7 @@
                       <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                       </div>
-                      <input type="text" class="form-control pull-right"  id="reservation" name = "rangoMesCrecimiento">
+                      <input type="text" class="form-control pull-right"  id="reservation" name = "rangoMesCrecimiento" value = "01/06/2015 - 30/09/2015">
                     </div><!-- /.input group -->
                   </div><!-- /.form group -->
                   </div>

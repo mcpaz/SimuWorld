@@ -13,14 +13,13 @@ class ClassCepa{
 	
 
 	//variables propias de la cepa
-	private $numerohojas = 7;//lo tomo como ejemplo desde el principio despues del deshoje
-	private $tamanoHojas;
-	private $numRacimos;
-	private $pesoRacimo = 0.1;
+	public $totalTamanoHojas;
+	public $arrayHojas = array();
+	public $pesoRacimo = 0.1;
 
-	private $tenerHongo = 0; //guarda si tiene o no hongo
-	private $fechaSulfatado;
-
+	public $tenerHongo = 0; //guarda si tiene o no hongo
+	public $fechaSulfatado;
+	public $inicializarArrayHojas = 0;//para controlar que se inicilize el array de hojas
 
 	//getters
 	public function getTemperatura(){
@@ -139,13 +138,7 @@ class ClassCepa{
 			$temperatura = $temperatura + 0.01;
 		}
 
-
-
-		$referenciaLluviaUva = $refLluvia;
-		$referenciaTemperaturaUva = $refTemp;
-		$porcentajeCrecimientoUva = $crecimiento;
-		
-		$aumento = ($lluvia*$temperatura*$porcentajeCrecimientoUva)/($referenciaLluviaUva*$referenciaTemperaturaUva);
+		$aumento = ($lluvia*$temperatura*$crecimiento)/($refLluvia*$refTemp);
 		
 		//sumo al peso del racimo que hay lo que aumenta
 		$this->pesoRacimo = $this->pesoRacimo + $aumento;
@@ -155,7 +148,7 @@ class ClassCepa{
 	}
 
 
-	public function calCrecimientoHoja($lluvia,$temperatura,$refLluvia,$refTemp,$crecimiento){
+	public function calCrecimientoHoja($lluvia,$temperatura,$refLluvia,$refTemp,$crecimiento,$numeroHojas){
 		if($lluvia == 0){
 			$lluvia = $lluvia + 0.01;
 		}
@@ -165,22 +158,43 @@ class ClassCepa{
 			$temperatura = $temperatura + 0.01;
 		}
 
+		if($this->inicializarArrayHojas == 0){
+			$this->inicializarArrayHojas($numeroHojas);
+			$inicializarArrayHojas = 1;
+		}
 
 
-		$referenciaLluviaUva = $refLluvia;
-		$referenciaTemperaturaUva = $refTemp;
-		$porcentajeCrecimientoUva = $crecimiento;
-		
-		$aumento = ($lluvia*$temperatura*$porcentajeCrecimientoUva)/($referenciaLluviaUva*$referenciaTemperaturaUva);
 
-		//sumo al peso del racimo que hay lo que aumenta
-		$this->tamanoHojas = $this->tamanoHojas + $aumento;
-		//voy decir que este crecimeinto realmente es el aumento de peso de la uva(racimo)
-		return $this->tamanoHojas;
+		for ($i=0;$i<$numeroHojas;$i++){
+
+			$aumento = ($lluvia*$temperatura*$crecimiento)/($refLluvia*$refTemp);
+			$this->arrayHojas[$i] = $this->arrayHojas[$i]  + $aumento;
+		}
+
+		//de esta manera devuelvo  el totoal de tamano de hoja que hay hasta el momento
+		//lo hago para poder pasarle datos al lotg en claseMundo
+		return $this->calcularTotalTamanoHojas($numeroHojas);
+
+	}
+
+	public function calcularTotalTamanoHojas($numeroHojas){
+
+		for ($i=0;$i<$numeroHojas;$i++){
+
+			$this->totalTamanoHojas = $this->totalTamanoHojas + $this->arrayHojas[$i];
+			
+		}
+
+		return $this->totalTamanoHojas;
 	}
 
 
 
+	public function inicializarArrayHojas($numeroHojas){
+		for ($i = 0; $i <$numeroHojas;$i++){
+			$this->arrayHojas[$i] = 0;
+		}
+	}
 }
 
 

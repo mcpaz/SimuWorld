@@ -26,7 +26,7 @@ class ClassDato
 	public $referenciaTemperaturaHoja;
 	public $porcentajeCrecimientoLluviaHoja;
 	public $numeroHojas;
-	public $arrrayHojas = array();
+
 	
 
 	//datos de referencia hongo

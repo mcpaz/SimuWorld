@@ -24,6 +24,7 @@ class ClassMundo
     public $totalPesoUva; //variablepara guardar el total del crecimiento de la uva en peso por iteracion
     public $totalPesoUvaPorDia; //variablepara guardar el total del crecimiento de la uva por dia de peso por dia en casda iteracion
     public $totalTamanoTotalHongo;//variablepara guardar el total del crecimiento del hongo por iteracion
+    public $totalTamanoTotalHoja;
     
 
 	public $tipoTierra; // tipo de tierra que es determiante en la produccion y calidad del vino
@@ -324,6 +325,20 @@ class ClassMundo
 		return $this->totalTamanoTotalHongo;
 
 	}
+
+
+		public function calcularTotalTamanoHojas($arrayCepas,$numeroHojas){
+
+
+		for ($i=0; $i < sizeof($arrayCepas); $i++) { 
+
+			$this->totalTamanoTotalHoja = $this->totalTamanoTotalHoja +  $arrayCepas[$i]->calcularTotalTamanoHojas($numeroHojas);
+
+		}
+
+		return $this->totalTamanoTotalHoja;
+
+	}
     
     
     public function getFechaIniCrecimiento(){
@@ -350,6 +365,7 @@ class ClassMundo
 
 
 		$numCepas = $this->getNumeroCepas();
+
         $numeroSimulaciones = $this->getNumeroSimulaciones();
         //guardo en sesion tambien el numero de simulaciones porque me hace falta pra un bucle de carga de datos
         //en la venta de graficas
@@ -374,11 +390,14 @@ class ClassMundo
   		$porcentajeCreHoja = $this->getPorcentajeCrecimientoHoja();
   		$numeroHojas = $this->getNumeroHojas();
 
+
   		$refLluviaHongo = $this->getReferenciaLluviaHongo();
   		$refTemperaturaHongo = $this->getReferenciaTemperaturaHongo();
   		$refHumedadHongo = $this->getReferenciaHumedadHongo();
   		$porcentajeCreHongo = $this->getPorcentajeCrecimientoHongo();
   		$procentajeProbabilidadHumedad = $this->getPorcentajeProbabilidadHumedadHongo();
+
+
 
 
 
@@ -423,14 +442,16 @@ class ClassMundo
                 $_SESSION["temperatura"][$k] = $temperatura;
                 $_SESSION["lluvia"][$k]= $lluvia;
                 $_SESSION["humedad"][$k] = $humedad;
+                $_SESSION["fechaFichero"][$k] = $fechaLog;
+     
 
                 if($fechaInicialCrecimiento < $fechaFicheroActual && $fechaFinCrecimiento > $fechaFicheroActual ){
-                	echo "<br>". $i;
+           
                     for ($j =0; $j  < $numCepas; $j ++) { 
                         $pesoUva = $arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
-                        
+          
                         //echo "<br>peso uva:" .$arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
-                        $tamanoHoja = $arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja);
+                        $tamanoHoja = $arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja,$numeroHojas);
                         //echo "<br>tamaño de hoja:" .$arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja);
                         
                         //mientras esto sea 0 es que no hay condiciones optimas para que crezca el hongo
@@ -498,10 +519,13 @@ class ClassMundo
           $arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);*/
           $_SESSION["pesoCepasTotal"][$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
           $_SESSION["tamanoHongo"][$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
+          $_SESSION["tamanoHojas"][$z] = $this->calcularTotalTamanoHojas($arrayCepas,$numeroHojas);
+
 
          
           $this->totalPesoUva = 0; //hay que volver inicializarla a 0 para que no acumule los valores
           $this->totalTamanoTotalHongo = 0;
+          $this->totalTamanoTotalHoja = 0;
           echo "<br>---------------------------------------------------------------FIN DE ITERACION";
         //fin bucle numeroSimulaciones
         }
@@ -511,9 +535,19 @@ class ClassMundo
         	echo "<br>Total de la cepa " . $i . ": " .$arrayPesoCepasTotal[$i];
         	echo "<br>Total de la hongo " . $i . ": " .$arrayTamanoHongo[$i];
         }*/
-		for ($i=0; $i < sizeof($_SESSION["pesoCepasTotal"]); $i++) { 
+
+
+		for ($i=0; $i <$numCepas; $i++) { 
         	echo "<br>Total de la cepa " . $i . ": " .$_SESSION["pesoCepasTotal"][$i];
         	echo "<br>Total de la hongo " . $i . ": " .$_SESSION["tamanoHongo"][$i];
+        	echo "<br>Total de la hoja " . $i . ": " .$_SESSION["tamanoHojas"][$i];
+        	echo"<br>";
+        }
+
+
+        for ($i=0; $i < sizeof($_SESSION["fechaFichero"]) ; $i++) { 
+        	echo "<br>";
+        	print_r($_SESSION["fechaFichero"][$i]);
         }
 	}
 

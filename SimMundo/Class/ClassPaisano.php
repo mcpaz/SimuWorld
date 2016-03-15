@@ -8,7 +8,7 @@ class ClassPaisano
 	
 	public $numeroFechasSulfatos;
 	public $diasDuracionSulfato;
-	public $rangoTiempoSulfato;
+	public $tiempoSulfato = array();
 
 	function __construct()
 	{
@@ -19,10 +19,18 @@ class ClassPaisano
  		$this->diasDuracionSulfato = $duracion;
  	}
 
+ 	public function getDuracionSulfato(){
+ 		return $this->diasDuracionSulfato;
+ 	}
+
 
 
  	public function setFechasSulfato($arrayFech){
- 		$this->rangoTiempoSulfato = $arrayFech;
+ 		$this->tiempoSulfato = $arrayFech;
+ 	}
+
+ 	public function getFechasSulfato(){
+ 		return $this->tiempoSulfato;
  	}
 
 

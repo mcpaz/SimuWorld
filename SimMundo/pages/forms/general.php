@@ -344,11 +344,11 @@
 
 
         //recojo el valor de cuantasfechas se van introducir y luego recorro todas $_POST dpara recvojer los valores
-        if(isset($_POSt["sulfatada0"])){
-          for ($i=1; $i< $_POST["numeroFechasSulfatos"] +1 ; $i++){
+        if(isset($_POST["sulfatada0"])){
+          for ($i=0; $i< $_POST["numeroFechasSulfatos"] ; $i++){
             $arrayFechasSulfato[$i] = $_POST["sulfatada".$i];
-            $arrayFechasSulfato[$i];
-          }  
+
+          }
         }
         
  

@@ -74,12 +74,14 @@ class ClassMundo
 
 
     public function guardarClasePaisano(&$paisano){
-    	$this->clasePaisno = &$paisano;
+    	$this->clasePaisano = &$paisano;
     }
 
     public function guardarClaseFichero(&$dato){
     	$this->claseFichero = &$dato;
     }
+
+
 
     public function getClaseFichero(){
     	return $this->claseFichero;
@@ -365,6 +367,10 @@ class ClassMundo
 		//$fechaInicialCrecimiento = new DateTime($this->getFechaIniCrecimiento());
 		//$fechaFinCrecimiento =  new DateTime($this->getFechaFinCrecimiento());
 
+		//fechas del pasiano apra el sulfato
+        $arrayFechasSulfato = $this->clasePaisano->getFechasSulfato();
+        $tiempoDuracionSulfato = $this->clasePaisano->getDuracionSulfato();
+
 
 		$numCepas = $this->getNumeroCepas();
 
@@ -399,16 +405,12 @@ class ClassMundo
   		$porcentajeCreHongo = $this->getPorcentajeCrecimientoHongo();
   		$procentajeProbabilidadHumedad = $this->getPorcentajeProbabilidadHumedadHongo();
 
-
-
-
-
-
-
   		 
 
 		$contador = 0;//2ª variable de control para que no este siempre calculando si infeta o no
-
+		$contSulfato = 0;
+		$contFechaSulfato = 0;
+			
 
         for($z=0;$z <  $numeroSimulaciones; $z++ ){
             //inicializo las cepas
@@ -449,6 +451,9 @@ class ClassMundo
 
                 if($fechaInicialCrecimiento < $fechaFicheroActual && $fechaFinCrecimiento > $fechaFicheroActual ){
            
+
+
+
                     for ($j =0; $j  < $numCepas; $j ++) { 
                         $pesoUva = $arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
           
@@ -459,46 +464,68 @@ class ClassMundo
                         //mientras esto sea 0 es que n[0],cadenaPartida[1],cadenaPartida[2]o hay condiciones optimas para que crezca el hongo
                         //y entonces se calcula su probabilidad pasandole la humedad para ver si se puede desarrolar o no
 
-                        if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 0){					
+                        $fechaSulfatoIni = date_create(str_replace("/","-",$arrayFechasSulfato[$contFechaSulfato]));
 
-                            $arrayEnfermedades[$j]->calcularProbabilidadInfectar($humedad,$refHumedadHongo,$procentajeProbabilidadHumedad);
-
-                        }
-                     
+                        $fechaSulfatoFin = date_create(str_replace("/","-",$arrayFechasSulfato[$contFechaSulfato]));
+					 	date_add($fechaSulfatoFin, date_interval_create_from_date_string( (string)$tiempoDuracionSulfato. 'days'));
 
 
-                        //aqui ya es optimo porque es igual 1 entonces se el hongo se pone a infectar a la cepa
-                        if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 1){
+                        if( $fechaSulfatoIni <= $fechaFicheroActual && $fechaSulfatoFin >= $fechaFicheroActual){                    	
+                        		
+                        	if($contSulfato == $tiempoDuracionSulfato ){
+                        		
+                        		$contFechaSulfato++;
+                        		$contSulfato = 0;
+                        	}
 
-                        	if( $arrayCepas[$j]->getTenerHongo() == 0 ){
-                            	//echo "<br>empieza la infeccion " . $j;
-
-                                $infectar = $arrayEnfermedades[$j]->getInfectarCepa();
-                                
-                                //echo "<br>esta infectado? : ". $infectar;
-                                $arrayCepas[$j]->setTenerHongo($infectar);
-                                //echo "<br>esta infectado desde cepa: " . $arrayCepas[$j]->getTenerHongo();
-                                $contador++;
-                            }
-                        }else{
-                            $infectar = -1;
-                        }
-
-                        //esta condicion me sirve para calcular solo el crecimiento de hongo de solo aquellas cepas
-                        // que han sido infectadas y ademas para restar al peso total del racimo el tamano del hongo
-                       
-                        if($arrayCepas[$j]->getTenerHongo() == 1){
+                        	$contSulfato++;
                         	
-                            $tamanhoHongo = $arrayEnfermedades[$j]->calcularCrecimientoHongo($lluvia,$temperatura,$refLluviaHongo,$refTemperaturaHongo,$porcentajeCreHongo);
-                            //echo "<br>peso uva actual " .$j .":" . $arrayCepas[$j]->getPesoRacimo();
-                            //se le pasa al metodo de rstar al peso de la uva el crecimiento del hongo solo el aumejto de esa iteraccion del hongo en ese momento
-                            $arrayCepas[$j]->restarTamanoHongoPesoUva($arrayEnfermedades[$j]->getAumentoHongo());
-							//echo "<br>peso uva despues de la resta :" . $arrayCepas[$j]->getPesoRacimo();
-                            //echo "<br>Tamanho del hongo:" . $tamanhoHongo;
                         }else{
-                            $tamanhoHongo = 0;
 
+                        	if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 0){					
+
+                            	$arrayEnfermedades[$j]->calcularProbabilidadInfectar($humedad,$refHumedadHongo,$procentajeProbabilidadHumedad);
+
+                        	}
+                        	
+                 			//aqui ya es optimo porque es igual 1 entonces se el hongo se pone a infectar a la cepa
+	                        if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 1){
+
+	                        	if( $arrayCepas[$j]->getTenerHongo() == 0 ){
+	                            	//echo "<br>empieza la infeccion " . $j;
+
+	                                $infectar = $arrayEnfermedades[$j]->getInfectarCepa();
+	                                
+	                                //echo "<br>esta infectado? : ". $infectar;
+	                                $arrayCepas[$j]->setTenerHongo($infectar);
+	                                //echo "<br>esta infectado desde cepa: " . $arrayCepas[$j]->getTenerHongo();
+	                                $contador++;
+	                            }
+	                        }else{
+	                            $infectar = -1;
+	                        }
+
+	                        //esta condicion me sirve para calcular solo el crecimiento de hongo de solo aquellas cepas
+	                        // que han sido infectadas y ademas para restar al peso total del racimo el tamano del hongo
+	                       
+	                        if($arrayCepas[$j]->getTenerHongo() == 1){
+	                        	
+	                            $tamanhoHongo = $arrayEnfermedades[$j]->calcularCrecimientoHongo($lluvia,$temperatura,$refLluviaHongo,$refTemperaturaHongo,$porcentajeCreHongo);
+	                            //echo "<br>peso uva actual " .$j .":" . $arrayCepas[$j]->getPesoRacimo();
+	                            //se le pasa al metodo de rstar al peso de la uva el crecimiento del hongo solo el aumejto de esa iteraccion del hongo en ese momento
+	                            $arrayCepas[$j]->restarTamanoHongoPesoUva($arrayEnfermedades[$j]->getAumentoHongo());
+								//echo "<br>peso uva despues de la resta :" . $arrayCepas[$j]->getPesoRacimo();
+	                            //echo "<br>Tamanho del hongo:" . $tamanhoHongo;
+	                        }else{
+	                            $tamanhoHongo = 0;
+
+	                        }
+	                    
                         }
+
+
+
+                        
                         //guardar los datos en e LOG
                         $this->guardarLog($fechaLog,$humedad,$lluvia,$temperatura,$pesoUva,$tamanoHoja, $infectar,$tamanhoHongo);
 

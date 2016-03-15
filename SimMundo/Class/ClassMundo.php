@@ -71,8 +71,10 @@ class ClassMundo
     	$this->claseDato = &$dato;
     }
 
-    public function getClaseDato(){
-    	return $this->claseDato;
+
+
+    public function guardarClasePaisano(&$paisano){
+    	$this->clasePaisno = &$paisano;
     }
 
     public function guardarClaseFichero(&$dato){
@@ -454,7 +456,7 @@ class ClassMundo
                         $tamanoHoja = $arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja,$numeroHojas);
                         //echo "<br>tamaño de hoja:" .$arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja);
                         
-                        //mientras esto sea 0 es que no hay condiciones optimas para que crezca el hongo
+                        //mientras esto sea 0 es que n[0],cadenaPartida[1],cadenaPartida[2]o hay condiciones optimas para que crezca el hongo
                         //y entonces se calcula su probabilidad pasandole la humedad para ver si se puede desarrolar o no
 
                         if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 0){					
@@ -463,6 +465,8 @@ class ClassMundo
 
                         }
                      
+
+
                         //aqui ya es optimo porque es igual 1 entonces se el hongo se pone a infectar a la cepa
                         if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 1){
 
@@ -502,7 +506,7 @@ class ClassMundo
                         if($numeroSimulaciones == 1){
                             
                             $arrayPesoCepasPorDia[$j] = $this->calcularTamanoTotalTodasCepasPorDia($arrayCepas);  
-                            
+      
                         }
                         
                     //fin fbucle numCepas
@@ -519,7 +523,7 @@ class ClassMundo
           $arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);*/
           $_SESSION["pesoCepasTotal"][$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
           $_SESSION["tamanoHongo"][$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
-
+          $_SESSION["tamanoHojas"][$z] =$this->calcularTotalTamanoHojas($arrayCepas,$numeroHojas);
 
          
           $this->totalPesoUva = 0; //hay que volver inicializarla a 0 para que no acumule los valores

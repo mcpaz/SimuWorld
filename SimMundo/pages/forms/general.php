@@ -102,6 +102,28 @@
                       </div>
                     </div>
 
+                    <div class="form-group">
+                      <label>Date masks:</label>
+                        <div class="input-group">
+                          <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada0" value= "15/06/2015" >
+                        </div><!-- /.input group -->
+                    </div><!-- /.form group -->
+
+
+
+                  <div class="form-group">
+                      <label>Date masks:</label>
+                      <div class="input-group">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada1" value= "15/08/2015">
+                      </div><!-- /.input group -->
+                    </div><!-- /.form group -->
+
 
 
                    
@@ -325,15 +347,15 @@
         if(isset($_POSt["sulfatada0"])){
           for ($i=1; $i< $_POST["numeroFechasSulfatos"] +1 ; $i++){
             $arrayFechasSulfato[$i] = $_POST["sulfatada".$i];
-            print_r($arrayFechasSulfato[$i]);
+            $arrayFechasSulfato[$i];
           }  
         }
         
  
         //recojo los datos para la clase paisano
-
-        //$clasePaisano->setFechasSulfato($arrayFechasSulfato);
-        //$clasePaisano->setDuracionSulfato($_POST["diasEfectoSulfato"]);
+        $clasePaisano->setNumeroFechasSulfatos($_POST["numeroFechasSulfatos"]);
+        $clasePaisano->setFechasSulfato($arrayFechasSulfato);
+        $clasePaisano->setDuracionSulfato($_POST["diasEfectoSulfato"]);
 
         //Poner decente para comprobar tamaño y  esas cosas del archivo
 
@@ -352,7 +374,8 @@
 
         //cuando se mete un objeto en una variable de sesion hay que meterla con serialize y luego cuando se 
         //quieran quitar los datos de unserialize(que se usa en la ejecuconSimulacion.php)
-        $_SESSION['claseDato'] = serialize($claseDato);
+        $_SESSION["claseDato"] = serialize($claseDato);
+        $_SESSION["clasePaisano"] = serialize($clasePaisano);
 
       }
 

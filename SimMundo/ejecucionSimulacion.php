@@ -149,8 +149,8 @@
                     
             
 
-            $claseMundo->guardarClaseDato(unserialize($_SESSION['claseDato']));
-         
+            $claseMundo->guardarClaseDato(unserialize($_SESSION["claseDato"]));
+            $claseMundo->guardarClasePaisano(unserialize($_SESSION["clasePaisano"]));
             $claseMundo->guardarClaseFichero($claseFichero);
            
 

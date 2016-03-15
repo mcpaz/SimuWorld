@@ -62,10 +62,12 @@
       
         <!-- Main content -->
         <section class="content">
+
+
           <div class="row">
             <div class="col-md-12">
               <!-- AREA CHART -->
-              <div class="box box-primary">
+              <div class="box box-info">
                 <div class="box-header with-border">
                   <h3 class="box-title">Area Chart</h3>
                   <div class="box-tools pull-right">
@@ -79,9 +81,10 @@
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
+          </div>
 
-
-              <div class="box box-primary">
+            <div class="col-md-12">
+              <div class="box box-info">
                 <div class="box-header with-border">
                   <h3 class="box-title">Area Chart</h3>
                   <div class="box-tools pull-right">
@@ -91,19 +94,14 @@
                 </div>
                 <div class="box-body">
                   <div class="chart">
-                    <div //id="graficaCepaHongo"></div>
+                    <div id="graficaCepaHongo"></div>
                   </div>
-                </div><!-- /.box-body -->
-
-
-                
+                </div><!-- /.box-body -->                
               </div><!-- /.box -->
+          </div>
 
 
-
-              <div class="col-md-6">
-              <!-- LINE CHART -->
-             
+            <div class="col-md-12">                     
               <div class="box box-info">
                 <div class="box-header with-border">
                   <h3 class="box-title">Line Chart</h3>
@@ -117,12 +115,11 @@
                     <canvas id="lineChart" style="height:250px"></canvas>
                   </div>
                 </div>
-              </div> 
-
-         
-
+              </div>   
             </div><!-- /.col (LEFT) -->
           </div><!-- /.row -->
+
+
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
@@ -220,8 +217,8 @@
     <!-- page script -->
     <script type="text/javascript">
 
+       
 
-         
           
           google.load('visualization', '1.1', {packages: ['line']});
           //google.setOnLoadCallback(graficaDatosClimaticos);
@@ -253,10 +250,16 @@
             //data.addColumn('number', 'Transformers: Age of Extinction');
 
             for (var i =0; i < periodo; i++) {
+             /*fecha = datosGraficaFechaFichero[i].split("-");
+              fecha = fecha[2] + '-' + fecha[1] + '-' +fecha[0];*/
 
-              cadenaPartida = datosGraficaFechaFichero[i].split("/");              
+              /*cadenaPartida = datosGraficaFechaFichero[i].replace("/","-");   
+              document.writeln(cadenaPartida[0],cadenaPartida[1],cadenaPartida[2]);    */   
 
-              data.addRows([  [ new Date(parseInt(cadenaPartida[2]),parseInt(cadenaPartida[1]),parseInt(cadenaPartida[0])), datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
+              cadenaPartida = datosGraficaFechaFichero[i].split("/");    
+              //cadena = cadenaPartida[0].remove("0"); 
+              
+              data.addRows([  [ new Date(datosGraficaFechaFichero[i],"dd/mm/yyyy"), datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
                
             };
 
@@ -331,7 +334,7 @@
               pointStrokeColor: "#c1c7d1",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(220,220,220,1)",
-              data: [65, 59, 80, 81, 56, 55, 40]
+              data: datosGraficaTempe
             },
             {
               label: "Digital Goods",
@@ -341,7 +344,18 @@
               pointStrokeColor: "rgba(60,141,188,1)",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(60,141,188,1)",
-              data: [28, 48, 40, 19, 86, 27, 90]
+              data: datosGraficaHumedad
+            },
+
+            {
+              label: "Digitdrh",
+              fillColor: "rgba(60,141,188,0.5)",
+              strokeColor: "rgba(30,170,150,0.4)",
+              pointColor: "#3b8bba",
+              pointStrokeColor: "rgba(60,141,188,1)",
+              pointHighlightFill: "#ffa",
+              pointHighlightStroke: "rgba(60,197,188,1)",
+              data: datosGraficaLluvia
             }
           ]
         };

@@ -98,7 +98,7 @@
                     <div class="form-group">
                       <label  class="col-sm-2 control-label">Número de sulfatos: </label>
                       <div  class="col-sm-10">
-                        <input id="numeroSulfatos" type="text" class="form-control" name="numeroFechasSulfatos" placeholder="Numero de sulfatos" value="2" onblur="generarDiasSulfato()">
+                        <input id="numeroSulfatos" type="text" class="form-control" name="numeroFechasSulfatos" placeholder="Numero de sulfatos" value="4" onblur="generarDiasSulfato()">
                       </div>
                     </div>
 
@@ -108,7 +108,7 @@
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada0" value= "15/06/2015" >
+                          <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada0" value= "01/06/2015" >
                         </div><!-- /.input group -->
                     </div><!-- /.form group -->
 
@@ -120,12 +120,30 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada1" value= "15/08/2015">
+                        <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada1" value= "01/07/2015">
+                      </div><!-- /.input group -->
+                    </div><!-- /.form group -->
+
+                    <div class="form-group">
+                      <label>Date masks:</label>
+                      <div class="input-group">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada2" value= "01/08/2015">
                       </div><!-- /.input group -->
                     </div><!-- /.form group -->
 
 
-
+                    <div class="form-group">
+                      <label>Date masks:</label>
+                      <div class="input-group">
+                        <div class="input-group-addon">
+                          <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada3" value= "01/09/2015">
+                      </div><!-- /.input group -->
+                    </div><!-- /.form group -->
                    
 
                     <!-- espacio para poner los calendar que se generan   -->

@@ -126,6 +126,7 @@ class ClassCepa{
 
 	//funciones para calcular el crecimiento tanto de la hoja como del peso de la uva
 
+	//meter tambien el parametro del tamaño de la hoja
 	public function calCrecPesoRacimo($lluvia,$temperatura,$refLluvia,$refTemp,$crecimiento){
 		
 

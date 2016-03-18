@@ -130,7 +130,7 @@
         <section class="content">
         <div class="row">
           <div class="col-md-12">
-            <?php   if($_SESSION['introducidoDatos'] == 1){ ?>
+            <?php   if(isset($_SESSION['introducidoDatos']) == 1){ ?>
             <form class="form-center" action="" method="post">
              
                 <div class="box-footer">
@@ -147,11 +147,13 @@
         </div>
         <?php
                     
-            
-
+          if(isset($_SESSION["claseDato"])){
             $claseMundo->guardarClaseDato(unserialize($_SESSION["claseDato"]));
             $claseMundo->guardarClasePaisano(unserialize($_SESSION["clasePaisano"]));
-            $claseMundo->guardarClaseFichero($claseFichero);
+            $claseMundo->guardarClaseFichero($claseFichero);      
+          }
+
+            
            
 
             if(isset($_POST["submit"])){

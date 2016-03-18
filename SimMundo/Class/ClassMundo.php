@@ -372,6 +372,9 @@ class ClassMundo
         $tiempoDuracionSulfato = $this->clasePaisano->getDuracionSulfato();
         $numeroSulfatos = $this->clasePaisano->getNumeroFechasSulfatos();
 
+
+        print_r($arrayFechasSulfato);
+
 		$numCepas = $this->getNumeroCepas();
 
         $numeroSimulaciones = $this->getNumeroSimulaciones();
@@ -458,7 +461,8 @@ class ClassMundo
 
                     for ($j =0; $j  < $numCepas; $j ++) { 
                         $pesoUva = $arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
-          
+        
+
                         //echo "<br>peso uva:" .$arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
                         $tamanoHoja = $arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja,$numeroHojas);
                         //echo "<br>tamaño de hoja:" .$arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja);
@@ -470,17 +474,37 @@ class ClassMundo
 	                    $fechaSulfatoFin = date_create(str_replace("/","-",$arrayFechasSulfato[$contFechaSulfato]));
 					 	date_add($fechaSulfatoFin, date_interval_create_from_date_string( (string)$tiempoDuracionSulfato. 'days'));
 
-	                   
-                        if( $fechaSulfatoIni <= $fechaFicheroActual && $fechaSulfatoFin >= $fechaFicheroActual){                    	
+	                    echo "<br>sulfato inicial: ";
+	            		print_r($fechaSulfatoIni);
+						echo "<br>sulfato fin: ";
+	            		print_r($fechaSulfatoFin);
+	            		echo "<br>sfechaFicheroActual: ";
+	            		print_r($fechaFicheroActual);
+	            		echo "<br>fin fecha crecimiento: ";
+	            		print_r($fechaFinCrecimiento);
+						echo "<br><br><br>";
+						  if( $fechaSulfatoFin >= $fechaFinCrecimiento){
+						  	echo "nanai";
+						  }
 
-                        	if($fechaSulfatoFin == $fechaFicheroActual){
+                        if( $fechaSulfatoIni <= $fechaFicheroActual ){     
 
-                        		if($contFechaSulfato < $numeroSulfatos -1){  
-                        			$contFechaSulfato++;   
-                        		} else{
-                        			$contFechaSulfato = 0;                  
-                        		}
-                        	}
+                        	if(  $fechaSulfatoFin >= $fechaFicheroActual){
+
+	                        	if($fechaSulfatoFin == $fechaFicheroActual){
+	                        		
+	                        		if($contFechaSulfato <= $numeroSulfatos -1 ){  
+	                        			echo "voy de : " . $contFechaSulfato;
+	                        			$contFechaSulfato++;   
+	                        			echo "<br>estoy en : " . $contFechaSulfato;
+	                        		} else{
+	                        			$contFechaSulfato = 0; 
+	                        		}                        		
+	                        		                    
+	                        	}
+							}elseif($fechaSulfatoFin > $fechaFinCrecimiento){
+								echo "nanai";
+							}
                         	$infectar = -1;
                         }else{
                         	
@@ -514,6 +538,7 @@ class ClassMundo
 	                        	
 	                            $tamanhoHongo = $arrayEnfermedades[$j]->calcularCrecimientoHongo($lluvia,$temperatura,$refLluviaHongo,$refTemperaturaHongo,$porcentajeCreHongo);
 	                            //echo "<br>peso uva actual " .$j .":" . $arrayCepas[$j]->getPesoRacimo();
+	
 	                            //se le pasa al metodo de rstar al peso de la uva el crecimiento del hongo solo el aumejto de esa iteraccion del hongo en ese momento
 
 	                            //cambiar de valores discretos a porcentajes

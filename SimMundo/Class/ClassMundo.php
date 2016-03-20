@@ -474,36 +474,26 @@ class ClassMundo
 	                    $fechaSulfatoFin = date_create(str_replace("/","-",$arrayFechasSulfato[$contFechaSulfato]));
 					 	date_add($fechaSulfatoFin, date_interval_create_from_date_string( (string)$tiempoDuracionSulfato. 'days'));
 
-	                    echo "<br>sulfato inicial: ";
-	            		print_r($fechaSulfatoIni);
-						echo "<br>sulfato fin: ";
-	            		print_r($fechaSulfatoFin);
-	            		echo "<br>sfechaFicheroActual: ";
-	            		print_r($fechaFicheroActual);
-	            		echo "<br>fin fecha crecimiento: ";
-	            		print_r($fechaFinCrecimiento);
-						echo "<br><br><br>";
-						  if( $fechaSulfatoFin >= $fechaFinCrecimiento){
-						  	echo "nanai";
-						  }
 
+						 //esta condicion sirve para controlar las diferentes fechas de las sulfatadas
+						  //los dos primeros ifs podian ir junto pero los pongo por separado pro que se puede dar que la segunda condicion
+						  //no se de porque la ultima sulfatada sumandole el efecto del sulfato exceda el rango donde crece la cepa
+						  ///por eso lo hago por separado
                         if( $fechaSulfatoIni <= $fechaFicheroActual ){     
-
+                        	$arrayEnfermedades[$j]->setTamanhoHongo(0);
                         	if(  $fechaSulfatoFin >= $fechaFicheroActual){
 
 	                        	if($fechaSulfatoFin == $fechaFicheroActual){
 	                        		
 	                        		if($contFechaSulfato <= $numeroSulfatos -1 ){  
-	                        			echo "voy de : " . $contFechaSulfato;
+
 	                        			$contFechaSulfato++;   
-	                        			echo "<br>estoy en : " . $contFechaSulfato;
+
 	                        		} else{
 	                        			$contFechaSulfato = 0; 
-	                        		}                        		
+	                        		}                       		
 	                        		                    
 	                        	}
-							}elseif($fechaSulfatoFin > $fechaFinCrecimiento){
-								echo "nanai";
 							}
                         	$infectar = -1;
                         }else{
@@ -569,7 +559,7 @@ class ClassMundo
                 }
             //fin de bucle de periodo	
             }
-          
+          $contFechaSulfato = 0; //varaible para que la siguiente iteracion el array de fechas empiece de nuevo en 0
           //hago esto porque asi guardo eltotal por cada iteracion
           /*$arrayPesoCepasTotal[$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
           $arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);*/
@@ -582,6 +572,7 @@ class ClassMundo
           $this->totalTamanoTotalHongo = 0;
           $this->totalTamanoTotalHoja = 0;
           echo "<br>---------------------------------------------------------------FIN DE ITERACION";
+          
         //fin bucle numeroSimulaciones
         }
 

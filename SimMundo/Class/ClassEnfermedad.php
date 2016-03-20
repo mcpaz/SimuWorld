@@ -62,6 +62,11 @@ class ClassEnfermedad{
 		return $this->tamanoHongo;
 	}
 
+	//se hace este set para cuando se aplica el sulfato
+	public function setTamanhoHongo($tam){
+		$this->tamanoHongo = $tam;
+	}
+
 	public function getAumentoHongo(){
 		return $this->aumentoHongo;
 	}

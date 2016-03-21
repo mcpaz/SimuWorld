@@ -16,6 +16,7 @@ class ClassCepa{
 	public $totalTamanoHojas;
 	public $arrayHojas = array();
 	public $pesoRacimo = 0.1;
+	public $pesoRacimoPerdido = 0;
 
 	public $tenerHongo = 0; //guarda si tiene o no hongo
 	public $fechaSulfatado;
@@ -114,12 +115,26 @@ class ClassCepa{
 	}
 
 
+	public function getPesoPesoPerdido(){
+		return $this->pesoRacimoPerdido;
+	}
+
+
 
 	//metodo apra restarle al peso del racimo de la uva el tamanho del hongo
 
-	public function restarTamanoHongoPesoUva($aumentoHongo){
+	public function restarTamanoHongoPesoUva($porcentajeAumentoHongo){
 
-		$this->pesoRacimo = $this->pesoRacimo - $aumentoHongo;
+		//regla de 3 para restar e l valor la peso del racimo el procentaje de ceciemino de la hogo
+		$resta = ($this->pesoRacimo*$porcentajeAumentoHongo)/1;
+
+		//guardo el pso de uva perdidos
+		$this->pesoRacimoPerdido = $this->pesoRacimoPerdido + $resta;
+
+
+		$this->pesoRacimo = $this->pesoRacimo - $resta;
+
+
 	}
 
 
@@ -140,9 +155,10 @@ class ClassCepa{
 		}
 
 		$aumento = ($lluvia*$temperatura*$crecimiento)/($refLluvia*$refTemp);
-		
+
 		//sumo al peso del racimo que hay lo que aumenta
-		$this->pesoRacimo = $this->pesoRacimo + $aumento;
+		$this->pesoRacimo = $this->pesoRacimo + ($this->pesoRacimo * $aumento);
+
 		//voy decir que este crecimeinto realmente es el aumento de peso de la uva(racimo)
 		return $this->pesoRacimo;
 
@@ -169,7 +185,7 @@ class ClassCepa{
 		for ($i=0;$i<$numeroHojas;$i++){
 
 			$aumento = ($lluvia*$temperatura*$crecimiento)/($refLluvia*$refTemp);
-			$this->arrayHojas[$i] = $this->arrayHojas[$i]  + $aumento;
+			$this->arrayHojas[$i] = $this->arrayHojas[$i]  + ( $this->arrayHojas[$i]*$aumento);
 		}
 
 		//de esta manera devuelvo  el totoal de tamano de hoja que hay hasta el momento
@@ -193,7 +209,7 @@ class ClassCepa{
 
 	public function inicializarArrayHojas($numeroHojas){
 		for ($i = 0; $i <$numeroHojas;$i++){
-			$this->arrayHojas[$i] = 0;
+			$this->arrayHojas[$i] = 0.01;
 		}
 	}
 }

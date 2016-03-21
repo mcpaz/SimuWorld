@@ -22,7 +22,7 @@ class ClassEnfermedad{
 	public $probabilidadInfeccionCepa = 0.0;
 	
 	public $aumentoHongo = 0; //variable para pasar la cantidad que crece el hongo , par no solo pasar el total
-	public $tamanoHongo = 0.1;//un valor inicial por darle uno
+	public $porcentajeTamanhoHongo = 0.1;//un valor inicial por darle uno
 	public $inicioCrecimientoHongo = 0;//hay que tener en cuenta esta variable para ver si crcio o no elhongo
 		// ya que una vez que crezca por las codiciones optimas puede seguir creciendo aunque estas no 
 		//sean tan buenas.
@@ -58,19 +58,21 @@ class ClassEnfermedad{
 
 
 
-	public function getTamanhoHongo(){
-		return $this->tamanoHongo;
+	public function getPorcentajeTamanhoHongo(){
+		return $this->porcentajeTamanhoHongo;
 	}
 
 	//se hace este set para cuando se aplica el sulfato
-	public function setTamanhoHongo($tam){
-		$this->tamanoHongo = $tam;
+	public function setPorcentajeTamanhoHongo($tam){
+		$this->porcentajeTamanhoHongo = $tam;
 	}
 
-	public function getAumentoHongo(){
+//esta funcion aa no me sirve porq con getPorcentajeTamanhoHongo ya hago return del porcenaje que va crecer el hongo
+	// ya lo tratoen el metodo de cepa para restarele ese porcentaje
+	/*public function getAumentoHongo(){
 		return $this->aumentoHongo;
 	}
-	
+	*/
 
 	
 
@@ -199,7 +201,7 @@ class ClassEnfermedad{
 
 		
 
-		$referenciaLluviaHongo = $refLluvia;
+		$referenciaLluviaHongo = $refLluvia; 
 		$referenciaTemperaturaHongo = $refTemp;
 		$porcentajeCrecimientoHongo = $crecimiento;
 
@@ -208,14 +210,16 @@ class ClassEnfermedad{
 
 		if($this->inicioCrecimientoHongo == 1){
 			//TOMO LA LLUVIA COMO DATO PERO REALEMTE SE HARIA CON EL DE HUMEDAD			
-			$this->aumentoHongo = ($lluvia*$temperatura*$porcentajeCrecimientoHongo)/($referenciaLluviaHongo*$referenciaTemperaturaHongo);
-
-			
-			$this->tamanoHongo = $this->tamanoHongo + $this->aumentoHongo;
+			$this->porcentajeTamanhoHongo = ($lluvia*$temperatura*$porcentajeCrecimientoHongo)/($referenciaLluviaHongo*$referenciaTemperaturaHongo);			
+	
 		}
+
+
 		
-		
-		return $this->tamanoHongo;
+		//voy pasar el porcentaje de crecimeinto del hongo y no wel tamaho como antes
+		//es mas dejo de calcularel tamaño de hongo xk no me vale apra nada
+		//y paso a comtemplar el total de uva perdida
+		return $this->porcentajeTamanhoHongo;
 
 	}
 

@@ -322,7 +322,7 @@ class ClassMundo
 
 		for ($i=0; $i < sizeof($arrayEnfermedades); $i++) { 
 
-			$this->totalTamanoTotalHongo=$this->totalTamanoTotalHongo +  $arrayEnfermedades[$i]->getTamanhoHongo();
+			$this->totalTamanoTotalHongo=$this->totalTamanoTotalHongo +  $arrayEnfermedades[$i]->getPorcentajeTamanhoHongo();
 
 		}
 
@@ -480,11 +480,11 @@ class ClassMundo
 						  //no se de porque la ultima sulfatada sumandole el efecto del sulfato exceda el rango donde crece la cepa
 						  ///por eso lo hago por separado
                         if( $fechaSulfatoIni <= $fechaFicheroActual ){     
-                        	$arrayEnfermedades[$j]->setTamanhoHongo(0);
+                 
                         	if(  $fechaSulfatoFin >= $fechaFicheroActual){
 
 	                        	if($fechaSulfatoFin == $fechaFicheroActual){
-	                        		
+	                        		$arrayEnfermedades[$j]->setPorcentajeTamanhoHongo(0);
 	                        		if($contFechaSulfato <= $numeroSulfatos -1 ){  
 
 	                        			$contFechaSulfato++;   
@@ -532,7 +532,7 @@ class ClassMundo
 	                            //se le pasa al metodo de rstar al peso de la uva el crecimiento del hongo solo el aumejto de esa iteraccion del hongo en ese momento
 
 	                            //cambiar de valores discretos a porcentajes
-	                            $arrayCepas[$j]->restarTamanoHongoPesoUva($arrayEnfermedades[$j]->getAumentoHongo());
+	                            $arrayCepas[$j]->restarTamanoHongoPesoUva($arrayEnfermedades[$j]->getPorcentajeTamanhoHongo());
 								//echo "<br>peso uva despues de la resta :" . $arrayCepas[$j]->getPesoRacimo();
 	                            //echo "<br>Tamanho del hongo:" . $tamanhoHongo;
 	                        }else{

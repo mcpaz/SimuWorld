@@ -123,7 +123,7 @@ class ClassCepa{
 
 	//metodo apra restarle al peso del racimo de la uva el tamanho del hongo
 
-	public function restarTamanoHongoPesoUva($porcentajeAumentoHongo){
+	/*public function restarTamanoHongoPesoUva($porcentajeAumentoHongo){
 
 		//regla de 3 para restar e l valor la peso del racimo el procentaje de ceciemino de la hogo
 		$resta = ($this->pesoRacimo*$porcentajeAumentoHongo)/1;
@@ -133,6 +133,27 @@ class ClassCepa{
 
 
 		$this->pesoRacimo = $this->pesoRacimo - $resta;
+
+
+	}*/
+
+
+	public function restarTamanoHongoPesoUva($porcentajeAumentoHongo){
+
+echo "<br>resaaaaaaaaaaaaaaaaaaaaaaaa: " .$this->pesoRacimo;
+		
+
+		//regla de 3 para restar e l valor la peso del racimo el procentaje de ceciemino de la hogo
+		$resta = $this->pesoRacimo*$porcentajeAumentoHongo;
+
+		echo "<br>lo que se va perder: " .$resta ;
+		//guardo el pso de uva perdidos
+		$this->pesoRacimoPerdido = $this->pesoRacimoPerdido + $resta;
+
+		echo "<br>peso racimo ganado : " .$this->pesoRacimo ;
+		$this->pesoRacimo = $this->pesoRacimo - $resta;
+		echo "<br>peso racimo perdido : " .$this->pesoRacimo ;
+				echo "<br> <br>";
 
 
 	}

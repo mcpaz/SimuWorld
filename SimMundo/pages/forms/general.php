@@ -108,7 +108,7 @@
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada0" value= "01/06/2015" >
+                          <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada0" value= "01/07/2015" >
                         </div><!-- /.input group -->
                     </div><!-- /.form group -->
 
@@ -120,10 +120,10 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada1" value= "01/07/2015">
+                        <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada1" value= "30/08/2015">
                       </div><!-- /.input group -->
                     </div><!-- /.form group -->
-
+<!-- 
                     <div class="form-group">
                       <label>Date masks:</label>
                       <div class="input-group">
@@ -131,8 +131,8 @@
                           <i class="fa fa-calendar"></i>
                         </div>
                         <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada2" value= "01/08/2015">
-                      </div><!-- /.input group -->
-                    </div><!-- /.form group -->
+                      </div>
+                    </div>
 
 
                     <div class="form-group">
@@ -142,9 +142,9 @@
                           <i class="fa fa-calendar"></i>
                         </div>
                         <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada3" value= "01/09/2015">
-                      </div><!-- /.input group -->
-                    </div><!-- /.form group -->
-                   
+                      </div>
+                    </div>
+                   -->
 
                     <!-- espacio para poner los calendar que se generan   -->
                     <div  id="divControl">

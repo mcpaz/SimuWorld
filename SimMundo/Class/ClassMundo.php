@@ -480,11 +480,13 @@ class ClassMundo
 						  //no se de porque la ultima sulfatada sumandole el efecto del sulfato exceda el rango donde crece la cepa
 						  ///por eso lo hago por separado
                         if( $fechaSulfatoIni <= $fechaFicheroActual ){     
-                 
+                 			$arrayEnfermedades[$j]->setPorcentajeTamanhoHongo(0);
+	                        $arrayEnfermedades[$j]->setInicioCrecimientoHongo(0);
+	                        		
                         	if(  $fechaSulfatoFin >= $fechaFicheroActual){
 
 	                        	if($fechaSulfatoFin == $fechaFicheroActual){
-	                        		$arrayEnfermedades[$j]->setPorcentajeTamanhoHongo(0);
+
 	                        		if($contFechaSulfato <= $numeroSulfatos -1 ){  
 
 	                        			$contFechaSulfato++;   

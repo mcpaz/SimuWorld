@@ -163,6 +163,10 @@ class ClassEnfermedad{
 		return $this->inicioCrecimientoHongo;
 	}
 
+	public function setInicioCrecimientoHongo($dato){
+		$this->inicioCrecimientoHongo = $dato;
+	}
+
 
 	public function calcularProbabilidadInfectar($humedad,$refHumedad,$refProbHumedad){
 		if($humedad >= $refHumedad){
@@ -197,22 +201,14 @@ class ClassEnfermedad{
 		if($temperatura == 0){
 			$temperatura = $temperatura + 0.01;
 		}
-
-
 		
 
 		$referenciaLluviaHongo = $refLluvia; 
 		$referenciaTemperaturaHongo = $refTemp;
 		$porcentajeCrecimientoHongo = $crecimiento;
 
-
 		
-
-		if($this->inicioCrecimientoHongo == 1){
-			//TOMO LA LLUVIA COMO DATO PERO REALEMTE SE HARIA CON EL DE HUMEDAD			
-			$this->porcentajeTamanhoHongo = ($lluvia*$temperatura*$porcentajeCrecimientoHongo)/($referenciaLluviaHongo*$referenciaTemperaturaHongo);			
-	
-		}
+		$this->porcentajeTamanhoHongo = ($lluvia*$temperatura*$porcentajeCrecimientoHongo)/($referenciaLluviaHongo*$referenciaTemperaturaHongo);		
 
 
 		

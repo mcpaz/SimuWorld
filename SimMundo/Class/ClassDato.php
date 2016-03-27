@@ -20,6 +20,7 @@ class ClassDato
 	public $referenciaLluviaUva;
 	public $referenciaTemperaturaUva;
 	public $porcentajeCrecimientoLluviaUva;
+	public $pesoRacimoMedio;
 	
 	//datos de referencia hoja
 	public $referenciaLluviaHoja;
@@ -203,6 +204,14 @@ class ClassDato
        
     }
 
+
+    public function setPesoRacimoMedio($peso){
+    	$this->pesoRacimoMedio = $peso;
+    }
+
+    public function getPesoRacimoMedio(){
+    	return $this->pesoRacimoMedio;
+    }
 
 
 

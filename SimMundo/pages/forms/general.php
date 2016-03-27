@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -42,15 +43,12 @@
               include("../../Class/ClassPaisano.php");
                  //inicio sesion para guaradar el bojeto de claseDato
               session_start();
-
               //uso esta variable de sesion para controlar que se haya metido los datos del formualrio
               //para luego comprobar en el ejecucionSimulacion si se metieron o no
               //y en el caso de no haberse metido no dejar dar al boton de simular.
               $_SESSION['introducidoDatos'] = 0;
       
-
              include("../../menuLateral.html");
-
           ?>
         </section>
         <!-- /.sidebar -->
@@ -87,21 +85,157 @@
                 <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
                   <div class="box-body">
 
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Número de simulaciones: </label>
-                      <div  class="col-sm-10">
-                        <input type="text" class="form-control" name="numeroSimulaciones" placeholder="Numero de simulaciones" value="10">
+
+                    <div class="box-header">
+                        <label  class="col-xs-3">Número de simulaciones: </label>
+                    
+                        <label  class="col-xs-3">Número de cepas: </label>
+
+                        <label  class="col-xs-3">Rango de crecimiento: </label>
                       </div>
+                      <div class="box-body">
+                        <div class="row">
+                          <div class="col-xs-3">
+                            <input type="text" class="form-control" name="numeroSimulaciones" placeholder="Numero de simulaciones" value="10">
+                          </div>
+                          <div class="col-xs-3">
+                            <input type="text" class="form-control" name="numeroCepas" placeholder="Numero de cepas" value="10">
+                          </div>
+                          <div class="form-group">
+                           
+                            <div class="col-sm-3">
+                            <div class="input-group">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" class="form-control pull-right"  id="reservation" name = "rangoMesCrecimiento" value = "01/06/2015 - 30/09/2015">
+                            </div><!-- /.input group -->
+                          </div><!-- /.form group -->
+                          </div>
+                        </div>
+                      </div>
+
+
+       
+
+                    <label><h4>Referencia de factores ambientales con respecto a la UVA.</h4></label>
+
+
+                    <div class="box-header">
+                          <label  class="col-xs-3">Referencia de litros de lluvia: </label>
+                      
+                          <label  class="col-xs-3">Referencia temperatura: </label>
+
+                          <label  class="col-xs-3">Porcentaje de crecimiento de UVA: </label>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-xs-3">
+                              <input type="text" class="form-control" name="referenciaLluviaUva" placeholder="Lluvia" value="10">
+                            </div>
+                            <div class="col-xs-3">
+                              <input type="text" class="form-control" name="referenciaTemperaturaUva" placeholder="Temperatura" value="10">
+                            </div>
+                            <div class="col-xs-3">
+                              <input type="text" class="form-control" name="porcentajeCrecimientoUva" placeholder="Porcentaje" value="0.4">
+                            </div>
+                          </div>
+                        </div>
+
+
+                    <label><h4>Referencia de factores ambientales con respecto a la HOJA.</h4></label>
+
+
+
+                    <div class="box-header">
+                          <label  class="col-xs-3">Referencia de litros de lluvia: </label>
+                      
+                          <label  class="col-xs-3">Referencia temperatura: </label>
+
+                          <label  class="col-xs-3">Numero de hojas de la cepa: </label>
+
+                          <label  class="col-xs-3">Porcentaje de crecimiento de UVA: </label>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-xs-3">
+                              <input type="text" class="form-control" name="referenciaLluviaHoja" placeholder="Lluvia" value="16">
+                            </div>
+                            <div class="col-xs-3">
+                              <input type="text" class="form-control" name="referenciaTemperaturaHoja" placeholder="Temperatura" value="11">
+                            </div>
+                            <div class="col-xs-3">
+                              <input type="text" class="form-control" name="numeroHojas" placeholder="Hojas" value="7">
+                            </div>
+                            <div class="col-xs-3">
+                              <input type="text" class="form-control" name="porcentajeCrecimientoHoja" placeholder="Porcentaje" value="0.4">
+                            </div>
+                          </div>
+                        </div>
+
+
+                    <label><h4>Referencia de factores ambientales con respecto al HONGO.</h4></label>
+
+                    <div class="box-header">
+                          <label  class="col-xs-2">Referencia de litros de lluvia: </label>
+                      
+                          <label  class="col-xs-2">Referencia temperatura: </label>
+
+                          <label  class="col-xs-2">Referencia humedad inicio: </label>
+
+                          <label  class="col-xs-2">Probabilidad de crecimiento del hongo por humedad: </label>
+
+                          <label  class="col-xs-2">Probabilidad de crecimiento del HONGO </label>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-xs-2">
+                              <input type="text" class="form-control" name="referenciaLluviaHongo" placeholder="Lluvia" value="3">
+                            </div>
+                            <div class="col-xs-2">
+                              <input type="text" class="form-control" name="referenciaTemperaturaHongo" placeholder="Temperatura" value="11">
+                            </div>
+                            <div class="col-xs-2">
+                              <input type="text" class="form-control" name="referenciaHumedadHongo" placeholder="Humedad" value="60">
+                            </div>
+                            <div class="col-xs-2">
+                              <input type="text" class="form-control" name="porcentajeProbabilidadHumedadHongo" placeholder="Porcentaje crecimiento" value="0.2">
+                            </div>
+                            <div class="col-xs-2">
+                              <input type="text" class="form-control" name="porcentajeCrecimientoHongo" placeholder="Porcentaje" value="0.4">
+                            </div>
+                          </div>
+                        </div>
+
+
+
+
+                    <label><h4>Sulfato</h4></label>
+
+                    <div class="box-header">
+                          <label  class="col-xs-2">Número de sulfatos: </label>
+
+                          <label  class="col-xs-2">Número de días de efecto: </label>
+                        </div>
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-xs-2">
+                              <input id="numeroSulfatos" type="text" class="form-control" name="numeroFechasSulfatos" placeholder="Numero de sulfatos" value="4" onblur="generarDiasSulfato()">
+                            </div>
+                            <div class="col-xs-2">
+                              <input type="text" class="form-control" name="diasEfectoSulfato" placeholder="Número de días de efecto:" value="30">
+                            </div>                           
+                            
+                          </div>
+                        </div>
+ 
+
+                    <div  id="divControl">
+
                     </div>
 
 
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Número de sulfatos: </label>
-                      <div  class="col-sm-10">
-                        <input id="numeroSulfatos" type="text" class="form-control" name="numeroFechasSulfatos" placeholder="Numero de sulfatos" value="4" onblur="generarDiasSulfato()">
-                      </div>
-                    </div>
-
+                    <!-- 
                     <div class="form-group">
                       <label>Date masks:</label>
                         <div class="input-group">
@@ -109,9 +243,8 @@
                             <i class="fa fa-calendar"></i>
                           </div>
                           <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada0" value= "01/07/2015" >
-                        </div><!-- /.input group -->
-                    </div><!-- /.form group -->
-
+                        </div>
+                    </div>
 
 
                   <div class="form-group">
@@ -121,9 +254,9 @@
                           <i class="fa fa-calendar"></i>
                         </div>
                         <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada1" value= "30/08/2015">
-                      </div><!-- /.input group -->
-                    </div><!-- /.form group -->
-<!-- 
+                      </div>
+                    </div>
+
                     <div class="form-group">
                       <label>Date masks:</label>
                       <div class="input-group">
@@ -133,8 +266,6 @@
                         <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada2" value= "01/08/2015">
                       </div>
                     </div>
-
-
                     <div class="form-group">
                       <label>Date masks:</label>
                       <div class="input-group">
@@ -147,134 +278,16 @@
                    -->
 
                     <!-- espacio para poner los calendar que se generan   -->
-                    <div  id="divControl">
-
-                    </div>
+                    
                  
 
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Número de días de efecto: </label>
-                      <div  class="col-sm-10">
-                        <input type="text" class="form-control" name="diasEfectoSulfato" placeholder="Número de días de efecto:" value="30">
-                      </div>
-                    </div>
 
-                    <!-- Date range -->
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Rango de crecimiento:</label>
-                    <div class="col-sm-10">
-                    <div class="input-group">
-                      <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                      </div>
-                      <input type="text" class="form-control pull-right"  id="reservation" name = "rangoMesCrecimiento" value = "01/06/2015 - 30/09/2015">
-                    </div><!-- /.input group -->
-                  </div><!-- /.form group -->
-                  </div>
-
-
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Número de cepas: </label>
-                      <div  class="col-sm-10">
-                        <input type="text" class="form-control" name="numeroCepas" placeholder="Numero de cepas" value="10">
-                      </div>
-                    </div>
-
-                    <label><h4>Referencia de factores ambientales con respecto a la UVA.</h4></label>
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Referencia de litros de lluvia</label>
-                      <div  class="col-sm-10">
-                        <input type="text" class="form-control" name="referenciaLluviaUva" placeholder="Lluvia" value="10">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Referencia temperatura</label>
-                      <div  class="col-sm-10">
-                        <input type="text" class="form-control" name="referenciaTemperaturaUva" placeholder="Temperatura" value="10">
-                      </div>
-                      
-                    </div>
-                    <label><h4>Porcentajes de crecimiento segun los factores ambientales de la UVA</h4></label>
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Porcentaje de crecimiento de la UVA</label>
-                      <div  class="col-sm-10">
-                        <input type="text" class="form-control" name="porcentajeCrecimientoUva" placeholder="Porcentaje" value="0.4">
-                      </div>
-                    </div>
-
-                    <label><h4>Referencia de factores ambientales con respecto a la HOJA.</h4></label>
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Referencia de litros de lluvia</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="referenciaLluviaHoja" placeholder="Lluvia" value="16">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Referencia temperatura</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="referenciaTemperaturaHoja" placeholder="Temperatura" value="11">
-                      </div>                      
-                    </div>
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Numero de hojas de la cepa</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="numeroHojas" placeholder="Hojas" value="7">
-                      </div>
-                    </div>
-
-
-
-                    <label><h4>Porcentajes de crecimiento segun los factores ambientales de la HOJA</h4></label>
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Porcentaje de crecimiento de la HOJA</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="porcentajeCrecimientoHoja" placeholder="Porcentaje" value="0.4">
-                      </div>
-                    </div>
-
-
-                    <label><h4>Referencia de factores ambientales con respecto al HONGO.</h4></label>
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Referencia de litros de lluvia</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="referenciaLluviaHongo" placeholder="Lluvia" value="3">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Referencia temperatura</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="referenciaTemperaturaHongo" placeholder="Temperatura" value="11">
-                      </div>
-                      
-                    </div>
-
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Referencia humedad inicio</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="referenciaHumedadHongo" placeholder="Humedad" value="60">
-                      </div>                      
-                    </div>
-
-
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Porcentaje de probabilidad de crecimiento del hongo</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="porcentajeProbabilidadHumedadHongo" placeholder="Porcentaje crecimiento" value="0.2">
-                      </div>                      
-                    </div>
-
-                    <label><h4>Porcentajes de crecimiento segun los factores ambientales del HONGO</h4></label>
-                    <div class="form-group">
-                      <label  class="col-sm-2 control-label">Porcentaje de crecimiento del HONGO</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="porcentajeCrecimientoHongo" placeholder="Porcentaje" value="0.4">
-                      </div>
-                    </div>
+                    
                     <br>
                     <label><h4>Archivo de datos climáticos</h4></label>
                     <div class="form-group">  
                         <label for="exampleInputFile" class="col-sm-2 control-label">Archivo</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-3">
                           <input type="file" id="exampleInputFile" name="archivo" >
                           
                         </div>
@@ -318,54 +331,42 @@
 
 
     <?php
-
         ///recojo la varaible del numero de fechas de sulfatada que va hacerse.
       
-
-
         
         $clasePaisano = new ClassPaisano;
         $claseDato = new ClassDato;
   
       if(isset($_POST["submit"])){
-
        
          
         $_SESSION['introducidoDatos'] = 1;
         $claseDato->setNumeroCepas($_POST["numeroCepas"]);
         $claseDato->setNumeroSimulaciones($_POST["numeroSimulaciones"]);
         $claseDato->cortarFechasRango($_POST["rangoMesCrecimiento"]);
-
         //datos de uva
         $claseDato->setReferenciaLluviaUva($_POST["referenciaLluviaUva"]);
         $claseDato->setReferenciaTemperaturaUva($_POST["referenciaTemperaturaUva"]);
         $claseDato->setPorcentajeCrecimientoUva($_POST["porcentajeCrecimientoUva"]);
-
           //datos de hoja
         $claseDato->setReferenciaLluviaHoja($_POST["referenciaLluviaHoja"]);
         $claseDato->setReferenciaTemperaturaHoja($_POST["referenciaTemperaturaHoja"]);
         $claseDato->setPorcentajeCrecimientoHoja($_POST["porcentajeCrecimientoHoja"]);
         $claseDato->setNumeroHojas($_POST["numeroHojas"]);
-
           //datos de hongo
         $claseDato->setReferenciaLluviaHongo($_POST["referenciaLluviaHongo"]);
         $claseDato->setReferenciaTemperaturaHongo($_POST["referenciaTemperaturaHongo"]);
         $claseDato->setReferenciaHumedadHongo($_POST["referenciaHumedadHongo"]);
         $claseDato->setPorcentajeCrecimientoHongo($_POST["porcentajeCrecimientoHongo"]);
         $claseDato->setPorcentajeProbabilidadHumedadHongo($_POST["porcentajeProbabilidadHumedadHongo"]);
-
-
         $arrayFechasSulfato = array();
         /*$arrayFechasSulfato[0] = $_POST["fechaSulfato0"];
         $arrayFechasSulfato[1] = $_POST["fechaSulfato1"];
         $arrayFechasSulfato[2] = $_POST["fechaSulfato2"];*/
-
-
         //recojo el valor de cuantasfechas se van introducir y luego recorro todas $_POST dpara recvojer los valores
         if(isset($_POST["sulfatada0"])){
           for ($i=0; $i< $_POST["numeroFechasSulfatos"] ; $i++){
             $arrayFechasSulfato[$i] = $_POST["sulfatada".$i];
-
           }
         }
         
@@ -374,31 +375,20 @@
         $clasePaisano->setNumeroFechasSulfatos($_POST["numeroFechasSulfatos"]);
         $clasePaisano->setFechasSulfato($arrayFechasSulfato);
         $clasePaisano->setDuracionSulfato($_POST["diasEfectoSulfato"]);
-
         //Poner decente para comprobar tamaño y  esas cosas del archivo
-
         $dir_subida = '../../carpetaDatos/';
         $fichero_subido = $dir_subida . basename($_FILES["archivo"]['name']);
-
         
         move_uploaded_file($_FILES['archivo']['tmp_name'], $fichero_subido);
            
-
-
         //voy intuir que todos los datos tienen que ser metidos obligatoriament
         //de esta manera recojo en una varible que los datos han sido metidos 
         //para poder ejecuar la accion de simulacion en la otra ventana
-
-
         //cuando se mete un objeto en una variable de sesion hay que meterla con serialize y luego cuando se 
         //quieran quitar los datos de unserialize(que se usa en la ejecuconSimulacion.php)
         $_SESSION["claseDato"] = serialize($claseDato);
         $_SESSION["clasePaisano"] = serialize($clasePaisano);
-
       }
-
-
-
       ?>  
      <!-- jQuery 2.1.4 -->
    
@@ -432,14 +422,12 @@
       $(function () {
         //Initialize Select2 Elements
         $(".select2").select2();
-
         //Datemask dd/mm/yyyy
         $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
         //Datemask2 mm/dd/yyyy
         $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
         //Money Euro
         $("[data-mask]").inputmask();
-
         //Date range picker
         $('#reservation').daterangepicker();
         //Date range picker with time picker
@@ -458,12 +446,10 @@
               startDate: moment().subtract(29, 'days'),
               endDate: moment()
             },
-
       function (start, end) {
           $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         }
         );
-
         //iCheck for checkbox and radio inputs
         $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
           checkboxClass: 'icheckbox_minimal-blue',
@@ -479,12 +465,10 @@
           checkboxClass: 'icheckbox_flat-green',
           radioClass: 'iradio_flat-green'
         });
-
         //Colorpicker
         $(".my-colorpicker1").colorpicker();
         //color picker with addon
         $(".my-colorpicker2").colorpicker();
-
         //Timepicker
         $(".timepicker").timepicker({
           showInputs: false
@@ -494,39 +478,31 @@
 
      <script>
                     
-
                       //consultar a rodeiro si estaria bien, aunque creo k si
                       var cont = 0;
                     function generarDiasSulfato() {
                         
-
-
                         if(cont == 0){
                           cont = document.getElementById("numeroSulfatos").value;
                           cont = parseInt(cont);                  
                           var $padre = $("#fechasSulfatos");
                           var alias = "alias";
                           var fech = "dd/mm/yyyy";
-
                           for(var i=1 ;i < cont+1; i++){
-                            $("#divControl").append('<div class="form-group" id="fechasSulfatos'+i+'"><label class="col-sm-2 control-label"> '+i+'ª sulfatada:</label><div class="col-sm-10"><div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i></div> <input type="text" name="sulfatada'+i+'" class="form-control" data-inputmask="\''+alias+'\':\''+fech+'\'" data-mask>  </div></div></div>');
+                            $("#divControl").append('<div class="form-group" id="fechasSulfatos'+i+'"><label class="col-xs-2 control-label"> '+i+'ª sulfatada:</label><div class="col-xs-2"><div class="input-group"> <div class="input-group-addon"><i class="fa fa-calendar"></i></div> <input type="text" name="sulfatada'+i+'" class="form-control" data-inputmask="\''+alias+'\':\''+fech+'\'" data-mask>  </div></div></div>');
                           }
-
                           $(document).ready(function(){
                               $(":input").inputmask();
                            
                           });
-
                         }else{
                             
                             for (var j = 1; j < cont +1; j++) {
                               $("#fechasSulfatos"+j).remove();                         
                             };                            
-
                             cont = 0;
                             generarDiasSulfato();
                         }
-
                       
                     }
                         

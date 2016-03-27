@@ -22,9 +22,13 @@ class ClassMundo
 	public $fechaActual;
 
     public $totalPesoUva; //variablepara guardar el total del crecimiento de la uva en peso por iteracion
-    public $totalPesoUvaPorDia; //variablepara guardar el total del crecimiento de la uva por dia de peso por dia en casda iteracion
-    public $totalTamanoTotalHongo;//variablepara guardar el total del crecimiento del hongo por iteracion
+    public $totalPesoUvaPerdido;
     public $totalTamanoTotalHoja;
+
+    public $totalPesoUvaPorDia; //variablepara guardar el total del crecimiento de la uva por dia de peso por dia en casda iteracion
+    public $totalPesoUvaPorDiaPerdido;
+
+
     
 
 	public $tipoTierra; // tipo de tierra que es determiante en la produccion y calidad del vino
@@ -48,6 +52,7 @@ class ClassMundo
 
 
 	public $arrayPesoCepasPorDia;
+
 	
 
 
@@ -305,6 +310,19 @@ class ClassMundo
 	}
 
 
+	public function calcularTamanoTotalTodasCepasPerdido($arrayCepas){//tamano es peso, esto decuelve el peso total de todas las cepas instanciadas
+
+
+		for ($i=0; $i < sizeof($arrayCepas); $i++) { 
+
+			$this->totalPesoUvaPerdido=$this->totalPesoUvaPerdido +  $arrayCepas[$i]->getPesoPesoPerdido();
+		}
+
+		return $this->totalPesoUvaPerdido;
+
+	}
+
+
 	public function calcularTamanoTotalTodasCepasPorDia($arrayCepas){//tamano es peso, esto decuelve el peso total de todas las cepas instanciadas por cada dia
 
 
@@ -317,7 +335,20 @@ class ClassMundo
 	}
 
 
-	public function calcularTotalTamanoHongo($arrayEnfermedades){
+	public function calcularTamanoTotalTodasCepasPorDiaPerdido($arrayCepas){//tamano es peso, esto decuelve el peso total de todas las cepas instanciadas por cada dia
+
+
+		for ($i=0; $i < sizeof($arrayCepas); $i++) { 
+
+			$this->totalPesoUvaPorDiaPerdido=$this->totalPesoUvaPorDiaPerdido +  $arrayCepas[$i]->getPesoPesoPerdido();
+		}
+		return $this->totalPesoUvaPorDiaPerdido;
+
+	}
+
+
+
+	/*public function calcularTotalTamanoHongo($arrayEnfermedades){
 
 
 		for ($i=0; $i < sizeof($arrayEnfermedades); $i++) { 
@@ -328,7 +359,7 @@ class ClassMundo
 
 		return $this->totalTamanoTotalHongo;
 
-	}
+	}*/
 
 
 		public function calcularTotalTamanoHojas($arrayCepas,$numeroHojas){
@@ -372,9 +403,6 @@ class ClassMundo
         $tiempoDuracionSulfato = $this->clasePaisano->getDuracionSulfato();
         $numeroSulfatos = $this->clasePaisano->getNumeroFechasSulfatos();
 
-
-        print_r($arrayFechasSulfato);
-
 		$numCepas = $this->getNumeroCepas();
 
         $numeroSimulaciones = $this->getNumeroSimulaciones();
@@ -408,14 +436,9 @@ class ClassMundo
   		$porcentajeCreHongo = $this->getPorcentajeCrecimientoHongo();
   		$procentajeProbabilidadHumedad = $this->getPorcentajeProbabilidadHumedadHongo();
 
-  		 
-
-		$contador = 0;//2ª variable de control para que no este siempre calculando si infeta o no
-		
 
 		$contFechaSulfato = 0;//variable apra controlar el array de las fechas de las veces que se echa el sulfato
 
-			
 
         for($z=0;$z <  $numeroSimulaciones; $z++ ){//numeo de simulaciones
             //inicializo las cepas
@@ -437,15 +460,6 @@ class ClassMundo
                 $fechaLog = $this->getFechaActual($i); //esta asignacion para guardar la fecha en tipo string
                 $fechaFicheroActual = date_create(str_replace("/", "-",$this->getFechaActual($i)));//cojo la fecha que viene del fichero de datos climaticos y la paso a date para poder comparalar con otra fecha
 
-         
-                
-               /* echo "t: " . $temperatura;
-                echo "<br> ";
-        		echo "h: " .$humedad;
-        		echo "<br> ";
-        		echo "ll: " .$lluvia;
-				echo "<br> ";echo "<br> ";*/
-
                 //GUARDO LOS DATOS EN SESION DE ARRAY PAR LUEGO PASARLOS AL JAVASCRIPT
                 //QUE CREA LAS GRAFICAS
                 $_SESSION["temperatura"][$k] = $temperatura;
@@ -461,7 +475,7 @@ class ClassMundo
 
                     for ($j =0; $j  < $numCepas; $j ++) { 
                         $pesoUva = $arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
-        
+
 
                         //echo "<br>peso uva:" .$arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
                         $tamanoHoja = $arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja,$numeroHojas);
@@ -482,7 +496,7 @@ class ClassMundo
                         if( $fechaSulfatoIni <= $fechaFicheroActual ){     
                  			$arrayEnfermedades[$j]->setPorcentajeTamanhoHongo(0);
 	                        $arrayEnfermedades[$j]->setInicioCrecimientoHongo(0);
-	                        		
+	                
                         	if(  $fechaSulfatoFin >= $fechaFicheroActual){
 
 	                        	if($fechaSulfatoFin == $fechaFicheroActual){
@@ -499,7 +513,7 @@ class ClassMundo
 							}
                         	$infectar = -1;
                         }else{
-                        	
+
                         	if($arrayEnfermedades[$j]->getInicioCrecimientoHongo() == 0){					
 
                             	$arrayEnfermedades[$j]->calcularProbabilidadInfectar($humedad,$refHumedadHongo,$procentajeProbabilidadHumedad);
@@ -517,7 +531,7 @@ class ClassMundo
 	                                //echo "<br>esta infectado? : ". $infectar;
 	                                $arrayCepas[$j]->setTenerHongo($infectar);
 	                                //echo "<br>esta infectado desde cepa: " . $arrayCepas[$j]->getTenerHongo();
-	                                $contador++;
+	                             
 	                            }
 	                        }else{
 	                            $infectar = -1;//se hace para darle un valor y asi se registra un -1 como queno ha crecido el hongo
@@ -527,8 +541,8 @@ class ClassMundo
 	                        // que han sido infectadas y ademas para restar al peso total del racimo el tamano del hongo
 	                       
 	                        if($arrayCepas[$j]->getTenerHongo() == 1){	                  
-	                        	
-	                            $tamanhoHongo = $arrayEnfermedades[$j]->calcularCrecimientoHongo($lluvia,$temperatura,$refLluviaHongo,$refTemperaturaHongo,$porcentajeCreHongo);
+
+	                            $arrayEnfermedades[$j]->calcularCrecimientoHongo($lluvia,$temperatura,$refLluviaHongo,$refTemperaturaHongo,$porcentajeCreHongo);
 	                            //echo "<br>peso uva actual " .$j .":" . $arrayCepas[$j]->getPesoRacimo();
 	
 	                            //se le pasa al metodo de rstar al peso de la uva el crecimiento del hongo solo el aumejto de esa iteraccion del hongo en ese momento
@@ -537,21 +551,26 @@ class ClassMundo
 	                            $arrayCepas[$j]->restarTamanoHongoPesoUva($arrayEnfermedades[$j]->getPorcentajeTamanhoHongo());
 								//echo "<br>peso uva despues de la resta :" . $arrayCepas[$j]->getPesoRacimo();
 	                            //echo "<br>Tamanho del hongo:" . $tamanhoHongo;
-	                        }else{
-	                            $tamanhoHongo = 0;
 	                        }	                    
                         }
 
 
                         //guardar los datos en e LOG
-                        $this->guardarLog($fechaLog,$humedad,$lluvia,$temperatura,$pesoUva,$tamanoHoja, $infectar,$tamanhoHongo);
+                        
 
                         //calculo el peso de la cepas por dia y los meto en un array solo si el numero de simualciones es inferios a 2
                         if($numeroSimulaciones == 1){
-                            
-                            $arrayPesoCepasPorDia[$j] = $this->calcularTamanoTotalTodasCepasPorDia($arrayCepas);  
-      
+                            //$arrayPesoCepasPorDiaPerdido[$j] = $this->calcularTamanoTotalTodasCepasPorDiaPerdido($arrayCepas);  
+                            //$arrayPesoCepasPorDia[$j] = $this->calcularTamanoTotalTodasCepasPorDia($arrayCepas);  
+      						$_SESSION["pesoCepasTotalPorDiaPerdido"][$j]  = $this->calcularTamanoTotalTodasCepasPorDiaPerdido($arrayCepas);
+      						$_SESSION["pesoCepasTotalPorDia"][$j]  = $this->calcularTamanoTotalTodasCepasPorDia($arrayCepas);
+      						/*echo "<br>cepa perdida";
+      						print_r($_SESSION["pesoCepasTotalPorDiaPerdido"][0]);
+      						echo "<br>cepa";
+      						print_r($_SESSION["pesoCepasTotalPorDia"][0]);*/
                         }
+
+                        $this->guardarLog($fechaLog,$humedad,$lluvia,$temperatura,$pesoUva,$tamanoHoja, $infectar,$arrayCepas[$j]->getPesoPesoPerdido());
                         
                     //fin fbucle numCepas
                     }
@@ -566,12 +585,12 @@ class ClassMundo
           /*$arrayPesoCepasTotal[$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
           $arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);*/
           $_SESSION["pesoCepasTotal"][$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
-          $_SESSION["tamanoHongo"][$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);
+          $_SESSION["pesoCepasTotalPerdido"][$z] = $this->calcularTamanoTotalTodasCepasPerdido($arrayCepas);
           $_SESSION["tamanoHojas"][$z] =$this->calcularTotalTamanoHojas($arrayCepas,$numeroHojas);
 
          
           $this->totalPesoUva = 0; //hay que volver inicializarla a 0 para que no acumule los valores
-          $this->totalTamanoTotalHongo = 0;
+          $this->totalPesoUvaPerdido = 0;
           $this->totalTamanoTotalHoja = 0;
           echo "<br>---------------------------------------------------------------FIN DE ITERACION";
           
@@ -587,7 +606,7 @@ class ClassMundo
 
 		for ($i=0; $i <$numCepas; $i++) { 
         	echo "<br>Total de la cepa " . $i . ": " .$_SESSION["pesoCepasTotal"][$i];
-        	echo "<br>Total de la hongo " . $i . ": " .$_SESSION["tamanoHongo"][$i];
+        	echo "<br>Total perdido " . $i . ": " .$_SESSION["pesoCepasTotalPerdido"][$i];
         	echo "<br>Total de la hoja " . $i . ": " .$_SESSION["tamanoHojas"][$i];
         	echo"<br>";
         }

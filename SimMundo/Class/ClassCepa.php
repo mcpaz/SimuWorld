@@ -140,21 +140,23 @@ class ClassCepa{
 
 	public function restarTamanoHongoPesoUva($porcentajeAumentoHongo){
 
-echo "<br>resaaaaaaaaaaaaaaaaaaaaaaaa: " .$this->pesoRacimo;
-		
-
 		//regla de 3 para restar e l valor la peso del racimo el procentaje de ceciemino de la hogo
 		$resta = $this->pesoRacimo*$porcentajeAumentoHongo;
 
-		echo "<br>lo que se va perder: " .$resta ;
+
 		//guardo el pso de uva perdidos
 		$this->pesoRacimoPerdido = $this->pesoRacimoPerdido + $resta;
 
-		echo "<br>peso racimo ganado : " .$this->pesoRacimo ;
-		$this->pesoRacimo = $this->pesoRacimo - $resta;
-		echo "<br>peso racimo perdido : " .$this->pesoRacimo ;
-				echo "<br> <br>";
+	
 
+
+		//revisar esta mierda
+		//lo hago por los negativos
+		if ($this->pesoRacimo >= $resta){
+			$this->pesoRacimo = $this->pesoRacimo - $resta;
+		}else{
+			$this->pesoRacimo = $resta -$this->pesoRacimo ;
+		}
 
 	}
 
@@ -180,7 +182,6 @@ echo "<br>resaaaaaaaaaaaaaaaaaaaaaaaa: " .$this->pesoRacimo;
 		//sumo al peso del racimo que hay lo que aumenta
 		$this->pesoRacimo = $this->pesoRacimo + ($this->pesoRacimo * $aumento);
 
-		//voy decir que este crecimeinto realmente es el aumento de peso de la uva(racimo)
 		return $this->pesoRacimo;
 
 	}

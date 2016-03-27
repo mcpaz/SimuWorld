@@ -117,8 +117,22 @@
                 </div>
               </div>   
             </div><!-- /.col (LEFT) -->
-          </div><!-- /.row -->
+       
 
+<div class="col-md-12">            
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Line Chart</h3>
+              <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+                <div id="chart1" style="height:600px; width:1200px;"></div>        
+            </div>
+          </div>   
+            </div><!-- /.col (LEFT) -->
 
 
         </section><!-- /.content -->
@@ -164,10 +178,11 @@
 
         //datos de la cepa y hongo
         var datosGraficaPesoCepasTotal =[];
-        var datosGraficaTamanoHongo =[];
+        var pesoCepasTotalPerdido =[];
         var datosGraficaTamanoHoja = [];
 
-
+        var pesoCepasTotalPorDia = [];
+        var pesoCepasTotalPorDiaPerdido = [];
 
 
       </script>
@@ -176,24 +191,35 @@
       
         $i=0;
         $j=0;
-     
+      $z =0;
+      
+          if (isset($_SESSION["pesoCepasTotalPorDiaPerdido"]) && isset($_SESSION["pesoCepasTotalPorDia"])){
+              while($z<10){   
+            
+                  echo "<script>pesoCepasTotalPorDia[$z] = " . (float)$_SESSION["pesoCepasTotalPorDia"][$z] . ";</script>";
+                  echo "<script>pesoCepasTotalPorDiaPerdido[$z] = " .(float) $_SESSION["pesoCepasTotalPorDiaPerdido"][$z] . ";</script>";
+
+                  $z++;         
+              } 
+          }
 
 
+          if (isset($_SESSION["temperatura"]) && isset($_SESSION["lluvia"])){
+            while($i<$_SESSION["periodo"]){     
+              
 
-        while($i<$_SESSION["periodo"]){     
-          
-
-            echo "<script>datosGraficaTempe[$i] = " .(float) $_SESSION['temperatura'][$i] . ";</script>";
-            echo "<script>datosGraficaLluvia[$i] = " . (float)$_SESSION["lluvia"][$i] . ";</script>";
-            echo "<script>datosGraficaHumedad[$i] = " . (float)$_SESSION["humedad"][$i] . ";</script>";
-            echo "<script>datosGraficaFechaFichero[$i] = '" . $_SESSION["fechaFichero"][$i] . "';</script>";
-          $i++;
-         
-        }    
+                echo "<script>datosGraficaTempe[$i] = " .(float) $_SESSION['temperatura'][$i] . ";</script>";
+                echo "<script>datosGraficaLluvia[$i] = " . (float)$_SESSION["lluvia"][$i] . ";</script>";
+                echo "<script>datosGraficaHumedad[$i] = " . (float)$_SESSION["humedad"][$i] . ";</script>";
+                echo "<script>datosGraficaFechaFichero[$i] = '" . $_SESSION["fechaFichero"][$i] . "';</script>";
+              $i++;
+             
+            }    
+          }
 
         while ( $j < $_SESSION["numeroSimulaciones"]) {
           echo "<script>datosGraficaPesoCepasTotal[$j] = " .(float) $_SESSION['pesoCepasTotal'][$j] . ";</script>";
-          echo "<script>datosGraficaTamanoHongo[$j] = " .(float) $_SESSION['tamanoHongo'][$j] . ";</script>";
+          echo "<script>pesoCepasTotalPerdido[$j] = " .(float) $_SESSION['pesoCepasTotalPerdido'][$j] . ";</script>";
           echo "<script>datosGraficaTamanoHoja[$j] = " .(float) $_SESSION['tamanoHojas'][$j] . ";</script>";
           $j++;
         }
@@ -214,6 +240,21 @@
     <script src="../../dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
+
+    <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="excanvas.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="../../jquery.jqplot.1.0.9.d96a669/jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="../../jquery.jqplot.1.0.9.d96a669/jquery.jqplot.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../jquery.jqplot.1.0.9.d96a669/jquery.jqplot.css" />
+
+<script type="text/javascript" src="../../jquery.jqplot.1.0.9.d96a669/jquery.jqplot.js"></script>
+<script type="text/javascript" src="../../jquery.jqplot.1.0.9.d96a669/plugins/jqplot.cursor.js"></script>
+<script type="text/javascript" src="../../jquery.jqplot.1.0.9.d96a669/plugins/jqplot.dateAxisRenderer.js"></script>
+<script type="text/javascript" src="../../jquery.jqplot.1.0.9.d96a669/plugins/jqplot.logAxisRenderer.js"></script>
+<script type="text/javascript" src="../../jquery.jqplot.1.0.9.d96a669/plugins/jqplot.canvasTextRenderer.js"></script>
+<script type="text/javascript" src="../../jquery.jqplot.1.0.9.d96a669/plugins/jqplot.canvasAxisTickRenderer.js"></script>
+
+
+
     <!-- page script -->
     <script type="text/javascript">
 
@@ -228,11 +269,54 @@
 
           function generarGraficas(){
             graficaDatosClimaticos();
-        setTimeout(function(){  graficaCepaHongo();}, 0);
+        /*setTimeout(function(){  graficaCepaHongo();}, 0);
+        setTimeout(function(){  graficaPrueba();}, 0);*/
           
             
           }
 
+
+          function graficaPrueba(){
+
+             $(document).ready(function(){
+              goog = [["6/22/2009",425.32,324], ["6/8/2009",424.84,345], ["5/26/2009",417.23,887], ["5/11/2009",390,7667], 
+              ["4/27/2009",393.69,4564], ["4/13/2009",392.24,4564], ["3/30/2009",369.78,4564], ["3/16/2009",330.16], ["3/2/2009",308.57], 
+              ["2/17/2009",346.45], ["2/2/2009",371.28], ["1/20/2009",324.7], ["1/5/2009",315.07], ["12/22/2008",300.36], 
+              ["12/8/2008",315.76], ["11/24/2008",292.96], ["11/10/2008",310.02], ["10/27/2008",359.36], ["10/13/2008",372.54],
+              ["9/29/2008",386.91], ["9/15/2008",449.15], ["9/2/2008",444.25], ["8/25/2008",463.29],  ["8/11/2008",510.15], 
+              ["7/28/2008",467.86], ["7/14/2008",481.32], ["6/30/2008",537], ["6/16/2008",546.43], ["6/2/2008",567], 
+              ["5/19/2008",544.62], ["5/5/2008",573.2], ["4/21/2008",544.06], ["4/7/2008",457.45], ["3/24/2008",438.08], 
+              ["3/10/2008",437.92], ["2/25/2008",471.18], ["2/11/2008",529.64], ["1/28/2008",515.9], ["1/14/2008",600.25], 
+              ["12/31/2007",657], ["12/17/2007",696.69], ["12/3/2007",714.87], ["11/19/2007",676.7], ["11/5/2007",663.97], 
+              ["10/22/2007",674.6], ["10/8/2007",637.39], ["9/24/2007",567.27], ["9/10/2007",528.75], ["8/27/2007",515.25]];
+           
+              var plot1 = $.jqplot('chart1', [goog], { 
+                  title: 'Google, Inc.', 
+                  series: [{ 
+                      label: 'Google, Inc.', 
+                      neighborThreshold: -1 
+                  }], 
+                  axes: { 
+                      xaxis: { 
+                          renderer:$.jqplot.DateAxisRenderer,
+                          tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                          tickOptions: {
+                            angle: -30
+                          } 
+                      }, 
+                      yaxis: {  
+                          renderer: $.jqplot.LogAxisRenderer,
+                          tickOptions:{ prefix: '$' } 
+                      } 
+                  }, 
+                  cursor:{
+                      show: true, 
+                      zoom: true
+                  } 
+              });
+          });
+           
+          }
 
           function graficaDatosClimaticos() {
             var i = 0;
@@ -242,14 +326,14 @@
             var cadenaPartida = [];
       
 
-            data.addColumn('date', 'meses');
+            data.addColumn('number', 'meses');
             data.addColumn('number', 'temperatura');
             data.addColumn('number', 'lluvia');
-            data.addColumn('number', 'humedad');
+ 
             
             //data.addColumn('number', 'Transformers: Age of Extinction');
 
-            for (var i =0; i < periodo; i++) {
+            for (var i =0; i < 10; i++) {
              /*fecha = datosGraficaFechaFichero[i].split("-");
               fecha = fecha[2] + '-' + fecha[1] + '-' +fecha[0];*/
 
@@ -259,7 +343,7 @@
               cadenaPartida = datosGraficaFechaFichero[i].split("/");    
               //cadena = cadenaPartida[0].remove("0"); 
               
-              data.addRows([  [ new Date(datosGraficaFechaFichero[i],"dd/mm/yyyy"), datosGraficaTempe[i], datosGraficaLluvia[i],datosGraficaHumedad[i] ]  ]);
+              data.addRows([  [ i,pesoCepasTotalPorDia[i] ,pesoCepasTotalPorDiaPerdido[i]]  ]);
                
             };
 
@@ -288,7 +372,7 @@
             var data = new google.visualization.DataTable();
             data.addColumn('number', 'Numero de simulaciones');
             data.addColumn('number', 'CEPA');
-            data.addColumn('number', 'HONGO');
+            data.addColumn('number', 'CEPA PERDIDO');
             data.addColumn('number', 'HOJA');
 
             
@@ -297,7 +381,7 @@
        
 
             for (var i =0; i < numeroSimulaciones; i++) {
-              data.addRows([  [i, datosGraficaPesoCepasTotal[i], datosGraficaTamanoHongo[i] , datosGraficaTamanoHoja[i]]  ]);
+              data.addRows([  [i, datosGraficaPesoCepasTotal[i], pesoCepasTotalPerdido[i] , datosGraficaTamanoHoja[i]]  ]);
             };
 
 

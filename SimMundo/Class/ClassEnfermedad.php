@@ -215,7 +215,7 @@ class ClassEnfermedad{
 		//voy pasar el porcentaje de crecimeinto del hongo y no wel tamaho como antes
 		//es mas dejo de calcularel tamaño de hongo xk no me vale apra nada
 		//y paso a comtemplar el total de uva perdida
-		return $this->porcentajeTamanhoHongo;
+		//return $this->porcentajeTamanhoHongo;
 
 	}
 

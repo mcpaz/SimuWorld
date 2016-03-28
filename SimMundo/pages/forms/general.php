@@ -220,7 +220,7 @@
                         <div class="box-body">
                           <div class="row">
                             <div class="col-xs-2">
-                              <input id="numeroSulfatos" type="text" class="form-control" name="numeroFechasSulfatos" placeholder="Numero de sulfatos" value="4" onblur="generarDiasSulfato()">
+                              <input id="numeroSulfatos" type="text" class="form-control" name="numeroFechasSulfatos" placeholder="Numero de sulfatos" value="2" onblur="generarDiasSulfato()">
                             </div>
                             <div class="col-xs-2">
                               <input type="text" class="form-control" name="diasEfectoSulfato" placeholder="Número de días de efecto:" value="30">
@@ -235,7 +235,7 @@
                     </div>
 
 
-                    <!-- 
+                    
                     <div class="form-group">
                       <label>Date masks:</label>
                         <div class="input-group">
@@ -257,7 +257,7 @@
                       </div>
                     </div>
 
-                    <div class="form-group">
+                 <!--    <div class="form-group">
                       <label>Date masks:</label>
                       <div class="input-group">
                         <div class="input-group-addon">
@@ -368,8 +368,11 @@
           for ($i=0; $i< $_POST["numeroFechasSulfatos"] ; $i++){
             $arrayFechasSulfato[$i] = $_POST["sulfatada".$i];
           }
+        }else{
+          $arrayFechasSulfato =  null;
         }
         
+    
  
         //recojo los datos para la clase paisano
         $clasePaisano->setNumeroFechasSulfatos($_POST["numeroFechasSulfatos"]);

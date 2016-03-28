@@ -21,12 +21,12 @@ class ClassMundo
 	public $humedadMedia;
 	public $fechaActual;
 
-    public $totalPesoUva; //variablepara guardar el total del crecimiento de la uva en peso por iteracion
-    public $totalPesoUvaPerdido;
-    public $totalTamanoTotalHoja;
+    public $totalPesoUva = 0; //variablepara guardar el total del crecimiento de la uva en peso por iteracion
+    public $totalPesoUvaPerdido= 0;
+    public $totalTamanoTotalHoja= 0;
 
-    public $totalPesoUvaPorDia; //variablepara guardar el total del crecimiento de la uva por dia de peso por dia en casda iteracion
-    public $totalPesoUvaPorDiaPerdido;
+    public $totalPesoUvaPorDia = 0; //variablepara guardar el total del crecimiento de la uva por dia de peso por dia en casda iteracion
+    public $totalPesoUvaPorDiaPerdido = 0;
 
 
     
@@ -330,6 +330,7 @@ class ClassMundo
 
 			$this->totalPesoUvaPorDia=$this->totalPesoUvaPorDia +  $arrayCepas[$i]->getPesoRacimo();
 		}
+
 		return $this->totalPesoUvaPorDia;
 
 	}
@@ -370,7 +371,7 @@ class ClassMundo
 			$this->totalTamanoTotalHoja = $this->totalTamanoTotalHoja +  $arrayCepas[$i]->calcularTotalTamanoHojas($numeroHojas);
 
 		}
-
+		
 		return $this->totalTamanoTotalHoja;
 
 	}
@@ -402,6 +403,7 @@ class ClassMundo
         $arrayFechasSulfato = $this->clasePaisano->getFechasSulfato();
         $tiempoDuracionSulfato = $this->clasePaisano->getDuracionSulfato();
         $numeroSulfatos = $this->clasePaisano->getNumeroFechasSulfatos();
+
 
 		$numCepas = $this->getNumeroCepas();
 
@@ -501,7 +503,7 @@ class ClassMundo
 
 	                        	if($fechaSulfatoFin == $fechaFicheroActual){
 
-	                        		if($contFechaSulfato <= $numeroSulfatos -1 ){  
+	                        		if($contFechaSulfato < $numeroSulfatos -1 ){  
 
 	                        			$contFechaSulfato++;   
 
@@ -559,52 +561,61 @@ class ClassMundo
                         
 
                         //calculo el peso de la cepas por dia y los meto en un array solo si el numero de simualciones es inferios a 2
-                        if($numeroSimulaciones == 1){
-                            //$arrayPesoCepasPorDiaPerdido[$j] = $this->calcularTamanoTotalTodasCepasPorDiaPerdido($arrayCepas);  
-                            //$arrayPesoCepasPorDia[$j] = $this->calcularTamanoTotalTodasCepasPorDia($arrayCepas);  
-      						$_SESSION["pesoCepasTotalPorDiaPerdido"][$j]  = $this->calcularTamanoTotalTodasCepasPorDiaPerdido($arrayCepas);
-      						$_SESSION["pesoCepasTotalPorDia"][$j]  = $this->calcularTamanoTotalTodasCepasPorDia($arrayCepas);
-      						/*echo "<br>cepa perdida";
-      						print_r($_SESSION["pesoCepasTotalPorDiaPerdido"][0]);
-      						echo "<br>cepa";
-      						print_r($_SESSION["pesoCepasTotalPorDia"][0]);*/
-                        }
+                        
 
                         $this->guardarLog($fechaLog,$humedad,$lluvia,$temperatura,$pesoUva,$tamanoHoja, $infectar,$arrayCepas[$j]->getPesoPesoPerdido());
                         
                     //fin fbucle numCepas
                     }
 
-                $this->guardarLogSeparador();
+
+                   // if($numeroSimulaciones == 1){
+    
+            		$_SESSION["pesoCepasTotalPorDia"][$i]  = $this->calcularTamanoTotalTodasCepasPorDia($arrayCepas);	
+					$_SESSION["pesoCepasTotalPorDiaPerdido"][$i]  = $this->calcularTamanoTotalTodasCepasPorDiaPerdido($arrayCepas);
+					$_SESSION["tamanoHojasPorDia"][$i] = $this->calcularTotalTamanoHojas($arrayCepas,$numeroHojas);
+
+
+					if( $fechaFinCrecimiento == $fechaFicheroActual){
+						$ultimopPesoCepasTotalPorDia = $_SESSION["pesoCepasTotalPorDia"][$i];
+						$ultimopPesoCepasTotalPorDiaPerdido = $_SESSION["pesoCepasTotalPorDiaPerdido"][$i];
+						$ulimoTamanoHojasPorDia = $_SESSION["tamanoHojasPorDia"][$i];
+					}
+
+                    //} 
+
+                	$this->guardarLogSeparador();
                 //fin de la condicion de fechas
+                }else{
+                	
+                	$_SESSION["pesoCepasTotalPorDia"][$i]  = 0;	
+					$_SESSION["pesoCepasTotalPorDiaPerdido"][$i]  = 0 ;
+					$_SESSION["tamanoHojasPorDia"][$i] = 0;
                 }
             //fin de bucle de periodo	
             }
-          $contFechaSulfato = 0; //varaible para que la siguiente iteracion el array de fechas empiece de nuevo en 0
-          //hago esto porque asi guardo eltotal por cada iteracion
-          /*$arrayPesoCepasTotal[$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
-          $arrayTamanoHongo[$z] = $this->calcularTotalTamanoHongo($arrayEnfermedades);*/
-          $_SESSION["pesoCepasTotal"][$z] = $this->calcularTamanoTotalTodasCepas($arrayCepas);
-          $_SESSION["pesoCepasTotalPerdido"][$z] = $this->calcularTamanoTotalTodasCepasPerdido($arrayCepas);
-          $_SESSION["tamanoHojas"][$z] =$this->calcularTotalTamanoHojas($arrayCepas,$numeroHojas);
 
-         
-          $this->totalPesoUva = 0; //hay que volver inicializarla a 0 para que no acumule los valores
-          $this->totalPesoUvaPerdido = 0;
-          $this->totalTamanoTotalHoja = 0;
-          echo "<br>---------------------------------------------------------------FIN DE ITERACION";
+		   
+
+		    if ($numeroSimulaciones > 1) {
+		      	$_SESSION["pesoCepasTotal"][$z] = $ultimopPesoCepasTotalPorDia ;
+			    $_SESSION["pesoCepasTotalPerdido"][$z] = $ultimopPesoCepasTotalPorDiaPerdido;
+			    $_SESSION["tamanoHojas"][$z] = $ulimoTamanoHojasPorDia;
+
+		    }
+	     	
+	     	 $contFechaSulfato = 0; //varaible para que la siguiente iteracion el array de fechas empiece de nuevo en 0
+
+	     	 //inicializar las varaible de sumatorio a 0 si no se acumula
+		    $this->totalPesoUvaPorDia = 0;
+			$this->totalPesoUvaPorDiaPerdido = 0;
+		    echo "<br>---------------------------------------------------------------FIN DE ITERACION";
           
         //fin bucle numeroSimulaciones
         }
 
-      	
-        /*for ($i=0; $i < sizeof($arrayPesoCepasTotal); $i++) { 
-        	echo "<br>Total de la cepa " . $i . ": " .$arrayPesoCepasTotal[$i];
-        	echo "<br>Total de la hongo " . $i . ": " .$arrayTamanoHongo[$i];
-        }*/
 
-
-		for ($i=0; $i <$numCepas; $i++) { 
+		for ($i=0; $i <$numeroSimulaciones; $i++) { 
         	echo "<br>Total de la cepa " . $i . ": " .$_SESSION["pesoCepasTotal"][$i];
         	echo "<br>Total perdido " . $i . ": " .$_SESSION["pesoCepasTotalPerdido"][$i];
         	echo "<br>Total de la hoja " . $i . ": " .$_SESSION["tamanoHojas"][$i];
@@ -612,10 +623,15 @@ class ClassMundo
         }
 
 
-        /*for ($i=0; $i < sizeof($_SESSION["fechaFichero"]) ; $i++) { 
-        	echo "<br>";
-        	print_r($_SESSION["fechaFichero"][$i]);
-        }*/
+        for ($i=0; $i <$this->getPeriodoFichero(); $i++) { 
+        	echo "<br>peso cepa " . $i . ": " .$_SESSION["pesoCepasTotalPorDia"][$i];
+        	echo "<br>peso perdido " . $i . ": " .$_SESSION["pesoCepasTotalPorDiaPerdido"][$i];
+        	echo "<br> hoja " . $i . ": " . $_SESSION["tamanoHojasPorDia"][$i];
+        	echo"<br>";
+        }
+
+
+    //fin mainWOrld
 	}
 
 

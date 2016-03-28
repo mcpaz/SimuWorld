@@ -82,7 +82,7 @@
                   <h3 class="box-title">Formulario de parametrización</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                <form class="form-horizontal" action="" method="post" enctype="multipart/form-data" id="formularioParametrizacion">
                   <div class="box-body">
 
 
@@ -108,7 +108,7 @@
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" class="form-control pull-right"  id="reservation" name = "rangoMesCrecimiento" value = "01/06/2015 - 30/09/2015">
+                              <input type="text" class="form-control pull-right"  id="reservation" name = "rangoMesCrecimiento"  value = "01/06/2015 - 30/09/2015">
                             </div><!-- /.input group -->
                           </div><!-- /.form group -->
                           </div>
@@ -242,7 +242,7 @@
                           <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                           </div>
-                          <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada0" value= "01/07/2015" >
+                          <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada0" id = "sulfatada0" value= "01/07/2015" >
                         </div>
                     </div>
 
@@ -253,7 +253,7 @@
                         <div class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada1" value= "30/08/2015">
+                        <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada1" id = "sulfatada1"value= "30/08/2015">
                       </div>
                     </div>
 
@@ -294,7 +294,7 @@
                     </div>
                   </div>  
                   <div class="box-footer">
-                    <button type="submit" name="submit" class="btn btn-primary" >Guardar datos</button>
+                    <button type="button" name="submit" class="btn btn-primary" onclick="validar()" >Guardar datos</button>
                   </div> 
 
                 </form>
@@ -372,7 +372,7 @@
           $arrayFechasSulfato =  null;
         }
         
-    
+
  
         //recojo los datos para la clase paisano
         $clasePaisano->setNumeroFechasSulfatos($_POST["numeroFechasSulfatos"]);
@@ -420,6 +420,67 @@
 
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
+
+
+    <script>
+
+
+        function validar() {
+
+          var numeroSulfatos = document.getElementById("numeroSulfatos").value;
+          var aux;
+          var arraySulfatos = [];
+          var comprobacionSulfatos = true;
+
+
+          var rangoMesCre = document.getElementById('reservation').value;
+
+          var auxRango = rangoMesCre.split("-");
+          var auxRangoIni = auxRango[0];
+          var auxRangoFin = auxRango[1];
+
+           
+
+
+          for (var i = 0; i < numeroSulfatos ; i++) {
+              
+              arraySulfatos[i] = document.getElementById("sulfatada"+i).value;
+              aux =  arraySulfatos[i].split('/');
+              arraySulfatos[i] = new Date ( aux[2],aux[1],aux[0]);
+          };
+           
+         
+          for (var i = 0; i < numeroSulfatos - 1; i++) {
+                if(arraySulfatos[i] < arraySulfatos[i+1]){
+                  comprobacionSulfatos =  false;
+                }
+          };
+
+
+          if(comprobacionSulfatos == true){
+            auxRangoIni = auxRangoIni.split("/");
+            auxRangoFin = auxRangoFin.split("/");
+
+            auxRangoIni = new Date(auxRangoIni[2],auxRangoIni[1],auxRangoIni[0]);
+            auxRangoFin = new Date(auxRangoFin[2],auxRangoFin[1],auxRangoFin[0]);
+
+            for (var i = 0; i < numeroSulfatos - 1; i++) {
+                if(arraySulfatos[i] > auxRangoIni){
+                   
+                }
+          };
+
+          }
+
+
+
+
+            //document.getElementById("formularioParametrizacion").submit();
+        }
+
+
+
+    </script>
     <!-- Page script -->
     <script>
       $(function () {

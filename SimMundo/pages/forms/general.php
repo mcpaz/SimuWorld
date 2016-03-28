@@ -82,7 +82,7 @@
                   <h3 class="box-title">Formulario de parametrización</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="" method="post" enctype="multipart/form-data" id="formularioParametrizacion">
+                <form id ="formularioParametrizacion" class="form-horizontal" action="#" method="post" enctype="multipart/form-data" onsubmit="validar()">
                   <div class="box-body">
 
 
@@ -294,7 +294,7 @@
                     </div>
                   </div>  
                   <div class="box-footer">
-                    <button type="button" name="submit" class="btn btn-primary" onclick="validar()" >Guardar datos</button>
+                    <button type="submit" name="submit" class="btn btn-primary"  >Guardar datos</button>
                   </div> 
 
                 </form>
@@ -439,19 +439,19 @@
           var auxRangoIni = auxRango[0];
           var auxRangoFin = auxRango[1];
 
-           
-
+          var comprobacionRangoSulfato = true ; //para comprobar que las fechas de las sulfatadas no excedan a las fechas de los rangos
 
           for (var i = 0; i < numeroSulfatos ; i++) {
               
               arraySulfatos[i] = document.getElementById("sulfatada"+i).value;
               aux =  arraySulfatos[i].split('/');
-              arraySulfatos[i] = new Date ( aux[2],aux[1],aux[0]);
+              arraySulfatos[i] = new Date ( aux[2],aux[1]-1,aux[0]);
           };
-           
+
          
           for (var i = 0; i < numeroSulfatos - 1; i++) {
-                if(arraySulfatos[i] < arraySulfatos[i+1]){
+                if(arraySulfatos[i] > arraySulfatos[i+1]){
+                  alert("sulfatada");
                   comprobacionSulfatos =  false;
                 }
           };
@@ -461,21 +461,27 @@
             auxRangoIni = auxRangoIni.split("/");
             auxRangoFin = auxRangoFin.split("/");
 
-            auxRangoIni = new Date(auxRangoIni[2],auxRangoIni[1],auxRangoIni[0]);
-            auxRangoFin = new Date(auxRangoFin[2],auxRangoFin[1],auxRangoFin[0]);
+            auxRangoIni = new Date(auxRangoIni[2],auxRangoIni[1]-1,auxRangoIni[0]);
+            auxRangoFin = new Date(auxRangoFin[2],auxRangoFin[1]-1,auxRangoFin[0]);           
 
-            for (var i = 0; i < numeroSulfatos - 1; i++) {
-                if(arraySulfatos[i] > auxRangoIni){
-                   
-                }
-          };
+            
+
+            if(auxRangoIni >= arraySulfatos[0] ){
+                comprobacionRangoSulfato = false;
+            }
+            
+
 
           }
 
 
+            if (comprobacionSulfatos == true && comprobacionRangoSulfato ==true){
 
+                // document.getElementById("formularioParametrizacion").submit();
+                return true;
+            }
 
-            //document.getElementById("formularioParametrizacion").submit();
+           
         }
 
 

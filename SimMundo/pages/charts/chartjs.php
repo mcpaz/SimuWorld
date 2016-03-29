@@ -64,44 +64,10 @@
         <section class="content">
 
 
-          <div class="row">
-            <div class="col-md-12">
-              <!-- AREA CHART -->
-              <div class="box box-info">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Area Chart</h3>
-                  <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                  </div>
-                </div>
-                <div class="box-body">
-                  <div class="chart">
-                    <div id="graficaDatosClimaticos"></div>
-                  </div>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-          </div>
-
-            <div class="col-md-12">
-              <div class="box box-info">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Area Chart</h3>
-                  <div class="box-tools pull-right">
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                  </div>
-                </div>
-                <div class="box-body">
-                  <div class="chart">
-                    <div id="graficaCepaHongo"></div>
-                  </div>
-                </div><!-- /.box-body -->                
-              </div><!-- /.box -->
-          </div>
+          <div class="row">    
 
 
-            <div class="col-md-12">                     
+            <div class="col-md-12">            
               <div class="box box-info">
                 <div class="box-header with-border">
                   <h3 class="box-title">Line Chart</h3>
@@ -111,44 +77,30 @@
                   </div>
                 </div>
                 <div class="box-body">
-                  <div class="chart">
-                    <canvas id="lineChart" style="height:250px"></canvas>
-                  </div>
+                    <div id="chart1" style="height:600px; width:1200px;"></div>        
                 </div>
-              </div>   
-            </div><!-- /.col (LEFT) -->
-       
-
-<div class="col-md-12">            
-          <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title">Line Chart</h3>
-              <div class="box-tools pull-right">
-                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
-            </div>
-            <div class="box-body">
-                <div id="chart1" style="height:600px; width:1200px;"></div>        
-            </div>
-          </div>   
-            </div><!-- /.col (LEFT) -->
 
+            </div>
+
+          </div>
 
         </section><!-- /.content -->
-      </div><!-- /.content-wrapper -->
-      <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-          <b>Version</b> 2.3.0
-        </div>
-        <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
-      </footer>
+
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+          <div class="pull-right hidden-xs">
+            <b>Version</b> 2.3.0
+          </div>
+          <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
+        </footer>
 
       <!-- Control Sidebar -->
      
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
-      <div class="control-sidebar-bg"></div>
+        <div class="control-sidebar-bg"></div>
+      </div>
     </div><!-- ./wrapper -->
 
     <!-- jQuery 2.1.4 -->
@@ -177,12 +129,13 @@
         var datosGraficaFechaFichero = [];
 
         //datos de la cepa y hongo
-        var datosGraficaPesoCepasTotal =[];
+        var pesoCepasTotal =[];
         var pesoCepasTotalPerdido =[];
-        var datosGraficaTamanoHoja = [];
+        var tamanoTotalHojas = [];
 
         var pesoCepasTotalPorDia = [];
         var pesoCepasTotalPorDiaPerdido = [];
+        var tamanoHojasPorDia = [];
 
 
       </script>
@@ -191,21 +144,22 @@
       
         $i=0;
         $j=0;
-      $z =0;
+        $z =0;
+        $c = 0;
       
           if (isset($_SESSION["pesoCepasTotalPorDiaPerdido"]) && isset($_SESSION["pesoCepasTotalPorDia"])){
               while($z<10){   
             
                   echo "<script>pesoCepasTotalPorDia[$z] = " . (float)$_SESSION["pesoCepasTotalPorDia"][$z] . ";</script>";
                   echo "<script>pesoCepasTotalPorDiaPerdido[$z] = " .(float) $_SESSION["pesoCepasTotalPorDiaPerdido"][$z] . ";</script>";
-
+                  echo "<script>tamanoHojasPorDia[$z] = " .(float) $_SESSION["tamanoHojasPorDia"][$z] . ";</script>";
                   $z++;         
               } 
           }
 
 
-          if (isset($_SESSION["temperatura"]) && isset($_SESSION["lluvia"])){
-            while($i<$_SESSION["periodo"]){     
+          if (isset($_SESSION["temperatura"])){
+            while($i < $_SESSION["periodo"]){     
               
 
                 echo "<script>datosGraficaTempe[$i] = " .(float) $_SESSION['temperatura'][$i] . ";</script>";
@@ -217,14 +171,27 @@
             }    
           }
 
-        while ( $j < $_SESSION["numeroSimulaciones"]) {
-          echo "<script>datosGraficaPesoCepasTotal[$j] = " .(float) $_SESSION['pesoCepasTotal'][$j] . ";</script>";
-          echo "<script>pesoCepasTotalPerdido[$j] = " .(float) $_SESSION['pesoCepasTotalPerdido'][$j] . ";</script>";
-          echo "<script>datosGraficaTamanoHoja[$j] = " .(float) $_SESSION['tamanoHojas'][$j] . ";</script>";
-          $j++;
-        }
+          while ( $j < $_SESSION["numeroSimulaciones"]) {
+            echo "<script>pesoCepasTotal[$j] = " .(float) $_SESSION['pesoCepasTotal'][$j] . ";</script>";
+            echo "<script>pesoCepasTotalPerdido[$j] = " .(float) $_SESSION['pesoCepasTotalPerdido'][$j] . ";</script>";
+            echo "<script>tamanoTotalHojas[$j] = " .(float) $_SESSION['tamanoTotalHojas'][$j] . ";</script>";
+            $j++;
+          }
 
+/*  
+                  $_SESSION["pesoCepasTotalPorDia"][$i]  = 0; 
+          $_SESSION["pesoCepasTotalPorDiaPerdido"][$i]  = 0 ;
+          $_SESSION["tamanoHojasPorDia"][$i] = 0;
+                }
+            //fin de bucle de periodo 
+            }
 
+       
+
+        if ($numeroSimulaciones > 1) {
+            $_SESSION["pesoCepasTotal"][$z] = $ultimopPesoCepasTotalPorDia ;
+          $_SESSION["pesoCepasTotalPerdido"][$z] = $ultimopPesoCepasTotalPorDiaPerdido;
+          $_SESSION["tamanoHojas"][$z] = $ulimoTamanoHojasPorDia;*/
 
           
       ?>  
@@ -268,236 +235,106 @@
 
 
           function generarGraficas(){
-            graficaDatosClimaticos();
-        /*setTimeout(function(){  graficaCepaHongo();}, 0);
-        setTimeout(function(){  graficaPrueba();}, 0);*/
-          
-            
+              
+              //setTimeout(function(){  graficaPrueba();}, 0);         
+              graficaPrueba();
           }
 
 
           function graficaPrueba(){
 
-             $(document).ready(function(){
-              goog = [["6/22/2009",425.32,324], ["6/8/2009",424.84,345], ["5/26/2009",417.23,887], ["5/11/2009",390,7667], 
-              ["4/27/2009",393.69,4564], ["4/13/2009",392.24,4564], ["3/30/2009",369.78,4564], ["3/16/2009",330.16], ["3/2/2009",308.57], 
-              ["2/17/2009",346.45], ["2/2/2009",371.28], ["1/20/2009",324.7], ["1/5/2009",315.07], ["12/22/2008",300.36], 
-              ["12/8/2008",315.76], ["11/24/2008",292.96], ["11/10/2008",310.02], ["10/27/2008",359.36], ["10/13/2008",372.54],
-              ["9/29/2008",386.91], ["9/15/2008",449.15], ["9/2/2008",444.25], ["8/25/2008",463.29],  ["8/11/2008",510.15], 
-              ["7/28/2008",467.86], ["7/14/2008",481.32], ["6/30/2008",537], ["6/16/2008",546.43], ["6/2/2008",567], 
-              ["5/19/2008",544.62], ["5/5/2008",573.2], ["4/21/2008",544.06], ["4/7/2008",457.45], ["3/24/2008",438.08], 
-              ["3/10/2008",437.92], ["2/25/2008",471.18], ["2/11/2008",529.64], ["1/28/2008",515.9], ["1/14/2008",600.25], 
-              ["12/31/2007",657], ["12/17/2007",696.69], ["12/3/2007",714.87], ["11/19/2007",676.7], ["11/5/2007",663.97], 
-              ["10/22/2007",674.6], ["10/8/2007",637.39], ["9/24/2007",567.27], ["9/10/2007",528.75], ["8/27/2007",515.25]];
-           
-              var plot1 = $.jqplot('chart1', [goog], { 
-                  title: 'Google, Inc.', 
-                  series: [{ 
-                      label: 'Google, Inc.', 
-                      neighborThreshold: -1 
-                  }], 
-                  axes: { 
-                      xaxis: { 
-                          renderer:$.jqplot.DateAxisRenderer,
-                          tickRenderer: $.jqplot.CanvasAxisTickRenderer,
-                          tickOptions: {
-                            angle: -30
-                          } 
-                      }, 
-                      yaxis: {  
-                          renderer: $.jqplot.LogAxisRenderer,
-                          tickOptions:{ prefix: '$' } 
-                      } 
-                  }, 
-                  cursor:{
-                      show: true, 
-                      zoom: true
-                  } 
-              });
-          });
-           
-          }
-
-          function graficaDatosClimaticos() {
-            var i = 0;
-            var data = new google.visualization.DataTable();
-
-
-            var cadenaPartida = [];
-      
-
-            data.addColumn('number', 'meses');
-            data.addColumn('number', 'temperatura');
-            data.addColumn('number', 'lluvia');
- 
-            
-            //data.addColumn('number', 'Transformers: Age of Extinction');
-
-            for (var i =0; i < 10; i++) {
-             /*fecha = datosGraficaFechaFichero[i].split("-");
-              fecha = fecha[2] + '-' + fecha[1] + '-' +fecha[0];*/
-
-              /*cadenaPartida = datosGraficaFechaFichero[i].replace("/","-");   
-              document.writeln(cadenaPartida[0],cadenaPartida[1],cadenaPartida[2]);    */   
-
-              cadenaPartida = datosGraficaFechaFichero[i].split("/");    
-              //cadena = cadenaPartida[0].remove("0"); 
+             /*$(document).ready(function(){
+                goog = [  ["6/22/2009",425.32,324], ["6/8/2009",424.84,345], ["5/26/2009",417.23,887], ["5/11/2009",390,7667], 
+                ["4/27/2009",393.69,4564], ["4/13/2009",392.24,4564], ["3/30/2009",369.78,4564], ["3/16/2009",330.16], ["3/2/2009",308.57], 
+                ["2/17/2009",346.45], ["2/2/2009",371.28], ["1/20/2009",324.7], ["1/5/2009",315.07], ["12/22/2008",300.36], 
+                ["12/8/2008",315.76], ["11/24/2008",292.96], ["11/10/2008",310.02], ["10/27/2008",359.36], ["10/13/2008",372.54],
+                ["9/29/2008",386.91], ["9/15/2008",449.15], ["9/2/2008",444.25], ["8/25/2008",463.29],  ["8/11/2008",510.15], 
+                ["7/28/2008",467.86], ["7/14/2008",481.32], ["6/30/2008",537], ["6/16/2008",546.43], ["6/2/2008",567], 
+                ["5/19/2008",544.62], ["5/5/2008",573.2], ["4/21/2008",544.06], ["4/7/2008",457.45], ["3/24/2008",438.08], 
+                ["3/10/2008",437.92], ["2/25/2008",471.18], ["2/11/2008",529.64], ["1/28/2008",515.9], ["1/14/2008",600.25], 
+                ["12/31/2007",657], ["12/17/2007",696.69], ["12/3/2007",714.87], ["11/19/2007",676.7], ["11/5/2007",663.97], 
+                ["10/22/2007",674.6], ["10/8/2007",637.39], ["9/24/2007",567.27], ["9/10/2007",528.75], ["8/27/2007",515.25] ];*/
               
-              data.addRows([  [ i,pesoCepasTotalPorDia[i] ,pesoCepasTotalPorDiaPerdido[i]]  ]);
+                //goog = [[datosGraficaFechaFichero[0],datosGraficaTempe[0],datosGraficaLluvia[0],datosGraficaHumedad[0]]];
                
-            };
+
+               var aux = [];
+                for(var i= 0;i<periodo;i++){
+
+                  aux[i]= [datosGraficaTempe[i],datosGraficaLluvia[i],datosGraficaHumedad[i] ];
 
 
-  
-            var options = {
-              chart: {
-                title: 'Gráfica de datos climaticos.'
-              },
-              width: 800,
-              height: 450 ,
-            
-              
-            };
+                }
 
-            var chart = new google.charts.Line(document.getElementById('graficaDatosClimaticos'));
+                
 
-            chart.draw(data, options);
+                var plot1 = $.jqplot('chart1', [aux], { 
+                    title: 'Google, Inc.', 
+                    series: [{ 
+                        label: 'Google, Inc.', 
+                        neighborThreshold: -1 
+                    }], 
+                    axes: { 
+                        xaxis: { 
+                            renderer:$.jqplot.DateAxisRenderer,
+                            tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                            tickOptions: {
+                              angle: -30
+                            } 
+                        }, 
+                        yaxis: {  
+                            renderer: $.jqplot.LogAxisRenderer,
+                            tickOptions:{ prefix: '$' } 
+                        } 
+                    }, 
+                    cursor:{
+                        show: true, 
+                        zoom: true
+                    } 
+                });
+          
+/*
+$(document).ready(function(){
+  var plot2 = $.jqplot ('chart1', [[3,7,9,1,5,3,8,2,5], [6,9,8,2,5,9,17,4,6]], {
+      // Give the plot a title.
+      title: 'Plot With Options',
+      // You can specify options for all axes on the plot at once with
+      // the axesDefaults object.  Here, we're using a canvas renderer
+      // to draw the axis label which allows rotated text.
+      axesDefaults: {
+        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+      },
+      // Likewise, seriesDefaults specifies default options for all
+      // series in a plot.  Options specified in seriesDefaults or
+      // axesDefaults can be overridden by individual series or
+      // axes options.
+      // Here we turn on smoothing for the line.
+      seriesDefaults: {
+          rendererOptions: {
+              smooth: true
+          }
+      },
+      // An axes object holds options for all axes.
+      // Allowable axes are xaxis, x2axis, yaxis, y2axis, y3axis, ...
+      // Up to 9 y axes are supported.
+      axes: {
+        // options for each axis are specified in seperate option objects.
+        xaxis: {
+          label: "X Axis",
+          // Turn off "padding".  This will allow data point to lie on the
+          // edges of the grid.  Default padding is 1.2 and will keep all
+          // points inside the bounds of the grid.
+          pad: 0
+        },
+        yaxis: {
+          label: "Y Axis"
+        }
+      }
+    });
+});*/
+           
           }
 
-
-  
-
-          function graficaCepaHongo() {
-            var i = 0;
-            var data = new google.visualization.DataTable();
-            data.addColumn('number', 'Numero de simulaciones');
-            data.addColumn('number', 'CEPA');
-            data.addColumn('number', 'CEPA PERDIDO');
-            data.addColumn('number', 'HOJA');
-
-            
-            //data.addColumn('number', 'Transformers: Age of Extinction');
-
-       
-
-            for (var i =0; i < numeroSimulaciones; i++) {
-              data.addRows([  [i, datosGraficaPesoCepasTotal[i], pesoCepasTotalPerdido[i] , datosGraficaTamanoHoja[i]]  ]);
-            };
-
-
-  
-            var options = {
-              chart: {
-                title: 'Gráfica de crecimiento'
-              },
-              width: 800,
-              height: 450
-              
-            };
-            var chart = new google.charts.Line(document.getElementById('graficaCepaHongo'));
-
-            chart.draw(data, options);
-          }
-       </script>
-
-
-       <script>
-       $(function () {
- 
-        // This will get the first returned node in the jQuery collection.
- 
-
-        var areaChartData = {
-          labels: ["January", "February", "March", "April", "May", "June", "July"],
-          datasets: [
-            {
-              label: "Electronics",
-              fillColor: "rgba(210, 214, 222, 1)",
-              strokeColor: "rgba(210, 100, 222, 1)",
-              pointColor: "rgba(100, 214, 100, 1)",
-              pointStrokeColor: "#c1c7d1",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(220,220,220,1)",
-              data: datosGraficaTempe
-            },
-            {
-              label: "Digital Goods",
-              fillColor: "rgba(60,141,188,0.9)",
-              strokeColor: "rgba(60,141,188,0.8)",
-              pointColor: "#3b8bba",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(60,141,188,1)",
-              data: datosGraficaHumedad
-            },
-
-            {
-              label: "Digitdrh",
-              fillColor: "rgba(60,141,188,0.5)",
-              strokeColor: "rgba(30,170,150,0.4)",
-              pointColor: "#3b8bba",
-              pointStrokeColor: "rgba(60,141,188,1)",
-              pointHighlightFill: "#ffa",
-              pointHighlightStroke: "rgba(60,197,188,1)",
-              data: datosGraficaLluvia
-            }
-          ]
-        };
-
-        var areaChartOptions = {
-          //Boolean - If we should show the scale at all
-          showScale: true,
-          //Boolean - Whether grid lines are shown across the chart
-          scaleShowGridLines: false,
-          //String - Colour of the grid lines
-          scaleGridLineColor: "rgba(0,0,0,.05)",
-          //Number - Width of the grid lines
-          scaleGridLineWidth: 1,
-          //Boolean - Whether to show horizontal lines (except X axis)
-          scaleShowHorizontalLines: true,
-          //Boolean - Whether to show vertical lines (except Y axis)
-          scaleShowVerticalLines: true,
-          //Boolean - Whether the line is curved between points
-          bezierCurve: true,
-          //Number - Tension of the bezier curve between points
-          bezierCurveTension: 0.3,
-          //Boolean - Whether to show a dot for each point
-          pointDot: false,
-          //Number - Radius of each point dot in pixels
-          pointDotRadius: 4,
-          //Number - Pixel width of point dot stroke
-          pointDotStrokeWidth: 1,
-          //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-          pointHitDetectionRadius: 20,
-          //Boolean - Whether to show a stroke for datasets
-          datasetStroke: true,
-          //Number - Pixel width of dataset stroke
-          datasetStrokeWidth: 2,
-          //Boolean - Whether to fill the dataset with a color
-          datasetFill: true,
-          //String - A legend template
-          legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-          //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-          maintainAspectRatio: true,
-          //Boolean - whether to make the chart responsive to window resizing
-          responsive: true
-        };
-
-        //Create the line chart
-
-
-        //-------------
-        //- LINE CHART -
-        //--------------
-        var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
-        var lineChart = new Chart(lineChartCanvas);
-        var lineChartOptions = areaChartOptions;
-        lineChartOptions.datasetFill = false;
-        lineChart.Line(areaChartData, lineChartOptions);
-
-
-          });
-       
-        </script>
+      </script>
   </body>
 </html>

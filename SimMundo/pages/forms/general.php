@@ -82,7 +82,7 @@
                   <h3 class="box-title">Formulario de parametrización</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form id ="formularioParametrizacion" class="form-horizontal" action="#" method="post" enctype="multipart/form-data" onsubmit="validar()">
+                <form id ="formularioParametrizacion" class="form-horizontal" action="#" method="post" enctype="multipart/form-data" >
                   <div class="box-body">
 
 
@@ -294,7 +294,7 @@
                     </div>
                   </div>  
                   <div class="box-footer">
-                    <button type="submit" name="submit" class="btn btn-primary"  >Guardar datos</button>
+                    <button type="submit" name="submit" class="btn btn-primary" onclick = " return validar()" >Guardar datos</button>
                   </div> 
 
                 </form>
@@ -338,7 +338,7 @@
         $claseDato = new ClassDato;
   
       if(isset($_POST["submit"])){
-       
+        print_r("mierdiaaaa");
          
         $_SESSION['introducidoDatos'] = 1;
         $claseDato->setNumeroCepas($_POST["numeroCepas"]);
@@ -451,7 +451,6 @@
          
           for (var i = 0; i < numeroSulfatos - 1; i++) {
                 if(arraySulfatos[i] > arraySulfatos[i+1]){
-                  alert("sulfatada");
                   comprobacionSulfatos =  false;
                 }
           };
@@ -477,8 +476,12 @@
 
             if (comprobacionSulfatos == true && comprobacionRangoSulfato ==true){
 
-                // document.getElementById("formularioParametrizacion").submit();
+                //document.getElementById("formularioParametrizacion").submit();
+                alert("entre");
                 return true;
+            }else{
+              alert("Las fechas estan mal parametrizadas.");
+              return false;
             }
 
            

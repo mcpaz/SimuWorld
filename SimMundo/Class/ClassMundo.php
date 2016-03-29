@@ -600,7 +600,7 @@ class ClassMundo
 		    if ($numeroSimulaciones > 1) {
 		      	$_SESSION["pesoCepasTotal"][$z] = $ultimopPesoCepasTotalPorDia ;
 			    $_SESSION["pesoCepasTotalPerdido"][$z] = $ultimopPesoCepasTotalPorDiaPerdido;
-			    $_SESSION["tamanoHojas"][$z] = $ulimoTamanoHojasPorDia;
+			    $_SESSION["tamanoTotalHojas"][$z] = $ulimoTamanoHojasPorDia;
 
 		    }
 	     	
@@ -618,7 +618,7 @@ class ClassMundo
 		for ($i=0; $i <$numeroSimulaciones; $i++) { 
         	echo "<br>Total de la cepa " . $i . ": " .$_SESSION["pesoCepasTotal"][$i];
         	echo "<br>Total perdido " . $i . ": " .$_SESSION["pesoCepasTotalPerdido"][$i];
-        	echo "<br>Total de la hoja " . $i . ": " .$_SESSION["tamanoHojas"][$i];
+        	echo "<br>Total de la hoja " . $i . ": " .$_SESSION["tamanoTotalHojas"][$i];
         	echo"<br>";
         }
 

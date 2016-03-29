@@ -85,6 +85,27 @@
 
           </div>
 
+          <div class="row">    
+
+
+            <div class="col-md-12">            
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Line Chart</h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                    <div id="chart2" style="height:600px; width:1200px;"></div>        
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
         </section><!-- /.content -->
 
         <!-- /.content-wrapper -->
@@ -145,53 +166,40 @@
         $i=0;
         $j=0;
         $z =0;
-        $c = 0;
-      
-          if (isset($_SESSION["pesoCepasTotalPorDiaPerdido"]) && isset($_SESSION["pesoCepasTotalPorDia"])){
-              while($z<10){   
+        $c = 0;       
+
+
+        if (isset($_SESSION["temperatura"])){
+          while($i < $_SESSION["periodo"]){     
             
-                  echo "<script>pesoCepasTotalPorDia[$z] = " . (float)$_SESSION["pesoCepasTotalPorDia"][$z] . ";</script>";
-                  echo "<script>pesoCepasTotalPorDiaPerdido[$z] = " .(float) $_SESSION["pesoCepasTotalPorDiaPerdido"][$z] . ";</script>";
-                  echo "<script>tamanoHojasPorDia[$z] = " .(float) $_SESSION["tamanoHojasPorDia"][$z] . ";</script>";
-                  $z++;         
-              } 
-          }
+
+              echo "<script>datosGraficaTempe[$i] = " .(float) $_SESSION['temperatura'][$i] . ";</script>";
+              echo "<script>datosGraficaLluvia[$i] = " . (float) $_SESSION["lluvia"][$i] . ";</script>";
+              echo "<script>datosGraficaHumedad[$i] = " . (float)$_SESSION["humedad"][$i] . ";</script>";
+              echo "<script>datosGraficaFechaFichero[$i] = '" . $_SESSION["fechaFichero"][$i] . "';</script>";
+            $i++;
+           
+          }    
+        }
 
 
-          if (isset($_SESSION["temperatura"])){
-            while($i < $_SESSION["periodo"]){     
-              
-
-                echo "<script>datosGraficaTempe[$i] = " .(float) $_SESSION['temperatura'][$i] . ";</script>";
-                echo "<script>datosGraficaLluvia[$i] = " . (float)$_SESSION["lluvia"][$i] . ";</script>";
-                echo "<script>datosGraficaHumedad[$i] = " . (float)$_SESSION["humedad"][$i] . ";</script>";
-                echo "<script>datosGraficaFechaFichero[$i] = '" . $_SESSION["fechaFichero"][$i] . "';</script>";
-              $i++;
-             
-            }    
-          }
-
-          while ( $j < $_SESSION["numeroSimulaciones"]) {
-            echo "<script>pesoCepasTotal[$j] = " .(float) $_SESSION['pesoCepasTotal'][$j] . ";</script>";
-            echo "<script>pesoCepasTotalPerdido[$j] = " .(float) $_SESSION['pesoCepasTotalPerdido'][$j] . ";</script>";
-            echo "<script>tamanoTotalHojas[$j] = " .(float) $_SESSION['tamanoTotalHojas'][$j] . ";</script>";
-            $j++;
-          }
-
-/*  
-                  $_SESSION["pesoCepasTotalPorDia"][$i]  = 0; 
-          $_SESSION["pesoCepasTotalPorDiaPerdido"][$i]  = 0 ;
-          $_SESSION["tamanoHojasPorDia"][$i] = 0;
-                }
-            //fin de bucle de periodo 
+        if ($_SESSION["numeroSimulaciones"] > 1){
+            while ( $j < $_SESSION["numeroSimulaciones"]) {
+              echo "<script>pesoCepasTotal[$j] = " .(float) $_SESSION['pesoCepasTotal'][$j] . ";</script>";
+              echo "<script>pesoCepasTotalPerdido[$j] = " .(float) $_SESSION['pesoCepasTotalPerdido'][$j] . ";</script>";
+              echo "<script>tamanoTotalHojas[$j] = " .(float) $_SESSION['tamanoTotalHojas'][$j] . ";</script>";
+              $j++;
             }
+        }else {
 
-       
-
-        if ($numeroSimulaciones > 1) {
-            $_SESSION["pesoCepasTotal"][$z] = $ultimopPesoCepasTotalPorDia ;
-          $_SESSION["pesoCepasTotalPerdido"][$z] = $ultimopPesoCepasTotalPorDiaPerdido;
-          $_SESSION["tamanoHojas"][$z] = $ulimoTamanoHojasPorDia;*/
+            while($z<sizeof($_SESSION["periodo"])){   
+          
+                echo "<script>pesoCepasTotalPorDia[$z] = " . (float)$_SESSION["pesoCepasTotalPorDia"][$z] . ";</script>";
+                echo "<script>pesoCepasTotalPorDiaPerdido[$z] = " .(float) $_SESSION["pesoCepasTotalPorDiaPerdido"][$z] . ";</script>";
+                echo "<script>tamanoHojasPorDia[$z] = " .(float) $_SESSION["tamanoHojasPorDia"][$z] . ";</script>";
+                $z++;         
+            } 
+        }
 
           
       ?>  
@@ -229,19 +237,17 @@
 
           
           google.load('visualization', '1.1', {packages: ['line']});
-          //google.setOnLoadCallback(graficaDatosClimaticos);
-          google.setOnLoadCallback(generarGraficas);
-         
+          google.setOnLoadCallback(generarGraficas);     
 
 
           function generarGraficas(){
               
               //setTimeout(function(){  graficaPrueba();}, 0);         
-              graficaPrueba();
+              graficaDatosClimaticos();
           }
 
 
-          function graficaPrueba(){
+          function graficaDatosClimaticos(){
 
              /*$(document).ready(function(){
                 goog = [  ["6/22/2009",425.32,324], ["6/8/2009",424.84,345], ["5/26/2009",417.23,887], ["5/11/2009",390,7667], 
@@ -258,20 +264,24 @@
                 //goog = [[datosGraficaFechaFichero[0],datosGraficaTempe[0],datosGraficaLluvia[0],datosGraficaHumedad[0]]];
                
 
-               var aux = [];
-                for(var i= 0;i<periodo;i++){
+               var tempe = [];
+               var lluvia = [];
+               var humedad = [];
 
-                  aux[i]= [datosGraficaTempe[i],datosGraficaLluvia[i],datosGraficaHumedad[i] ];
+
+               for(var i= 0;i<periodo;i++){
+              
+                tempe[i] = [datosGraficaFechaFichero[i],datosGraficaTempe[i] ];
+                lluvia[i] = [datosGraficaFechaFichero[i],datosGraficaLluvia[i] ];
+                humedad[i] = [datosGraficaFechaFichero[i],datosGraficaHumedad[i] ];
+
+              }
 
 
-                }
-
-                
-
-                var plot1 = $.jqplot('chart1', [aux], { 
-                    title: 'Google, Inc.', 
+                var plot1 = $.jqplot('chart1', [tempe,lluvia,humedad], { 
+                    title: 'Datos climáticos', 
                     series: [{ 
-                        label: 'Google, Inc.', 
+                        label: 'fdias', 
                         neighborThreshold: -1 
                     }], 
                     axes: { 
@@ -290,14 +300,15 @@
                     cursor:{
                         show: true, 
                         zoom: true
-                    } 
+                    }
                 });
           
-/*
+
 $(document).ready(function(){
-  var plot2 = $.jqplot ('chart1', [[3,7,9,1,5,3,8,2,5], [6,9,8,2,5,9,17,4,6]], {
+  //var plot2 = $.jqplot ('chart1', [[3,7,9,1,5,3,8,2,5], [6,9,8,2,5,9,17,4,6]], {
+    var plot2 = $.jqplot ('chart2', [pesoCepasTotal,pesoCepasTotalPerdido,tamanoTotalHojas], {
       // Give the plot a title.
-      title: 'Plot With Options',
+      title: 'totales de cepa',
       // You can specify options for all axes on the plot at once with
       // the axesDefaults object.  Here, we're using a canvas renderer
       // to draw the axis label which allows rotated text.
@@ -331,7 +342,7 @@ $(document).ready(function(){
         }
       }
     });
-});*/
+});
            
           }
 

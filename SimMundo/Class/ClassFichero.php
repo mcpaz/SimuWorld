@@ -231,6 +231,7 @@ class ClassFichero
 		$re7='.*?';	# Non-greedy match on filler
 		$re8='(-?[0-9]+(?!\))([,\.][0-9]*)?)';	# Float 1
 
+
 		//funcion que aplica el la expresion regular
 
 		if ($c=preg_match_all ("/".$re1.$re2.$re3.$re4.$re5.$re6.$re7.$re8."/is", $l, $matches))
@@ -244,7 +245,7 @@ class ClassFichero
 			    $word2=$matches[3][0];
 			    $float1=$matches[4][0];
 			
-			    $this->lluviaMedia = $float1;
+			    $this->lluviaMedia = str_replace(',', '.', $float1);
 			    $this->fechaActual = $ddmmyyyy1;
 
 			    if($this->lineaLluviaMedia == 0){

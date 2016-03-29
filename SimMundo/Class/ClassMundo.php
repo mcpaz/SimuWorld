@@ -27,7 +27,7 @@ class ClassMundo
 
     public $totalPesoUvaPorDia = 0; //variablepara guardar el total del crecimiento de la uva por dia de peso por dia en casda iteracion
     public $totalPesoUvaPorDiaPerdido = 0;
-
+    public $totalTamanoTotalHojaPorDia = 0;
 
     
 
@@ -363,16 +363,16 @@ class ClassMundo
 	}*/
 
 
-		public function calcularTotalTamanoHojas($arrayCepas,$numeroHojas){
+		public function calcularTotalTamanoHojasPorDia($arrayCepas,$numeroHojas){
 
 
 		for ($i=0; $i < sizeof($arrayCepas); $i++) { 
 
-			$this->totalTamanoTotalHoja = $this->totalTamanoTotalHoja +  $arrayCepas[$i]->calcularTotalTamanoHojas($numeroHojas);
+			$this->totalTamanoTotalHojaPorDia = $this->totalTamanoTotalHojaPorDia +  $arrayCepas[$i]->calcularTotalTamanoHojas($numeroHojas);
 
 		}
 		
-		return $this->totalTamanoTotalHoja;
+		return $this->totalTamanoTotalHojaPorDia;
 
 	}
     
@@ -461,6 +461,11 @@ class ClassMundo
                 $lluvia = $this->getLluviaMediaFichero($i+ $lineaLluvia);
                 $fechaLog = $this->getFechaActual($i); //esta asignacion para guardar la fecha en tipo string
                 $fechaFicheroActual = date_create(str_replace("/", "-",$this->getFechaActual($i)));//cojo la fecha que viene del fichero de datos climaticos y la paso a date para poder comparalar con otra fecha
+
+                //transformo la fecha para el javascript de las graficas
+                $fechaLog = explode("/",$fechaLog);
+                $fechaLog =  $fechaLog[2]."/". $fechaLog[1]."/". $fechaLog[0]; 
+               
 
                 //GUARDO LOS DATOS EN SESION DE ARRAY PAR LUEGO PASARLOS AL JAVASCRIPT
                 //QUE CREA LAS GRAFICAS
@@ -573,7 +578,7 @@ class ClassMundo
     
             		$_SESSION["pesoCepasTotalPorDia"][$i]  = $this->calcularTamanoTotalTodasCepasPorDia($arrayCepas);	
 					$_SESSION["pesoCepasTotalPorDiaPerdido"][$i]  = $this->calcularTamanoTotalTodasCepasPorDiaPerdido($arrayCepas);
-					$_SESSION["tamanoHojasPorDia"][$i] = $this->calcularTotalTamanoHojas($arrayCepas,$numeroHojas);
+					$_SESSION["tamanoHojasPorDia"][$i] = $this->calcularTotalTamanoHojasPorDia($arrayCepas,$numeroHojas);
 
 
 					if( $fechaFinCrecimiento == $fechaFicheroActual){
@@ -609,27 +614,28 @@ class ClassMundo
 	     	 //inicializar las varaible de sumatorio a 0 si no se acumula
 		    $this->totalPesoUvaPorDia = 0;
 			$this->totalPesoUvaPorDiaPerdido = 0;
+			$this->totalTamanoTotalHojaPorDia = 0;
 		    echo "<br>---------------------------------------------------------------FIN DE ITERACION";
           
         //fin bucle numeroSimulaciones
         }
 
-
+        
 		for ($i=0; $i <$numeroSimulaciones; $i++) { 
         	echo "<br>Total de la cepa " . $i . ": " .$_SESSION["pesoCepasTotal"][$i];
         	echo "<br>Total perdido " . $i . ": " .$_SESSION["pesoCepasTotalPerdido"][$i];
         	echo "<br>Total de la hoja " . $i . ": " .$_SESSION["tamanoTotalHojas"][$i];
         	echo"<br>";
         }
-
-
+		
+		
         for ($i=0; $i <$this->getPeriodoFichero(); $i++) { 
         	echo "<br>peso cepa " . $i . ": " .$_SESSION["pesoCepasTotalPorDia"][$i];
         	echo "<br>peso perdido " . $i . ": " .$_SESSION["pesoCepasTotalPorDiaPerdido"][$i];
         	echo "<br> hoja " . $i . ": " . $_SESSION["tamanoHojasPorDia"][$i];
         	echo"<br>";
         }
-
+		
 
     //fin mainWOrld
 	}

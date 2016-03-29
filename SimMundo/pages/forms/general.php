@@ -475,9 +475,6 @@
 
 
             if (comprobacionSulfatos == true && comprobacionRangoSulfato ==true){
-
-                //document.getElementById("formularioParametrizacion").submit();
-                alert("entre");
                 return true;
             }else{
               alert("Las fechas estan mal parametrizadas.");

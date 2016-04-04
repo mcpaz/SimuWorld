@@ -256,6 +256,11 @@ class ClassMundo
 	}
 
 
+	public function getPesoMedioCepa(){
+		return $this->claseDato->getPesoMedioCepa();
+	}
+
+
 
 
 	public function cabeceraLog(){
@@ -425,6 +430,7 @@ class ClassMundo
 		$refLluviaUva = $this->getReferenciaLluviaUva();
   		$refTemperaturaUva = $this->getReferenciaTemperaturaUva();
   		$porcentajeCreUva = $this->getPorcentajeCrecimientoUva();
+  		$pesoMedioCepa = $this->getPesoMedioCepa();
 
   		$refLluviaHoja = $this->getReferenciaLluviaHoja();
   		$refTemperaturaHoja= $this->getReferenciaTemperaturaHoja();
@@ -481,11 +487,12 @@ class ClassMundo
                     
 
                     for ($j =0; $j  < $numCepas; $j ++) { 
-                        $pesoUva = $arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
+                    	$tamanoHoja = $arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja,$numeroHojas);
+                        $pesoUva = $arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva,$tamanoHoja);
 
 
                         //echo "<br>peso uva:" .$arrayCepas[$j]->calCrecPesoRacimo($lluvia,$temperatura,$refLluviaUva,$refTemperaturaUva,$porcentajeCreUva);
-                        $tamanoHoja = $arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja,$numeroHojas);
+                        
                         //echo "<br>tamaño de hoja:" .$arrayCepas[$j]->calCrecimientoHoja($lluvia,$temperatura,$refLluviaHoja,$refTemperaturaHoja,$porcentajeCreHoja);
                         
                         //mientras esto sea 0 es que n[0],cadenaPartida[1],cadenaPartida[2]o hay condiciones optimas para que crezca el hongo

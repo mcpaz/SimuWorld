@@ -192,15 +192,16 @@
             }
         }else {
 
-            while($z<sizeof($_SESSION["periodo"])){   
-          
+            while($z<$_SESSION["periodo"]){   
+                
                 echo "<script>pesoCepasTotalPorDia[$z] = " . (float)$_SESSION["pesoCepasTotalPorDia"][$z] . ";</script>";
                 echo "<script>pesoCepasTotalPorDiaPerdido[$z] = " .(float) $_SESSION["pesoCepasTotalPorDiaPerdido"][$z] . ";</script>";
                 echo "<script>tamanoHojasPorDia[$z] = " .(float) $_SESSION["tamanoHojasPorDia"][$z] . ";</script>";
                 $z++;         
             } 
-        }
 
+        }
+     
           
       ?>  
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -244,6 +245,11 @@
               
               //setTimeout(function(){  graficaPrueba();}, 0);         
               graficaDatosClimaticos();
+              if (numeroSimulaciones > 1){
+                  setTimeout(function(){  graficasCepaTotales();}, 0); 
+              }else{
+                  setTimeout(function(){  graficaDatosCepaPorDia();}, 0); 
+              }
           }
 
 
@@ -304,47 +310,96 @@
                 });
           
 
-$(document).ready(function(){
-  //var plot2 = $.jqplot ('chart1', [[3,7,9,1,5,3,8,2,5], [6,9,8,2,5,9,17,4,6]], {
-    var plot2 = $.jqplot ('chart2', [pesoCepasTotal,pesoCepasTotalPerdido,tamanoTotalHojas], {
-      // Give the plot a title.
-      title: 'totales de cepa',
-      // You can specify options for all axes on the plot at once with
-      // the axesDefaults object.  Here, we're using a canvas renderer
-      // to draw the axis label which allows rotated text.
-      axesDefaults: {
-        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-      },
-      // Likewise, seriesDefaults specifies default options for all
-      // series in a plot.  Options specified in seriesDefaults or
-      // axesDefaults can be overridden by individual series or
-      // axes options.
-      // Here we turn on smoothing for the line.
-      seriesDefaults: {
-          rendererOptions: {
-              smooth: true
-          }
-      },
-      // An axes object holds options for all axes.
-      // Allowable axes are xaxis, x2axis, yaxis, y2axis, y3axis, ...
-      // Up to 9 y axes are supported.
-      axes: {
-        // options for each axis are specified in seperate option objects.
-        xaxis: {
-          label: "X Axis",
-          // Turn off "padding".  This will allow data point to lie on the
-          // edges of the grid.  Default padding is 1.2 and will keep all
-          // points inside the bounds of the grid.
-          pad: 0
-        },
-        yaxis: {
-          label: "Y Axis"
-        }
-      }
-    });
-});
+        } 
+
+          function graficasCepaTotales(){
+            $(document).ready(function(){
+                  //var plot2 = $.jqplot ('chart1', [[3,7,9,1,5,3,8,2,5], [6,9,8,2,5,9,17,4,6]], {
+                    var plot2 = $.jqplot ('chart2', [pesoCepasTotal,pesoCepasTotalPerdido,tamanoTotalHojas], {
+                      // Give the plot a title.
+                      title: 'totales de cepa',
+                      // You can specify options for all axes on the plot at once with
+                      // the axesDefaults object.  Here, we're using a canvas renderer
+                      // to draw the axis label which allows rotated text.
+                      axesDefaults: {
+                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                      },
+                      // Likewise, seriesDefaults specifies default options for all
+                      // series in a plot.  Options specified in seriesDefaults or
+                      // axesDefaults can be overridden by individual series or
+                      // axes options.
+                      // Here we turn on smoothing for the line.
+                      seriesDefaults: {
+                          rendererOptions: {
+                              smooth: true
+                          }
+                      },
+                      // An axes object holds options for all axes.
+                      // Allowable axes are xaxis, x2axis, yaxis, y2axis, y3axis, ...
+                      // Up to 9 y axes are supported.
+                      axes: {
+                        // options for each axis are specified in seperate option objects.
+                        xaxis: {
+                          label: "X Axis",
+                          // Turn off "padding".  This will allow data point to lie on the
+                          // edges of the grid.  Default padding is 1.2 and will keep all
+                          // points inside the bounds of the grid.
+                          pad: 0
+                        },
+                        yaxis: {
+                          label: "Y Axis"
+                        }
+                      }
+                    });
+                });
+            }
+
+
+            function graficaDatosCepaPorDia(){               
+
+               var cepa = [];
+               var cepaPerdida = [];
+               var hoja = [];
+
+
+              for(var i= 0;i<periodo;i++){
+ 
+                cepa[i] = [datosGraficaFechaFichero[i],pesoCepasTotalPorDia[i] ];
+                cepaPerdida[i] = [datosGraficaFechaFichero[i],pesoCepasTotalPorDiaPerdido[i] ];
+                hoja[i] = [datosGraficaFechaFichero[i],tamanoHojasPorDia[i] ];
+
+              }
+             //alert(cepa);
+
+              var plot1 = $.jqplot('chart2', [cepa,cepaPerdida,hoja], { 
+                  title: 'Datos de cepa', 
+                  series: [{ 
+                      label: 'fdias', 
+                      neighborThreshold: -1 
+                  }], 
+                  axes: { 
+                      xaxis: { 
+                          renderer:$.jqplot.DateAxisRenderer,
+                          tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+                          tickOptions: {
+                            angle: -30
+                          } 
+                      }, 
+                      yaxis: {  
+                          renderer: $.jqplot.LogAxisRenderer,
+                          tickOptions:{ prefix: '$' } 
+                      } 
+                  }, 
+                  cursor:{
+                      show: true, 
+                      zoom: true
+                  }
+              });
+          
+
+            } 
            
-          }
+         
 
       </script>
   </body>

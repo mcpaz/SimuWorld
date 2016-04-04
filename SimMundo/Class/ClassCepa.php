@@ -155,7 +155,8 @@ class ClassCepa{
 		if ($this->pesoRacimo >= $resta){
 			$this->pesoRacimo = $this->pesoRacimo - $resta;
 		}else{
-			$this->pesoRacimo = $resta -$this->pesoRacimo ;
+			//$this->pesoRacimo = $resta -$this->pesoRacimo ;
+			$this->pesoRacimo = 1;
 		}
 
 	}
@@ -165,8 +166,11 @@ class ClassCepa{
 	//funciones para calcular el crecimiento tanto de la hoja como del peso de la uva
 
 	//meter tambien el parametro del tamaño de la hoja
-	public function calCrecPesoRacimo($lluvia,$temperatura,$refLluvia,$refTemp,$crecimiento){
+	public function calCrecPesoRacimo($lluvia,$temperatura,$refLluvia,$refTemp,$crecimiento,$tamanoHoja){
 		
+
+		//cuand obtengo el porcentaje de crecieminto lo multiplico por la media de crecimiento por dia, proporcinona por el peso
+		//ideal divido por los dias de madurez en vez de por el peso, y se lo sumo al pesototal
 
 		if($lluvia == 0){
 			$lluvia = $lluvia + 0.01;

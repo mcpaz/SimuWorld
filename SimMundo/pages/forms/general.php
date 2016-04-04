@@ -127,6 +127,7 @@
                           <label  class="col-xs-3">Referencia temperatura: </label>
 
                           <label  class="col-xs-3">Porcentaje de crecimiento de UVA: </label>
+                          <label  class="col-xs-3">Peso medio total por cepa(gramos): </label>
                         </div>
                         <div class="box-body">
                           <div class="row">
@@ -138,6 +139,9 @@
                             </div>
                             <div class="col-xs-3">
                               <input type="text" class="form-control" name="porcentajeCrecimientoUva" placeholder="Porcentaje" value="0.4">
+                            </div>
+                            <div class="col-xs-3">
+                              <input type="text" class="form-control" name="pesoMedioPorCepa" placeholder="peso medio" value="300">
                             </div>
                           </div>
                         </div>
@@ -236,26 +240,7 @@
 
 
                     
-                    <div class="form-group">
-                      <label>Date masks:</label>
-                        <div class="input-group">
-                          <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
-                          </div>
-                          <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada0" id = "sulfatada0" value= "01/07/2015" >
-                        </div>
-                    </div>
-
-
-                  <div class="form-group">
-                      <label>Date masks:</label>
-                      <div class="input-group">
-                        <div class="input-group-addon">
-                          <i class="fa fa-calendar"></i>
-                        </div>
-                        <input type="text" class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask name = "sulfatada1" id = "sulfatada1"value= "30/08/2015">
-                      </div>
-                    </div>
+                   
 
                  <!--    <div class="form-group">
                       <label>Date masks:</label>
@@ -348,6 +333,7 @@
         $claseDato->setReferenciaLluviaUva($_POST["referenciaLluviaUva"]);
         $claseDato->setReferenciaTemperaturaUva($_POST["referenciaTemperaturaUva"]);
         $claseDato->setPorcentajeCrecimientoUva($_POST["porcentajeCrecimientoUva"]);
+        $claseDato->setPesoMedioCepa($_POST["pesoMedioCepa"]);//cuantos gramos puede pesar toda la uva de la cepa en gramos
           //datos de hoja
         $claseDato->setReferenciaLluviaHoja($_POST["referenciaLluviaHoja"]);
         $claseDato->setReferenciaTemperaturaHoja($_POST["referenciaTemperaturaHoja"]);
